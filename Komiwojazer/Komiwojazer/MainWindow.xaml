@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Komiwojazer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="Zagadnienie komiwojażera" Height="371" Width="744">
+    <StackPanel>
+        <Label Content="Zagadnienie komiwojażera" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="35"
+               Padding="30"></Label>
+        <Button x:Name="startButton" Content="Start" Cursor="Hand" Margin="50" Height="70" Width="150" FontSize="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Click="startButton_Click"></Button>
+        <Button x:Name="helpButton" Content="Pomoc" Cursor="Hand" Width="50" Margin="550 15 0 0"></Button>
+    </StackPanel>
 </Window>

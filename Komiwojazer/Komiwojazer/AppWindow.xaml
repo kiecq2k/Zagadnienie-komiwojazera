@@ -1,0 +1,46 @@
+﻿<Window x:Class="Komiwojazer.AppWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Komiwojazer"
+        mc:Ignorable="d"
+        Title="Zagadnienie komiwojażera" Height="500" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+            <Image x:Name="image" Height="300" Source="/mapa.png" Stretch="None" Margin="10"></Image>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="Algorytm 1" FontSize="20" Margin="30 1 1 1" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
+                <CheckBox x:Name="alg1" Grid.Row="0" Grid.Column="1" Margin="30 10 10 10" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
+                
+                <Label Grid.Row="1" Grid.Column="0" Content="Algorytm 2" FontSize="20" Margin="30 1 1 1" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
+                <CheckBox x:Name="alg2" Grid.Row="1" Grid.Column="1" Margin="30 10 10 10" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
+
+                <Label Grid.Row="2" Grid.Column="0" Content="Algorytm 3" FontSize="20" Margin="30 1 1 1" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
+                <CheckBox x:Name="alg3" Grid.Row="2" Grid.Column="1" Margin="30 10 10 10" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1">
+            <Button x:Name="startPointButton" Cursor="Hand" Content="Zaznacz punkt początkowy" Height="50" Margin="20,50,20,20" FontSize="16"></Button>
+            <Button x:Name="endPointsButton" Cursor="Hand" Content="Zaznacz resztę punktów" Height="50" Margin="20" FontSize="16"></Button>
+            <Button x:Name="startAlgorithmButton" Cursor="Hand" Content="Znajdź trasę" Height="50" Margin="20" FontSize="16"></Button>
+            <Button x:Name="endButton" Cursor="Hand" Content="Wyjście" Height="50" Margin="20" FontSize="16"></Button>
+        </StackPanel>
+    </Grid>
+</Window>
