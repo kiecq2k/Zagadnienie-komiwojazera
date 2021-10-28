@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0">
-            <Image x:Name="image" Height="300" Source="/mapa.png" Stretch="None" Margin="10"></Image>
+            <Image x:Name="image" Height="300" Source="/mapa.jpg" Stretch="None" Margin="10"></Image>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
