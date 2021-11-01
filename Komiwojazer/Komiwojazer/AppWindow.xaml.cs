@@ -21,5 +21,10 @@ namespace Komiwojazer
         {
             InitializeComponent();
         }
+
+        private void endButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

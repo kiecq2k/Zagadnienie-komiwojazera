@@ -31,5 +31,7 @@ namespace Komiwojazer
             appWindow.Show();
             Close();
         }
+
+        
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Komiwojazer"
         mc:Ignorable="d"
-        Title="Zagadnienie komiwojażera" Height="500" Width="800">
+        Title="Zagadnienie komiwojażera" Height="800" Width="1200">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0">
-            <Image x:Name="image" Height="300" Source="/mapa.jpg" Stretch="None" Margin="10"></Image>
+            <Image x:Name="image" Height="600" Source="/mapa.jpg" Stretch="Fill" Margin="10"></Image>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -21,18 +21,23 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Content="Algorytm 1" FontSize="20" Margin="30 1 1 1" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
-                <CheckBox x:Name="alg1" Grid.Row="0" Grid.Column="1" Margin="30 10 10 10" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
-                
-                <Label Grid.Row="1" Grid.Column="0" Content="Algorytm 2" FontSize="20" Margin="30 1 1 1" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
-                <CheckBox x:Name="alg2" Grid.Row="1" Grid.Column="1" Margin="30 10 10 10" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
+                <Label Grid.Column="0" Content="Algorytm 1" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="37" Width="108"/>
+                <CheckBox x:Name="alg1" Grid.Column="1" Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="16"/>
+                <TextBox x:Name="road_alg1" Grid.Row="0" Grid.Column="2" Margin="15,0,0,0" Width="50" Height="20" />
 
-                <Label Grid.Row="2" Grid.Column="0" Content="Algorytm 3" FontSize="20" Margin="30 1 1 1" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
-                <CheckBox x:Name="alg3" Grid.Row="2" Grid.Column="1" Margin="30 10 10 10" HorizontalAlignment="Left" VerticalAlignment="Center"></CheckBox>
+                <Label Grid.Row="1" Grid.Column="0" Content="Algorytm 2" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="36" Width="108"></Label>
+                <CheckBox x:Name="alg2" Grid.Row="1" Grid.Column="1" Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="16"></CheckBox>
+                <TextBox x:Name="road_alg2" Grid.Row="1" Grid.Column="2" Margin="15,0,0,0" Width="50" Height="20" />
+
+                <Label Grid.Row="2" Grid.Column="0" Content="Algorytm 3" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="37" Width="108"></Label>
+                <CheckBox x:Name="alg3" Grid.Row="2" Grid.Column="1" Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="16"></CheckBox>
+                <TextBox x:Name="road_alg3" Grid.Row="2" Grid.Column="2" Margin="15,0,0,0" Height="20" Width="50"  />
+
             </Grid>
         </StackPanel>
 
@@ -40,7 +45,7 @@
             <Button x:Name="startPointButton" Cursor="Hand" Content="Zaznacz punkt początkowy" Height="50" Margin="20,50,20,20" FontSize="16"></Button>
             <Button x:Name="endPointsButton" Cursor="Hand" Content="Zaznacz resztę punktów" Height="50" Margin="20" FontSize="16"></Button>
             <Button x:Name="startAlgorithmButton" Cursor="Hand" Content="Znajdź trasę" Height="50" Margin="20" FontSize="16"></Button>
-            <Button x:Name="endButton" Cursor="Hand" Content="Wyjście" Height="50" Margin="20" FontSize="16"></Button>
+            <Button x:Name="endButton" Cursor="Hand" Content="Wyjście" Height="50" Margin="20" FontSize="16" Click="endButton_Click"></Button>
         </StackPanel>
     </Grid>
 </Window>
