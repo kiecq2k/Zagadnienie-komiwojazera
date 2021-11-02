@@ -9,11 +9,20 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
+        <Image x:Name="image" Height="600" Width="780" Source="/mapa.jpg" Stretch="Fill" Margin="10,10,10,174"></Image>
         <StackPanel Grid.Column="0">
-            <Image x:Name="image" Height="600" Source="/mapa.jpg" Stretch="Fill" Margin="10"></Image>
+            <Canvas x:Name="CanvasImage" Height="600" Width="771" Margin="8,10,0,0" Background="Transparent"
+                    MouseDown="CanvasImage_MouseDown" MouseUp="CanvasImage_MouseUp">
+
+            </Canvas>
+
+
+
+
+
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -23,7 +32,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="0" Content="Algorytm 1" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="37" Width="108"/>
@@ -42,9 +51,10 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-            <Button x:Name="startPointButton" Cursor="Hand" Content="Zaznacz punkt początkowy" Height="50" Margin="20,50,20,20" FontSize="16"></Button>
-            <Button x:Name="endPointsButton" Cursor="Hand" Content="Zaznacz resztę punktów" Height="50" Margin="20" FontSize="16"></Button>
+            <Button x:Name="startPointButton" Cursor="Hand" Content="Zaznacz punkt początkowy" Height="50" Margin="20,50,20,20" FontSize="16" Click="startPointButton_Click"></Button>
+            <Button x:Name="endPointsButton" Cursor="Hand" Content="Zaznacz resztę punktów" Height="50" Margin="20" FontSize="16" Click="endPointsButton_Click"></Button>
             <Button x:Name="startAlgorithmButton" Cursor="Hand" Content="Znajdź trasę" Height="50" Margin="20" FontSize="16"></Button>
+            <Button x:Name="removePointsButton" Cursor="Hand" Content="Wyczyść punkty" Height="50" Margin="20" FontSize="16"></Button>
             <Button x:Name="endButton" Cursor="Hand" Content="Wyjście" Height="50" Margin="20" FontSize="16" Click="endButton_Click"></Button>
         </StackPanel>
     </Grid>
