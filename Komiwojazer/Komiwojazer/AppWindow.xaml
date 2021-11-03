@@ -53,8 +53,8 @@
         <StackPanel Grid.Column="1">
             <Button x:Name="startPointButton" Cursor="Hand" Content="Zaznacz punkt początkowy" Height="50" Margin="20,50,20,20" FontSize="16" Click="startPointButton_Click"></Button>
             <Button x:Name="endPointsButton" Cursor="Hand" Content="Zaznacz resztę punktów" Height="50" Margin="20" FontSize="16" Click="endPointsButton_Click"></Button>
-            <Button x:Name="startAlgorithmButton" Cursor="Hand" Content="Znajdź trasę" Height="50" Margin="20" FontSize="16"></Button>
-            <Button x:Name="removePointsButton" Cursor="Hand" Content="Wyczyść punkty" Height="50" Margin="20" FontSize="16"></Button>
+            <Button x:Name="startAlgorithmButton" Cursor="Hand" Content="Znajdź trasę" Height="50" Margin="20" FontSize="16" Click="startAlgorithmButton_Click"></Button>
+            <Button x:Name="removePointsButton" Cursor="Hand" Content="Wyczyść punkty" Height="50" Margin="20" FontSize="16" Click="removePointsButton_Click"></Button>
             <Button x:Name="endButton" Cursor="Hand" Content="Wyjście" Height="50" Margin="20" FontSize="16" Click="endButton_Click"></Button>
         </StackPanel>
     </Grid>

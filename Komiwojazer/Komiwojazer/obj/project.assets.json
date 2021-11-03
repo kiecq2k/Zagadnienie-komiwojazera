@@ -8,19 +8,19 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\chudy\\.nuget\\packages\\": {}
+    "C:\\Users\\olekm\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\chudy\\source\\repos\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
+      "projectUniqueName": "C:\\Users\\olekm\\OneDrive\\Pulpit\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
       "projectName": "Komiwojazer",
-      "projectPath": "C:\\Users\\chudy\\source\\repos\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
-      "packagesPath": "C:\\Users\\chudy\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\chudy\\source\\repos\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\obj\\",
+      "projectPath": "C:\\Users\\olekm\\OneDrive\\Pulpit\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
+      "packagesPath": "C:\\Users\\olekm\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\olekm\\OneDrive\\Pulpit\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\chudy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\olekm\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -63,7 +63,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }
