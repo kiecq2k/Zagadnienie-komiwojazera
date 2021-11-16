@@ -17,11 +17,11 @@ namespace Komiwojazer
     /// </summary>
     public partial class AppWindow : Window
     {
-        private int flag { get; set; } = -1;
+        private int _flag = -1;
 
-        private List<Ellipse> points { get; set; } = new List<Ellipse>();
-        private Ellipse startingPoint { get; set; } = null;
-        private int licznik { get; set; } = 0;
+        private IList<Ellipse> _points = new List<Ellipse>();
+        private Ellipse _startingPoint = null;
+        private int _counter = 0;
 
         public AppWindow()
         {
@@ -38,28 +38,28 @@ namespace Komiwojazer
             var coord = e.GetPosition(this.CanvasImage);
             if (coord.X < 764 && coord.Y < 577 && coord.X > 2 && coord.Y > 3)
             {
-                if (flag == 1)
+                if (_flag == 1)
                 {
-                    if (startingPoint == null)
+                    if (_startingPoint == null)
                     {
-                        startingPoint = new Ellipse();
-                        startingPoint.Width = 10;
-                        startingPoint.Height = 10;
-                        startingPoint.Fill = Brushes.Red;
-                        CanvasImage.Children.Add(startingPoint);
+                        _startingPoint = new Ellipse();
+                        _startingPoint.Width = 10;
+                        _startingPoint.Height = 10;
+                        _startingPoint.Fill = Brushes.Red;
+                        CanvasImage.Children.Add(_startingPoint);
                     }
-                    Canvas.SetLeft(startingPoint, coord.X - 5);
-                    Canvas.SetTop(startingPoint, coord.Y - 5);
+                    Canvas.SetLeft(_startingPoint, coord.X - 5);
+                    Canvas.SetTop(_startingPoint, coord.Y - 5);
                 }
-                else if (flag == 2)
+                else if (_flag == 2)
                 {
-                    points.Add(new Ellipse());
-                    points[licznik].Width = 10;
-                    points[licznik].Height = 10;
-                    points[licznik].Fill = Brushes.Blue;
-                    Canvas.SetLeft(points[licznik], coord.X - 5);
-                    Canvas.SetTop(points[licznik], coord.Y - 5);
-                    CanvasImage.Children.Add(points[licznik++]);
+                    _points.Add(new Ellipse());
+                    _points[_counter].Width = 10;
+                    _points[_counter].Height = 10;
+                    _points[_counter].Fill = Brushes.Blue;
+                    Canvas.SetLeft(_points[_counter], coord.X - 5);
+                    Canvas.SetTop(_points[_counter], coord.Y - 5);
+                    CanvasImage.Children.Add(_points[_counter++]);
                 }
             }
         }
@@ -81,26 +81,26 @@ namespace Komiwojazer
 
         private void startPointButton_Click(object sender, RoutedEventArgs e)
         {
-            flag = 1;
+            _flag = 1;
         }
 
         private void endPointsButton_Click(object sender, RoutedEventArgs e)
         {
-            flag = 2;
+            _flag = 2;
         }
 
         private void removePointsButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var point in points)
+            foreach (var point in _points)
             {
                 CanvasImage.Children.Remove(point);
             }
-            licznik = 0;
+            _counter = 0;
         }
 
         private void startAlgorithmButton_Click(object sender, RoutedEventArgs e)
         {
-            if (startingPoint == null || licznik < 1)
+            if (_startingPoint == null || _counter < 1)
             {
                 MessageBox.Show("Nie wybrano punktów");
             }
