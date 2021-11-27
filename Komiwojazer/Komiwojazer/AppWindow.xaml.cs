@@ -38,7 +38,8 @@ namespace Komiwojazer
         private void CanvasImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var coord = e.GetPosition(this.CanvasImage);
-            if (coord.X < 764 && coord.Y < 577 && coord.X > 2 && coord.Y > 3)
+
+            if (coord.IsOnRoad())
             {
                 if (_flag == 1)
                 {
