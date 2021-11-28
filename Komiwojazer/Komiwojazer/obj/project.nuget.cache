@@ -1,8 +1,21 @@
 {
   "version": 2,
-  "dgSpecHash": "kH5tix+z9SdgMK6IICSF0C/b37dG/VEcQj/66h+aw3xY7eYjKs27os3hpxmO2LcCCU3c4o9Wq8mMCooxptiJzA==",
+  "dgSpecHash": "Kuj+tgygIOfYepj9ZnykRE24q+OUtggwgns2o0kDRRsuZZGTmFhBcxmgQwpS/1SkVWGfa1ZLb0dqwG7djVON5w==",
   "success": true,
   "projectFilePath": "C:\\Users\\barto\\Desktop\\komiwojazer\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
-  "expectedPackageFiles": [],
-  "logs": []
+  "expectedPackageFiles": [
+    "C:\\Users\\barto\\.nuget\\packages\\quickgraph\\3.6.61119.7\\quickgraph.3.6.61119.7.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'QuickGraph 3.6.61119.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "QuickGraph",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
 }

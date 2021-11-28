@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +10,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using QuickGraph;
+using QuickGraph.Algorithms;
 
 namespace Komiwojazer
 {
@@ -24,10 +27,13 @@ namespace Komiwojazer
         private Points _startingPoint = null;
         private IList<Points> _points = new List<Points>();
         private int _counter = 0;
+        private IList<Point> _intersections = new List<Point>();
+        private IList<Point> _usedPoints = new List<Point>();
 
         public AppWindow()
         {
             InitializeComponent();
+            FillIntersections();
         }
 
         private void endButton_Click(object sender, RoutedEventArgs e)
@@ -198,82 +204,84 @@ namespace Komiwojazer
 
         private void startAlgorithmButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_startingPoint == null || _counter < 1)
-            {
-                //MessageBox.Show("Nie wybrano punktów");
-            }
-            int row = _startingPoint.Row, col = _startingPoint.Column;
-            for (int i = 0; i < _counter; i++)
-            {
-                while (row != _points[i].Row)
-                {
-                    if (row < _points[i].Row)
-                    {
-                        lineHorDo(row, col);
-                        row++;
-                        if (row == _points[i].Row) lineHorDo(row, col);
-                    }
-                    else if (row > _points[i].Row)
-                    {
-                        lineHorUp(row, col);
-                        row--;
-                    }
-                }
+            DrawPath();
 
-                //lineHorDo(row, col);
-                //row--;
-                //col++;
-                while (col != _points[i].Column)
-                {
-                    if (col < _points[i].Column)
-                    {
-
-                        col++;
-                        lineVert(row, col);
-                    }
-                    else if (col > _points[i].Column)
-                    {
-                        lineVert(row, col);
-                        col--;
-                    }
-                }
-                //MessageBox.Show($"row{row}  col{col}");
-                lineVert(row, col);
-                row = _points[i].Row;
-                col = _points[i].Column;
-            }
-            //while (row != _startingPoint.Row)
+            //if (_startingPoint == null || _counter < 1)
             //{
-            //    if (row < _startingPoint.Row)
-            //    {
-            //        lineHorDo(row, col);
-            //        row++;
-            //        if (row == _startingPoint.Row) lineHorDo(row, col);
-            //    }
-            //    else if (row > _startingPoint.Row)
-            //    {
-            //        lineHorUp(row, col);
-            //        row--;
-            //    }
+            //    //MessageBox.Show("Nie wybrano punktów");
             //}
-
-            //lineHorDo(row, col);
-            //row--;
-            //col++;
-            //while (col != _startingPoint.Column)
+            //int row = _startingPoint.Row, col = _startingPoint.Column;
+            //for (int i = 0; i < _counter; i++)
             //{
-            //    if (col < _startingPoint.Column)
+            //    while (row != _points[i].Row)
             //    {
+            //        if (row < _points[i].Row)
+            //        {
+            //            lineHorDo(row, col);
+            //            row++;
+            //            if (row == _points[i].Row) lineHorDo(row, col);
+            //        }
+            //        else if (row > _points[i].Row)
+            //        {
+            //            lineHorUp(row, col);
+            //            row--;
+            //        }
+            //    }
 
-            //        col++;
-            //        lineVert(row, col);
-            //    }
-            //    else if (col > _startingPoint.Column)
+            //    //lineHorDo(row, col);
+            //    //row--;
+            //    //col++;
+            //    while (col != _points[i].Column)
             //    {
-            //        lineVert(row, col);
-            //        col--;
+            //        if (col < _points[i].Column)
+            //        {
+
+            //            col++;
+            //            lineVert(row, col);
+            //        }
+            //        else if (col > _points[i].Column)
+            //        {
+            //            lineVert(row, col);
+            //            col--;
+            //        }
             //    }
+            //    //MessageBox.Show($"row{row}  col{col}");
+            //    lineVert(row, col);
+            //    row = _points[i].Row;
+            //    col = _points[i].Column;
             //}
+            ////while (row != _startingPoint.Row)
+            ////{
+            ////    if (row < _startingPoint.Row)
+            ////    {
+            ////        lineHorDo(row, col);
+            ////        row++;
+            ////        if (row == _startingPoint.Row) lineHorDo(row, col);
+            ////    }
+            ////    else if (row > _startingPoint.Row)
+            ////    {
+            ////        lineHorUp(row, col);
+            ////        row--;
+            ////    }
+            ////}
+
+            ////lineHorDo(row, col);
+            ////row--;
+            ////col++;
+            ////while (col != _startingPoint.Column)
+            ////{
+            ////    if (col < _startingPoint.Column)
+            ////    {
+
+            ////        col++;
+            ////        lineVert(row, col);
+            ////    }
+            ////    else if (col > _startingPoint.Column)
+            ////    {
+            ////        lineVert(row, col);
+            ////        col--;
+            ////    }
+            ////}
 
 
 
@@ -325,9 +333,225 @@ namespace Komiwojazer
             foreach (var line in _lines)
             {
                 imageGrid.Children.Remove(line);
-
+                CanvasImage.Children.Remove(line);
             }
             //_linesCounter = 0;
+        }
+
+        private void FillIntersections()
+        {
+            _intersections.Add(new Point(2.300000000000068, 10));
+            _intersections.Add(new Point(92.70000000000007, 9.200000000000003));
+            _intersections.Add(new Point(176.70000000000007, 8.400000000000002));
+            _intersections.Add(new Point(191.10000000000008, 8.400000000000002));
+            _intersections.Add(new Point(281.50000000000006, 8.400000000000002));
+            _intersections.Add(new Point(371.1000000000001, 8.400000000000002));
+            _intersections.Add(new Point(500.70000000000005, 6.800000000000001));
+            _intersections.Add(new Point(637.5000000000001, 6));
+            _intersections.Add(new Point(763.9000000000001, 5.200000000000001));
+            _intersections.Add(new Point(2.300000000000068, 52.400000000000006));
+            _intersections.Add(new Point(94.30000000000007, 54));
+            _intersections.Add(new Point(179.9000000000001, 54.8));
+            _intersections.Add(new Point(194.30000000000007, 54));
+            _intersections.Add(new Point(279.9000000000001, 52.400000000000006));
+            _intersections.Add(new Point(372.7000000000001, 52.400000000000006));
+            _intersections.Add(new Point(503.10000000000014, 52.400000000000006));
+            _intersections.Add(new Point(638.3000000000001, 50));
+            _intersections.Add(new Point(763.9000000000001, 53.2));
+            _intersections.Add(new Point(2.300000000000068, 98));
+            _intersections.Add(new Point(95.10000000000008, 98));
+            _intersections.Add(new Point(181.50000000000009, 98));
+            _intersections.Add(new Point(193.50000000000009, 97.2));
+            _intersections.Add(new Point(279.9000000000001, 97.2));
+            _intersections.Add(new Point(372.7000000000001, 96.4));
+            _intersections.Add(new Point(501.5000000000001, 96.4));
+            _intersections.Add(new Point(637.5000000000001, 96.4));
+            _intersections.Add(new Point(763.1000000000001, 94.80000000000001));
+            _intersections.Add(new Point(1.5000000000000693, 142));
+            _intersections.Add(new Point(97.50000000000007, 141.20000000000002));
+            _intersections.Add(new Point(181.50000000000009, 140.4));
+            _intersections.Add(new Point(195.10000000000008, 142));
+            _intersections.Add(new Point(280.7000000000001, 141.20000000000002));
+            _intersections.Add(new Point(373.5000000000001, 142));
+            _intersections.Add(new Point(502.30000000000007, 140.4));
+            _intersections.Add(new Point(637.5000000000001, 140.4));
+            _intersections.Add(new Point(763.9000000000001, 141.20000000000002));
+            _intersections.Add(new Point(4.70000000000007, 186.8));
+            _intersections.Add(new Point(96.70000000000007, 186.8));
+            _intersections.Add(new Point(180.70000000000007, 185.20000000000002));
+            _intersections.Add(new Point(195.10000000000008, 184.4));
+            _intersections.Add(new Point(282.30000000000007, 186));
+            _intersections.Add(new Point(372.7000000000001, 186));
+            _intersections.Add(new Point(502.30000000000007, 184.4));
+            _intersections.Add(new Point(638.3000000000001, 184.4));
+            _intersections.Add(new Point(762.3000000000001, 184.4));
+            _intersections.Add(new Point(4.70000000000007, 230.8));
+            _intersections.Add(new Point(96.70000000000007, 231.60000000000002));
+            _intersections.Add(new Point(182.30000000000007, 230.8));
+            _intersections.Add(new Point(191.9000000000001, 229.20000000000002));
+            _intersections.Add(new Point(280.7000000000001, 229.20000000000002));
+            _intersections.Add(new Point(372.7000000000001, 227.60000000000002));
+            _intersections.Add(new Point(502.30000000000007, 226.8));
+            _intersections.Add(new Point(639.1000000000001, 228.4));
+            _intersections.Add(new Point(763.9000000000001, 229.20000000000002));
+            _intersections.Add(new Point(4.70000000000007, 278.8));
+            _intersections.Add(new Point(95.90000000000008, 278));
+            _intersections.Add(new Point(179.9000000000001, 278));
+            _intersections.Add(new Point(195.9000000000001, 277.2));
+            _intersections.Add(new Point(283.1000000000001, 276.40000000000003));
+            _intersections.Add(new Point(373.5000000000001, 276.40000000000003));
+            _intersections.Add(new Point(501.5000000000001, 276.40000000000003));
+            _intersections.Add(new Point(639.9000000000001, 274.8));
+            _intersections.Add(new Point(762.3000000000001, 276.40000000000003));
+            _intersections.Add(new Point(4.70000000000007, 326));
+            _intersections.Add(new Point(98.30000000000007, 326));
+            _intersections.Add(new Point(183.9000000000001, 326));
+            _intersections.Add(new Point(195.9000000000001, 324.40000000000003));
+            _intersections.Add(new Point(282.30000000000007, 326));
+            _intersections.Add(new Point(374.30000000000007, 326));
+            _intersections.Add(new Point(502.30000000000007, 325.20000000000005));
+            _intersections.Add(new Point(639.9000000000001, 323.6));
+            _intersections.Add(new Point(762.3000000000001, 322));
+            _intersections.Add(new Point(3.100000000000069, 370));
+            _intersections.Add(new Point(95.90000000000008, 370));
+            _intersections.Add(new Point(181.50000000000009, 369.20000000000005));
+            _intersections.Add(new Point(195.10000000000008, 369.20000000000005));
+            _intersections.Add(new Point(283.1000000000001, 369.20000000000005));
+            _intersections.Add(new Point(375.1000000000001, 369.20000000000005));
+            _intersections.Add(new Point(503.10000000000014, 368.40000000000003));
+            _intersections.Add(new Point(641.5000000000001, 366.8));
+            _intersections.Add(new Point(761.5000000000001, 367.6));
+            _intersections.Add(new Point(3.9000000000000696, 413.20000000000005));
+            _intersections.Add(new Point(98.30000000000007, 414));
+            _intersections.Add(new Point(183.10000000000008, 413.20000000000005));
+            _intersections.Add(new Point(197.50000000000009, 412.40000000000003));
+            _intersections.Add(new Point(283.1000000000001, 412.40000000000003));
+            _intersections.Add(new Point(375.1000000000001, 412.40000000000003));
+            _intersections.Add(new Point(503.9000000000001, 413.20000000000005));
+            _intersections.Add(new Point(640.7000000000002, 410.8));
+            _intersections.Add(new Point(762.3000000000001, 414.8));
+            _intersections.Add(new Point(3.9000000000000696, 458));
+            _intersections.Add(new Point(98.30000000000007, 458));
+            _intersections.Add(new Point(182.30000000000007, 458.8));
+            _intersections.Add(new Point(196.70000000000007, 458.8));
+            _intersections.Add(new Point(283.1000000000001, 458.8));
+            _intersections.Add(new Point(377.5000000000001, 458.8));
+            _intersections.Add(new Point(503.10000000000014, 456.40000000000003));
+            _intersections.Add(new Point(641.5000000000001, 456.40000000000003));
+            _intersections.Add(new Point(763.9000000000001, 457.20000000000005));
+            _intersections.Add(new Point(5.500000000000071, 502.80000000000007));
+            _intersections.Add(new Point(98.30000000000007, 502.80000000000007));
+            _intersections.Add(new Point(181.50000000000009, 503.6));
+            _intersections.Add(new Point(195.10000000000008, 503.6));
+            _intersections.Add(new Point(285.50000000000006, 503.6));
+            _intersections.Add(new Point(375.1000000000001, 502));
+            _intersections.Add(new Point(503.10000000000014, 503.6));
+            _intersections.Add(new Point(642.3000000000001, 501.20000000000005));
+            _intersections.Add(new Point(762.3000000000001, 500.40000000000003));
+            _intersections.Add(new Point(4.70000000000007, 546.8000000000001));
+            _intersections.Add(new Point(96.70000000000007, 547.6));
+            _intersections.Add(new Point(182.30000000000007, 549.2));
+            _intersections.Add(new Point(198.30000000000007, 548.4));
+            _intersections.Add(new Point(284.7000000000001, 547.6));
+            _intersections.Add(new Point(375.1000000000001, 547.6));
+            _intersections.Add(new Point(503.9000000000001, 546.8000000000001));
+            _intersections.Add(new Point(642.3000000000001, 546.8000000000001));
+            _intersections.Add(new Point(763.9000000000001, 545.2));
+
+        }
+
+        private void DrawPath()
+        {
+            var np1 = GetNearestPoint(_startingPoint.Coor);
+            var line = new Line
+            {
+                Stroke = System.Windows.Media.Brushes.Red,
+                Fill = System.Windows.Media.Brushes.Red,
+                X1 = _startingPoint.Coor.X,
+                Y1 = _startingPoint.Coor.Y,
+                X2 = np1.X,
+                Y2 = np1.Y,
+                StrokeThickness = 4,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Bottom
+
+            };
+
+            _lines.Add(line);
+            CanvasImage.Children.Add(line);
+            _usedPoints.Add(_startingPoint.Coor);
+
+            Point last = np1;
+
+            while(!AllPointsUsed())
+            {
+                var line2 = new Line
+                {
+                    Stroke = System.Windows.Media.Brushes.Red,
+                    Fill = System.Windows.Media.Brushes.Red,
+                    X1 = last.X,
+                    Y1 = last.Y,
+                    StrokeThickness = 4,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Bottom
+                };
+
+                last = GetNearestPoint(last);
+                line2.X2 = last.X;
+                line2.Y2 = last.Y;
+
+                _lines.Add(line2);
+                CanvasImage.Children.Add(line2);
+            }
+        }
+
+        private Point GetNearestPoint(Point point)
+        {
+            double minDistance = 1000000;
+            Point minPoint;
+
+            foreach (var p in _intersections)
+            {
+                double distance = GetDistance(point, p);
+                if(p != point && distance < minDistance && !_usedPoints.Contains(p))
+                {
+                    minDistance = distance;
+                    minPoint = p;
+                }
+            }
+
+            foreach (var p in _points)
+            {
+                double distance = GetDistance(point, p.Coor);
+                if(p.Coor != point && distance < minDistance && !_usedPoints.Contains(p.Coor))
+                {
+                    minDistance = distance;
+                    minPoint = p.Coor;
+                }
+            }
+
+            foreach (var p in _points)
+            {
+                if (p.Coor == minPoint)
+                    p.Used = true;
+            }
+
+            _usedPoints.Add(minPoint);
+
+            return minPoint;
+        }
+
+        private double GetDistance(Point p1, Point p2) => Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));
+
+        private bool AllPointsUsed()
+        {
+            foreach (var point in _points)
+            {
+                if (!point.Used)
+                    return false;
+            }
+
+            return true;
         }
     }
 }
