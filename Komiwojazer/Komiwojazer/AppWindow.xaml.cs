@@ -34,6 +34,7 @@ namespace Komiwojazer
         {
             InitializeComponent();
             FillIntersections();
+            graphFill();
         }
 
         private void endButton_Click(object sender, RoutedEventArgs e)
@@ -206,126 +207,91 @@ namespace Komiwojazer
         {
             DrawPath();
 
-            //if (_startingPoint == null || _counter < 1)
-            //{
-            //    //MessageBox.Show("Nie wybrano punktów");
-            //}
-            //int row = _startingPoint.Row, col = _startingPoint.Column;
-            //for (int i = 0; i < _counter; i++)
-            //{
-            //    while (row != _points[i].Row)
-            //    {
-            //        if (row < _points[i].Row)
-            //        {
-            //            lineHorDo(row, col);
-            //            row++;
-            //            if (row == _points[i].Row) lineHorDo(row, col);
-            //        }
-            //        else if (row > _points[i].Row)
-            //        {
-            //            lineHorUp(row, col);
-            //            row--;
-            //        }
-            //    }
-
-            //    //lineHorDo(row, col);
-            //    //row--;
-            //    //col++;
-            //    while (col != _points[i].Column)
-            //    {
-            //        if (col < _points[i].Column)
-            //        {
-
-            //            col++;
-            //            lineVert(row, col);
-            //        }
-            //        else if (col > _points[i].Column)
-            //        {
-            //            lineVert(row, col);
-            //            col--;
-            //        }
-            //    }
-            //    //MessageBox.Show($"row{row}  col{col}");
-            //    lineVert(row, col);
-            //    row = _points[i].Row;
-            //    col = _points[i].Column;
-            //}
-            ////while (row != _startingPoint.Row)
-            ////{
-            ////    if (row < _startingPoint.Row)
-            ////    {
-            ////        lineHorDo(row, col);
-            ////        row++;
-            ////        if (row == _startingPoint.Row) lineHorDo(row, col);
-            ////    }
-            ////    else if (row > _startingPoint.Row)
-            ////    {
-            ////        lineHorUp(row, col);
-            ////        row--;
-            ////    }
-            ////}
-
-            ////lineHorDo(row, col);
-            ////row--;
-            ////col++;
-            ////while (col != _startingPoint.Column)
-            ////{
-            ////    if (col < _startingPoint.Column)
-            ////    {
-
-            ////        col++;
-            ////        lineVert(row, col);
-            ////    }
-            ////    else if (col > _startingPoint.Column)
-            ////    {
-            ////        lineVert(row, col);
-            ////        col--;
-            ////    }
-            ////}
-
-
-
+            //radze nie zagladac
+            {
+                /*
+                //if (_startingPoint == null || _counter < 1)
+                //{
+                //    //MessageBox.Show("Nie wybrano punktów");
+                //}
+                //int row = _startingPoint.Row, col = _startingPoint.Column;
+                //for (int i = 0; i < _counter; i++)
+                //{
+                //    while (row != _points[i].Row)
+                //    {
+                //        if (row < _points[i].Row)
+                //        {
+                //            lineHorDo(row, col);
+                //            row++;
+                //            if (row == _points[i].Row) lineHorDo(row, col);
+                //        }
+                //        else if (row > _points[i].Row)
+                //        {
+                //            lineHorUp(row, col);
+                //            row--;
+                //        }
+                //    }
+                //    //lineHorDo(row, col);
+                //    //row--;
+                //    //col++;
+                //    while (col != _points[i].Column)
+                //    {
+                //        if (col < _points[i].Column)
+                //        {
+                //            col++;
+                //            lineVert(row, col);
+                //        }
+                //        else if (col > _points[i].Column)
+                //        {
+                //            lineVert(row, col);
+                //            col--;
+                //        }
+                //    }
+                //    //MessageBox.Show($"row{row}  col{col}");
+                //    lineVert(row, col);
+                //    row = _points[i].Row;
+                //    col = _points[i].Column;
+                //}
+                ////while (row != _startingPoint.Row)
+                ////{
+                ////    if (row < _startingPoint.Row)
+                ////    {
+                ////        lineHorDo(row, col);
+                ////        row++;
+                ////        if (row == _startingPoint.Row) lineHorDo(row, col);
+                ////    }
+                ////    else if (row > _startingPoint.Row)
+                ////    {
+                ////        lineHorUp(row, col);
+                ////        row--;
+                ////    }
+                ////}
+                ////lineHorDo(row, col);
+                ////row--;
+                ////col++;
+                ////while (col != _startingPoint.Column)
+                ////{
+                ////    if (col < _startingPoint.Column)
+                ////    {
+                ////        col++;
+                ////        lineVert(row, col);
+                ////    }
+                ////    else if (col > _startingPoint.Column)
+                ////    {
+                ////        lineVert(row, col);
+                ////        col--;
+                ////    }
+                ////}
+                */
+            }
 
         }
 
         private void imageGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            //var point = Mouse.GetPosition(imageGrid);
-
-            //int row = 0;
-            //int col = 0;
-            //double accumulatedHeight = 0.0;
-            //double accumulatedWidth = 0.0;
-
-            //// calc row mouse was over
-            //foreach (var rowDefinition in imageGrid.RowDefinitions)
-            //{
-            //    accumulatedHeight += rowDefinition.ActualHeight;
-            //    if (accumulatedHeight >= point.Y)
-            //        break;
-            //    row++;
-            //}
-
-            //// calc col mouse was over
-            //foreach (var columnDefinition in imageGrid.ColumnDefinitions)
-            //{
-            //    accumulatedWidth += columnDefinition.ActualWidth;
-            //    if (accumulatedWidth >= point.X)
-            //        break;
-            //    col++;
-            //}
-            //MessageBox.Show($"row{row}  col{col}");
             int col = 0;
             int row = 0;
             fun(ref col, ref row);
-
-            //lineVert(row, col++);
-            //lineVert(row++, col);
-            //lineHor(row++, col);
-            //lineHor(row, col++);
-            //lineVert(row, col++);
-            //lineVert(row, col++);
-
         }
 
         private void removeRoadButton_Click(object sender, RoutedEventArgs e)
@@ -335,7 +301,6 @@ namespace Komiwojazer
                 imageGrid.Children.Remove(line);
                 CanvasImage.Children.Remove(line);
             }
-            //_linesCounter = 0;
         }
 
         private void FillIntersections()
@@ -553,5 +518,214 @@ namespace Komiwojazer
 
             return true;
         }
+
+        private void graphFill()
+        {
+            int counter = 0;
+            int[] vertex = new int[200];
+            for (int i = 0; i < 200; i++)
+            {
+                vertex[i] = i;
+            }
+            var graph = new AdjacencyGraph<int, Edge<int>>();
+            for (int i = 0; i < 125; i++)
+            {
+                graph.AddVertex(vertex[i]);
+            }
+            Edge<int>[] edge = new Edge<int>[1000];
+
+
+
+            //reczny graf
+            {
+                /*
+                 row 0
+                // */
+                ////vertex 0
+                //edge[counter++] = new Edge<int>(vertex[0], vertex[9]);
+                ////vertex 1
+                //edge[counter++] = new Edge<int>(vertex[1], vertex[0]);
+                ////vertex 2
+                //edge[counter++] = new Edge<int>(vertex[2], vertex[1]);
+                //edge[counter++] = new Edge<int>(vertex[2], vertex[11]);
+                ////vertex 3
+                //edge[counter++] = new Edge<int>(vertex[3], vertex[2]);
+                ////vertex 4
+                //edge[counter++] = new Edge<int>(vertex[4], vertex[3]);
+                //edge[counter++] = new Edge<int>(vertex[4], vertex[13]);
+                ////vertex 5
+                //edge[counter++] = new Edge<int>(vertex[5], vertex[4]);
+                ////vertex 6
+                //edge[counter++] = new Edge<int>(vertex[6], vertex[5]);
+                //edge[counter++] = new Edge<int>(vertex[6], vertex[15]);
+                ////vertex 7
+                //edge[counter++] = new Edge<int>(vertex[7], vertex[6]);
+                ////vertex 8
+                //edge[counter++] = new Edge<int>(vertex[8], vertex[7]);
+                //edge[counter++] = new Edge<int>(vertex[8], vertex[17]);
+                /*
+                  row 1
+                 */
+                ////vertex 9
+                //edge[counter++] = new Edge<int>(vertex[9], vertex[18]);
+                //edge[counter++] = new Edge<int>(vertex[9], vertex[10]);
+                ////vertex 10
+                //edge[counter++] = new Edge<int>(vertex[10], vertex[11]);
+                //edge[counter++] = new Edge<int>(vertex[10], vertex[1]);
+                ////vertex 11 
+                //edge[counter++] = new Edge<int>(vertex[11], vertex[12]);
+                //edge[counter++] = new Edge<int>(vertex[11], vertex[20]);
+                ////vertex 12
+                //edge[counter++] = new Edge<int>(vertex[12], vertex[3]);
+                //edge[counter++] = new Edge<int>(vertex[12], vertex[13]);
+                ////vertex 13
+                //edge[counter++] = new Edge<int>(vertex[13], vertex[22]);
+                //edge[counter++] = new Edge<int>(vertex[13], vertex[14]);
+                ////vertex 14
+                //edge[counter++] = new Edge<int>(vertex[14], vertex[5]);
+                //edge[counter++] = new Edge<int>(vertex[14], vertex[15]);
+                ////vertex 15
+                //edge[counter++] = new Edge<int>(vertex[15], vertex[24]);
+                //edge[counter++] = new Edge<int>(vertex[15], vertex[16]);
+                ////vertex 16
+                //edge[counter++] = new Edge<int>(vertex[16], vertex[7]);
+                //edge[counter++] = new Edge<int>(vertex[16], vertex[17]);
+                ////vertex 17
+                //edge[counter++] = new Edge<int>(vertex[17], vertex[8]);
+                //edge[counter++] = new Edge<int>(vertex[17], vertex[26]);
+                ///*
+                // row 2
+                // */
+                ////vertex 18
+                //edge[counter++] = new Edge<int>(vertex[18], vertex[27]);
+                ////vertex 19
+                //edge[counter++] = new Edge<int>(vertex[19], vertex[10]);
+                //edge[counter++] = new Edge<int>(vertex[19], vertex[18]);
+                ////vertex 20
+                //edge[counter++] = new Edge<int>(vertex[20], vertex[19]);
+                //edge[counter++] = new Edge<int>(vertex[20], vertex[29]);
+                ////vertex 21
+                //edge[counter++] = new Edge<int>(vertex[21], vertex[20]);
+                //edge[counter++] = new Edge<int>(vertex[21], vertex[12]);
+                ////vertex 22
+                //edge[counter++] = new Edge<int>(vertex[22], vertex[21]);
+                //edge[counter++] = new Edge<int>(vertex[22], vertex[31]);
+                ////vertex 23
+                //edge[counter++] = new Edge<int>(vertex[23], vertex[22]);
+                //edge[counter++] = new Edge<int>(vertex[23], vertex[14]);
+                ////vertex 24
+                //edge[counter++] = new Edge<int>(vertex[24], vertex[23]);
+                //edge[counter++] = new Edge<int>(vertex[24], vertex[33]);
+                ////vertex 25 
+                //edge[counter++] = new Edge<int>(vertex[25], vertex[24]);
+                //edge[counter++] = new Edge<int>(vertex[25], vertex[16]);
+                ////vertex 26
+                //edge[counter++] = new Edge<int>(vertex[26], vertex[25]);
+                //edge[counter++] = new Edge<int>(vertex[26], vertex[17]);
+                //edge[counter++] = new Edge<int>(vertex[26], vertex[35]);
+            }
+            
+            
+            
+            
+            int vert_counter = 0;
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    if(i%2 != 0)
+                    {
+                        if (j != 8)
+                        {
+                            edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter + 1]);
+                        }
+                    }
+                    else
+                    {
+                        if (j != 0)
+                        {
+                            edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter - 1]);
+                        }
+                    }
+                    vert_counter++;
+                }
+            }
+            edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[++vert_counter]);
+
+            for (int i = 0; i < 7; i++)
+            {
+
+                edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter+1]);
+                edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter-1]);
+                vert_counter++;
+            }
+            edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter - 1]);
+            vert_counter++;
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        if (j != 8)
+                        {
+                            edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter + 1]);
+                        }
+                    }
+                    else
+                    {
+                        if (j != 0)
+                        {
+                            edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter - 1]);
+                        }
+                    }
+                    vert_counter++;
+                }
+            }
+            edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[++vert_counter]);
+
+            for (int i = 0; i < 7; i++)
+            {
+
+                edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter + 1]);
+                edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter - 1]);
+                vert_counter++;
+            }
+            edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter - 1]);
+
+            /////vertical
+
+            vert_counter = 0;
+            for (int i = 0; i < 8; i++)
+		    {
+                for (int j = 0; j < 13; j++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter + 9]);
+                        vert_counter += 9;
+                    }
+                    else
+                    {
+                        edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter - 9]);
+                        vert_counter -= 9;
+                    }
+                }
+                vert_counter++;
+            }
+            vert_counter = 8;
+            edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter + 9]);
+            vert_counter += 9;
+            for (int i = 0; i < 12; i++)
+            {
+                edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter - 9]);
+                edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter + 9]);
+                vert_counter += 9;
+            }
+            edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter - 9]);
+            counter++;
+        }
+
+
     }
 }
