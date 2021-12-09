@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Komiwojazer"
         mc:Ignorable="d"
-        Title="Zagadnienie komiwojażera" Height="800" Width="1200">
+        Title="Zagadnienie komiwojażera" Height="825" Width="1140">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition ></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Image x:Name="image" Height="600" Width="780" Source="/mapa.jpg" Stretch="Fill" Margin="10,10,10,174"></Image>
+        <Image x:Name="image" Height="600" Width="780" Source="/mapa.jpg" Stretch="None" Margin="10,10,10,174"></Image>
 
         <StackPanel Grid.Column="0">
             <Canvas x:Name="CanvasImage" Height="600" Width="771" Margin="8,10,0,0" Background="Transparent"

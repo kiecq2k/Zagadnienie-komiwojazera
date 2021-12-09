@@ -624,16 +624,16 @@ namespace Komiwojazer
                 //edge[counter++] = new Edge<int>(vertex[26], vertex[17]);
                 //edge[counter++] = new Edge<int>(vertex[26], vertex[35]);
             }
-            
-            
-            
-            
+
+
+
+            ////horizontal
             int vert_counter = 0;
             for (int i = 0; i < 6; i++)
             {
                 for (int j = 0; j < 9; j++)
                 {
-                    if(i%2 != 0)
+                    if (i % 2 != 0)
                     {
                         if (j != 8)
                         {
@@ -655,8 +655,8 @@ namespace Komiwojazer
             for (int i = 0; i < 7; i++)
             {
 
-                edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter+1]);
-                edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter-1]);
+                edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter + 1]);
+                edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter - 1]);
                 vert_counter++;
             }
             edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter - 1]);
@@ -694,10 +694,9 @@ namespace Komiwojazer
             edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter - 1]);
 
             /////vertical
-
             vert_counter = 0;
             for (int i = 0; i < 8; i++)
-		    {
+            {
                 for (int j = 0; j < 13; j++)
                 {
                     if (i % 2 == 0)
@@ -723,9 +722,6 @@ namespace Komiwojazer
                 vert_counter += 9;
             }
             edge[counter++] = new Edge<int>(vertex[vert_counter], vertex[vert_counter - 9]);
-            counter++;
         }
-
-
     }
 }
