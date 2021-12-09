@@ -55,11 +55,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\barto\\Desktop\\komiwojazer\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
+      "projectUniqueName": "C:\\Users\\barto\\Documents\\University\\semestr5\\ProjektZespolowy\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
       "projectName": "Komiwojazer",
-      "projectPath": "C:\\Users\\barto\\Desktop\\komiwojazer\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
+      "projectPath": "C:\\Users\\barto\\Documents\\University\\semestr5\\ProjektZespolowy\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
       "packagesPath": "C:\\Users\\barto\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\barto\\Desktop\\komiwojazer\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\obj\\",
+      "outputPath": "C:\\Users\\barto\\Documents\\University\\semestr5\\ProjektZespolowy\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\barto\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -103,6 +103,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[3.1.21, 3.1.21]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
@@ -111,7 +117,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -120,7 +126,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'QuickGraph 3.6.61119.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "message": "Pakiet „QuickGraph 3.6.61119.7” został przywrócony przy użyciu elementu „.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8” zamiast platformy docelowej projektu „.NETCoreApp,Version=v3.1”. Ten pakiet może nie być w pełni kompatybilny z Twoim projektem.",
       "libraryId": "QuickGraph",
       "targetGraphs": [
         ".NETCoreApp,Version=v3.1"
