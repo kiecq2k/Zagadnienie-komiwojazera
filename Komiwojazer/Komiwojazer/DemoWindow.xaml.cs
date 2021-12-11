@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using QuickGraph;
+
 
 namespace Komiwojazer
 {
@@ -33,6 +35,7 @@ namespace Komiwojazer
         public DemoWindow()
         {
             InitializeComponent();
+            graphFill();
         }
 
         private void endButton_Click(object sender, RoutedEventArgs e)
@@ -116,6 +119,73 @@ namespace Komiwojazer
 
         private void graphFill()
         {
+            int counter = 0;
+            int[] vertex = new int[100];
+            for (int i = 0; i < 26; i++)
+            {
+                vertex[i] = i;
+            }
+            var graph = new AdjacencyGraph<int, Edge<int>>();
+            for (int i = 0; i < 26; i++)
+            {
+                graph.AddVertex(vertex[i]);
+            }
+            TaggedEdge<int,int>[] edge = new TaggedEdge<int, int>[300];
+
+            //row 1
+            edge[counter++] = new TaggedEdge<int, int>(vertex[0], vertex[1], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[1], vertex[2], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[1], vertex[5], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[2], vertex[7], 15);
+            
+            //row 2
+            edge[counter++] = new TaggedEdge<int, int>(vertex[3], vertex[8], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[4], vertex[0], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[4], vertex[3], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[5], vertex[4], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[6], vertex[5], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[7], vertex[2], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[7], vertex[6], 40);
+
+            //row 3
+            edge[counter++] = new TaggedEdge<int, int>(vertex[8], vertex[9], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[8], vertex[14], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[9], vertex[4], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[9], vertex[10], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[10], vertex[11], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[11], vertex[18], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[11], vertex[12], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[12], vertex[6], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[12], vertex[13], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[13], vertex[19], 15);
+
+            //row 4
+            edge[counter++] = new TaggedEdge<int, int>(vertex[14], vertex[20], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[15], vertex[14], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[15], vertex[21], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[16], vertex[15], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[17], vertex[16], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[17], vertex[10], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[18], vertex[17], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[18], vertex[24], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[19], vertex[13], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[19], vertex[18], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[19], vertex[25], 15);
+
+            //row 5
+            edge[counter++] = new TaggedEdge<int, int>(vertex[20], vertex[21], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[21], vertex[20], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[21], vertex[22], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[22], vertex[16], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[22], vertex[21], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[22], vertex[23], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[23], vertex[17], 15);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[23], vertex[22], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[23], vertex[24], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[24], vertex[23], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[24], vertex[25], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[25], vertex[24], 40);
+            edge[counter++] = new TaggedEdge<int, int>(vertex[25], vertex[19], 15);
 
         }
     }
