@@ -29,13 +29,16 @@ namespace Komiwojazer
         private IList<Point> _intersections = new List<Point>();
         private IList<Point> _usedPoints = new List<Point>();
 
+        private int[,] _adjMatrix;
 
 
 
         public DemoWindow()
         {
             InitializeComponent();
-            graphFill();
+            //graphFill();
+            graphFillMatrix();
+            
         }
 
         private void endButton_Click(object sender, RoutedEventArgs e)
@@ -117,9 +120,45 @@ namespace Komiwojazer
             }
         }
 
+        private void adjMatrixFill()
+        {
+            int[,] tmp = {
+                { 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 40, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 15, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 15, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 15, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 15},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 40, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 40, 0, 40, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 40, 0, 40, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 40},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 40, 0}
+                };
+            _adjMatrix = tmp;
+        }
+
+
+
         private void graphFill()
         {
             int counter = 0;
+            TaggedEdge<int,int>[] edge = new TaggedEdge<int, int>[300];
             int[] vertex = new int[100];
             for (int i = 0; i < 26; i++)
             {
@@ -130,7 +169,6 @@ namespace Komiwojazer
             {
                 graph.AddVertex(vertex[i]);
             }
-            TaggedEdge<int,int>[] edge = new TaggedEdge<int, int>[300];
 
             //row 1
             edge[counter++] = new TaggedEdge<int, int>(vertex[0], vertex[1], 40);
@@ -187,6 +225,54 @@ namespace Komiwojazer
             edge[counter++] = new TaggedEdge<int, int>(vertex[25], vertex[24], 40);
             edge[counter++] = new TaggedEdge<int, int>(vertex[25], vertex[19], 15);
 
+           
         }
+
+
+        private void graphFillMatrix()
+        {
+            int counter = 0;
+            TaggedEdge<int, int>[] edge1 = new TaggedEdge<int, int>[300];
+            adjMatrixFill();
+            int[] vertex = new int[100];
+            for (int i = 0; i < 26; i++)
+            {
+                vertex[i] = i;
+            }
+            var graph = new AdjacencyGraph<int, TaggedEdge<int, int>>();
+            for (int i = 0; i < 26; i++)
+            {
+                graph.AddVertex(vertex[i]);
+            }
+
+            for (int i = 0; i < _adjMatrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < _adjMatrix.GetLength(1); j++)
+                {
+                    if (_adjMatrix[i,j] != 0)
+                    {
+                        edge1[counter++] = new TaggedEdge<int, int>(vertex[i], vertex[j], _adjMatrix[i, j]);
+                    }
+                }
+            }
+
+            foreach (var elem in edge1)
+            {
+                if(elem != null)
+                {
+                    graph.AddEdge(elem);
+
+                }
+            }
+            
+        }
+
+
+
     }
 }
+
+
+
+
+ 
