@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,13 +30,14 @@ namespace Komiwojazer
         private IList<Point> _intersections = new List<Point>();
         private IList<Point> _usedPoints = new List<Point>();
 
-        private int[,] _adjMatrix;
+        private IList<IList<int>> _adjMatrix = new List<IList<int>>();
 
 
 
         public DemoWindow()
         {
             InitializeComponent();
+            FillIntersections();
             //graphFill();
             graphFillMatrix();
             
@@ -123,35 +125,17 @@ namespace Komiwojazer
 
         private void adjMatrixFill()
         {
-            int[,] tmp = {
-                { 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 40, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                { 15, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 15, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 15, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 15},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 40, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 40, 0, 40, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 40, 0, 40, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 40},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 40, 0}
-                };
-            _adjMatrix = tmp;
+            string[] lines = File.ReadAllLines("graph_matrix_demo.txt");
+            for(int i=0; i<lines.Length; i++)
+            {
+                var line = lines[i].Replace(",","").Split(" ");
+                _adjMatrix.Add(new List<int>());
+
+                foreach (var numberAsString in line)
+                {
+                    _adjMatrix[i].Add(int.Parse(numberAsString));
+                }
+            }
         }
 
 
@@ -246,13 +230,13 @@ namespace Komiwojazer
                 graph.AddVertex(vertex[i]);
             }
 
-            for (int i = 0; i < _adjMatrix.GetLength(0); i++)
+            for (int i = 0; i < _adjMatrix.Count; i++)
             {
-                for (int j = 0; j < _adjMatrix.GetLength(1); j++)
+                for (int j = 0; j < _adjMatrix[i].Count; j++)
                 {
-                    if (_adjMatrix[i,j] != 0)
+                    if (_adjMatrix[i][j] != 0)
                     {
-                        edge1[counter++] = new TaggedEdge<int, int>(vertex[i], vertex[j], _adjMatrix[i, j]);
+                        edge1[counter++] = new TaggedEdge<int, int>(vertex[i], vertex[j], _adjMatrix[i][j]);
                     }
                 }
             }
@@ -268,6 +252,42 @@ namespace Komiwojazer
             
         }
 
+        private void FillIntersections()
+        {
+            // 1 row
+            _intersections.Add(new Point(185.90000000000003, 10.400000000000002));
+            _intersections.Add(new Point(425.1000000000001, 10.400000000000002));
+            _intersections.Add(new Point(677.9000000000001, 10.400000000000002));
+
+            // 2 row
+            _intersections.Add(new Point(14.700000000000035, 97.60000000000001));
+            _intersections.Add(new Point(185.90000000000003, 97.60000000000001));
+            _intersections.Add(new Point(425.1000000000001, 97.60000000000001));
+            _intersections.Add(new Point(677.9000000000001, 97.60000000000001));
+
+            // 3 row
+            _intersections.Add(new Point(16.300000000000036, 184.8));
+            _intersections.Add(new Point(185.90000000000003, 184.8));
+            _intersections.Add(new Point(313.1000000000001, 184.8));
+            _intersections.Add(new Point(425.1000000000001, 184.8));
+            _intersections.Add(new Point(677.9000000000001, 184.8));
+
+            // 4 row
+            _intersections.Add(new Point(16.300000000000036, 275.2));
+            _intersections.Add(new Point(87.50000000000004, 275.2));
+            _intersections.Add(new Point(185.90000000000003, 275.2));
+            _intersections.Add(new Point(313.1000000000001, 275.2));
+            _intersections.Add(new Point(425.1000000000001, 275.2));
+            _intersections.Add(new Point(677.9000000000001, 275.2));
+
+            // 5 row
+            _intersections.Add(new Point(16.300000000000036, 369.6));
+            _intersections.Add(new Point(85.90000000000003, 369.6));
+            _intersections.Add(new Point(185.90000000000003, 369.6));
+            _intersections.Add(new Point(315.50000000000006, 369.6));
+            _intersections.Add(new Point(425.1000000000001, 369.6));
+            _intersections.Add(new Point(677.9000000000001, 369.6));
+        }
 
 
     }
