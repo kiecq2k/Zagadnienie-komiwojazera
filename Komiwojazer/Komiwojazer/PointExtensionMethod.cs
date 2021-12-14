@@ -5,33 +5,46 @@ using System.Windows;
 
 namespace Komiwojazer
 {
+
+    public enum Version { Demo, Full };
+
     public static class PointExtensionMethod
     {
-        public static bool IsOnRoad(this Point point)
+        public static bool IsOnRoad(this Point point, Version version)
         {
-            return (IsOnRow(point) || IsOnColumn(point));
+            switch (version)
+            {
+                case Version.Demo: return (IsOnRowDemoVersion(point) || IsOnColumnDemoVersion(point));
+                case Version.Full: return (IsOnRowFullVersion(point) || IsOnColumnFullVersion(point));
+                default: return false;
+            }
         }
 
-        private static bool IsOnRow(Point point)
+        private static bool IsOnRowFullVersion(Point point)
         {
-            if (point.X < 0 || point.X > 764)
+            if (point.X < 5 || point.X > 727)
             {
                 return false;
             }
 
-            if ((point.Y >= 6 && point.Y <= 12) ||
-               (point.Y >= 49 && point.Y <= 57) ||
-               (point.Y >= 95 && point.Y <= 101) ||
-               (point.Y >= 140 && point.Y <= 145) ||
-               (point.Y >= 184 && point.Y <= 189) ||
-               (point.Y >= 227 && point.Y <= 234) ||
-               (point.Y >= 275 && point.Y <= 284) ||
-               (point.Y >= 323 && point.Y <= 330) ||
-               (point.Y >= 368 && point.Y <= 373) ||
-               (point.Y >= 411 && point.Y <= 417) ||
-               (point.Y >= 455 && point.Y <= 462) ||
-               (point.Y >= 500 && point.Y <= 505) ||
-               (point.Y >= 544 && point.Y <= 550))
+            if ((point.X >= 5 && point.X <= 725 && point.Y >= 4 && point.Y <= 12) ||
+               (point.X >= 5 && point.X <= 358 && point.Y >= 48 && point.Y <= 58) ||
+               (point.X >= 467 && point.X <= 725 && point.Y >= 46 && point.Y <= 56) ||
+               (point.X >= 5 && point.X <= 605 && point.Y >= 93 && point.Y <= 103) ||
+               (point.X >= 5 && point.X <= 273 && point.Y >= 137 && point.Y <= 147) ||
+               (point.X >= 345 && point.X <= 725 && point.Y >= 137 && point.Y <= 145) ||
+               (point.X >= 5 && point.X <= 725 && point.Y >= 182 && point.Y <= 190) ||
+               (point.X >= 5 && point.X <= 479 && point.Y >= 225 && point.Y <= 235) ||
+               (point.X >= 594 && point.X <= 726 && point.Y >= 225 && point.Y <= 234) ||
+               (point.X >= 5 && point.X <= 666 && point.Y >= 275 && point.Y <= 285) ||
+               (point.X >= 5 && point.X <= 726 && point.Y >= 324 && point.Y <= 331) ||
+               (point.X >= 5 && point.X <= 726 && point.Y >= 366 && point.Y <= 375) ||
+               (point.X >= 93 && point.X <= 726 && point.Y >= 412 && point.Y <= 419) ||
+               (point.X >= 5 && point.X <= 726 && point.Y >= 457 && point.Y <= 464) ||
+               (point.X >= 5 && point.X <= 275 && point.Y >= 502 && point.Y <= 509) ||
+               (point.X >= 351 && point.X <= 726 && point.Y >= 500 && point.Y <= 509) ||
+               (point.X >= 5 && point.X <= 608 && point.Y >= 547 && point.Y <= 554) ||
+               (point.X >= 5 && point.X <= 726 && point.Y >= 592 && point.Y <= 600))
             {
                 return true;
             }
@@ -39,22 +52,84 @@ namespace Komiwojazer
             return false;
         }
 
-        private static bool IsOnColumn(Point point)
+        private static bool IsOnColumnFullVersion(Point point)
         {
-            if (point.Y < 0 || point.Y > 575)
+            if (point.Y < 1 || point.Y > 600)
             {
                 return false;
             }
 
-            if((point.X >= 0 && point.X <= 11) ||
-               (point.X >= 88 && point.X <= 103) ||
-               (point.X >= 174 && point.X <= 185) ||
-               (point.X > 185 && point.X <= 197) ||
-               (point.X >= 275 && point.X <= 286) ||
-               (point.X >= 366 && point.X <= 382) ||
-               (point.X >= 494 && point.X <= 505) ||
-               (point.X >= 630 && point.X <= 642) ||
-               (point.X >= 760 && point.X <= 764))
+            if((point.X >= 5 && point.X <= 15 && point.Y >= 2 && point.Y <= 147) ||
+               (point.X >= 5 && point.X <= 15 && point.Y >= 185 && point.Y <= 510) ||
+               (point.X >= 5 && point.X <= 15 && point.Y >= 549 && point.Y <= 600) ||
+               (point.X >= 62 && point.X <= 69 && point.Y >= 49 && point.Y <= 100) ||
+               (point.X >= 91 && point.X <= 100 && point.Y >= 95 && point.Y <= 600) ||
+               (point.X >= 171 && point.X <= 180 && point.Y >= 2 && point.Y <= 190) ||
+               (point.X >= 171 && point.X <= 180 && point.Y >= 228 && point.Y <= 331) ||
+               (point.X >= 171 && point.X <= 180 && point.Y >= 368 && point.Y <= 464) ||
+               (point.X >= 171 && point.X <= 180 && point.Y >= 501 && point.Y <= 600) ||
+               (point.X >= 181 && point.X <= 191 && point.Y >= 2 && point.Y <= 56) ||
+               (point.X >= 181 && point.X <= 191 && point.Y >= 95 && point.Y <= 190) ||
+               (point.X >= 181 && point.X <= 191 && point.Y >= 228 && point.Y <= 464) ||
+               (point.X >= 181 && point.X <= 191 && point.Y >= 501 && point.Y <= 600) ||
+               (point.X >= 264 && point.X <= 273 && point.Y >= 50 && point.Y <= 330) ||
+               (point.X >= 264 && point.X <= 273 && point.Y >= 369 && point.Y <= 600) ||
+               (point.X >= 345 && point.X <= 358 && point.Y >= 2 && point.Y <= 144) ||
+               (point.X >= 345 && point.X <= 358 && point.Y >= 183 && point.Y <= 376) ||
+               (point.X >= 345 && point.X <= 358 && point.Y >= 412 && point.Y <= 600) ||
+               (point.X >= 405 && point.X <= 412 && point.Y >= 139 && point.Y <= 188) ||
+               (point.X >= 408 && point.X <= 415 && point.Y >= 367 && point.Y <= 508) ||
+               (point.X >= 467 && point.X <= 478 && point.Y >= 2 && point.Y <= 145) ||
+               (point.X >= 467 && point.X <= 478 && point.Y >= 182 && point.Y <= 600) ||
+               (point.X >= 540 && point.X <= 547 && point.Y >= 366 && point.Y <= 508) ||
+               (point.X >= 593 && point.X <= 604 && point.Y >= 49 && point.Y <= 418) ||
+               (point.X >= 593 && point.X <= 604 && point.Y >= 456 && point.Y <= 600) ||
+               (point.X >= 660 && point.X <= 666 && point.Y >= 271 && point.Y <= 330) ||
+               (point.X >= 712 && point.X <= 724 && point.Y >= 2 && point.Y <= 233) ||
+               (point.X >= 712 && point.X <= 724 && point.Y >= 320 && point.Y <= 600))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsOnRowDemoVersion(Point point)
+        {
+            if (point.X < 0 || point.X > 695)
+            {
+                return false;
+            }
+
+            if ((point.X >= 176 && point.X <= 690 && point.Y >= 6 && point.Y <= 17) ||
+               (point.X >= 5 && point.X <= 690 && point.Y >= 91 && point.Y <= 103) ||
+               (point.X >= 5 && point.X <= 690 && point.Y >= 178 && point.Y <= 192) ||
+               (point.X >= 5 && point.X <= 690 && point.Y >= 269 && point.Y <= 280) ||
+               (point.X >= 5 && point.X <= 690 && point.Y >= 365 && point.Y <= 375))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsOnColumnDemoVersion(Point point)
+        {
+            if (point.Y < 0 || point.Y > 378)
+            {
+                return false;
+            }
+
+            if ((point.X >= 6 && point.X <= 24 && point.Y >= 91 && point.Y <= 376) ||
+               (point.X >= 177 && point.X <= 195 && point.Y >= 1 && point.Y <= 192) ||
+               (point.X >= 177 && point.X <= 195 && point.Y >= 270 && point.Y <= 376) ||
+               (point.X >= 416 && point.X <= 434 && point.Y >= 0 && point.Y <= 105) ||
+               (point.X >= 416 && point.X <= 434 && point.Y >= 182 && point.Y <= 376) ||
+               (point.X >= 308 && point.X <= 319 && point.Y >= 181 && point.Y <= 376) ||
+               (point.X >= 81 && point.X <= 92 && point.Y >= 269 && point.Y <= 376) ||
+               (point.X >= 522 && point.X <= 532 && point.Y >= 93 && point.Y <= 191) ||
+               (point.X >= 669 && point.X <= 686 && point.Y >= 0 && point.Y <= 105) ||
+               (point.X >= 669 && point.X <= 686 && point.Y >= 182 && point.Y <= 376))
             {
                 return true;
             }

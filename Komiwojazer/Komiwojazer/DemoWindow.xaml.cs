@@ -49,7 +49,8 @@ namespace Komiwojazer
         private void CanvasImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var coord = e.GetPosition(this.CanvasImage);
-            
+
+            if (coord.IsOnRoad(Version.Demo))
             {
                 if (_flag == 1)
                 {

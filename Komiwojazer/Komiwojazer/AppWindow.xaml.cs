@@ -50,7 +50,7 @@ namespace Komiwojazer
 
             //File.AppendAllText("intersections.txt", $"_intersections.Add(new Point({coord.ToString().Replace(",", ".").Replace(";",",")}));\n");
 
-            //if (coord.IsOnRoad())
+            if (coord.IsOnRoad(Version.Full))
             {
                 if (_flag == 1)
                 {

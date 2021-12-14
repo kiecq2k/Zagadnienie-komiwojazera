@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Resource Include="mapa.jpg" />
-    <Resource Include="mapa.png" />
   </ItemGroup>
 
 </Project>

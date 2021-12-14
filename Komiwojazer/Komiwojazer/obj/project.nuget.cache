@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "8aYHhEMh/DMgDVmSiIVY5CMZJTHpCb8ET/jCVpLp0zz6+0OiZXbRiAOy6tOjYIRqgNnEas+3eL8idUhCpOVF6Q==",
+  "dgSpecHash": "Wh5K7y2fPkR/RpUS0tcNrwg1YylVd19NwitjUJQnKzzCG3KgZqTdNYPwFryvIjoclo85WbWDg+/cpAp408XLKg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\chudy\\source\\repos\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
+  "projectFilePath": "C:\\Users\\barto\\Documents\\University\\semestr5\\ProjektZespolowy\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\chudy\\.nuget\\packages\\quickgraph\\3.6.61119.7\\quickgraph.3.6.61119.7.nupkg.sha512"
+    "C:\\Users\\barto\\.nuget\\packages\\quickgraph\\3.6.61119.7\\quickgraph.3.6.61119.7.nupkg.sha512",
+    "C:\\Users\\barto\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.21\\microsoft.netcore.app.host.win-x64.3.1.21.nupkg.sha512"
   ],
   "logs": [
     {
