@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Komiwojazer"
         mc:Ignorable="d"
-        Title="Zagadnienie komiwojażera" Height="825" Width="1140">
+        Title="Zagadnienie komiwojażera" Height="825" Width="1140" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -16,39 +16,7 @@
 
         <StackPanel Grid.Column="0">
             <Canvas x:Name="CanvasImage" Height="600" Width="771" Margin="8,10,0,0" Background="Transparent"
-                    MouseDown="CanvasImage_MouseDown" MouseUp="CanvasImage_MouseUp">
-                <Grid x:Name="imageGrid"  Height="600" Width="771"  HorizontalAlignment ="Center" VerticalAlignment="Center"  Background="Transparent" PreviewMouseDown="imageGrid_PreviewMouseDown">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="12*"></RowDefinition>
-                        <RowDefinition Height="44*"></RowDefinition>
-                        <RowDefinition Height="44*"></RowDefinition>
-                        <RowDefinition Height="43*"></RowDefinition>
-                        <RowDefinition Height="44*"></RowDefinition>
-                        <RowDefinition Height="48*"></RowDefinition>
-                        <RowDefinition Height="47*"></RowDefinition>
-                        <RowDefinition Height="47*"></RowDefinition>
-                        <RowDefinition Height="44*"></RowDefinition>
-                        <RowDefinition Height="48*"></RowDefinition>
-                        <RowDefinition Height="44*"></RowDefinition>
-                        <RowDefinition Height="42*"></RowDefinition>
-                        <RowDefinition Height="42*"></RowDefinition>
-                        <RowDefinition Height="53*"></RowDefinition>
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="6*"></ColumnDefinition>
-                        <ColumnDefinition Width="93*"></ColumnDefinition>
-                        <ColumnDefinition Width="86*"></ColumnDefinition>
-                        <ColumnDefinition Width="13*"></ColumnDefinition>
-                        <ColumnDefinition Width="88*"></ColumnDefinition>
-                        <ColumnDefinition Width="97*"></ColumnDefinition>
-                        <ColumnDefinition Width="124*"></ColumnDefinition>
-                        <ColumnDefinition Width="136*"></ColumnDefinition>
-                        <ColumnDefinition Width="129*"></ColumnDefinition>
-                        <ColumnDefinition Width="9*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                </Grid>
-
+                    MouseDown="CanvasImage_MouseDown">
             </Canvas>
 
 
