@@ -179,6 +179,7 @@ namespace Komiwojazer
             _intersections.Add(new Point(14.700000000000035, 97.60000000000001));
             _intersections.Add(new Point(185.90000000000003, 97.60000000000001));
             _intersections.Add(new Point(425.1000000000001, 97.60000000000001));
+            _intersections.Add(new Point(527.5, 97.60000000000001));
             _intersections.Add(new Point(677.9000000000001, 97.60000000000001));
 
             // 3 row
@@ -186,6 +187,7 @@ namespace Komiwojazer
             _intersections.Add(new Point(185.90000000000003, 184.8));
             _intersections.Add(new Point(313.1000000000001, 184.8));
             _intersections.Add(new Point(425.1000000000001, 184.8));
+            _intersections.Add(new Point(527.5, 184.8));
             _intersections.Add(new Point(677.9000000000001, 184.8));
 
             // 4 row
