@@ -65,6 +65,8 @@ namespace Komiwojazer
                     }
                     Canvas.SetLeft(_startingPoint.point, coord.X - 5);
                     Canvas.SetTop(_startingPoint.point, coord.Y - 5);
+                    
+                    pointPosition(e);
                     _startingPoint.Coor = coord;
                 }
                 else if (_flag == 2)
@@ -79,6 +81,8 @@ namespace Komiwojazer
                     Canvas.SetTop(_points[_counter].point, coord.Y - 5);
                     CanvasImage.Children.Add(_points[_counter].point);
                     _points[_counter].Coor = coord;
+                    MessageBox.Show($"{coord.X}, {coord.Y}");
+
                     _counter++;
                 }
             }
@@ -199,8 +203,39 @@ namespace Komiwojazer
             _intersections.Add(new Point(315.50000000000006, 369.6));
             _intersections.Add(new Point(425.1000000000001, 369.6));
             _intersections.Add(new Point(677.9000000000001, 369.6));
+
+
+            foreach (var elem in _intersections)
+            {
+                _startingPoint = new Points();
+                _startingPoint.point = new Ellipse();
+                _startingPoint.point.Width = 10;
+                _startingPoint.point.Height = 10;
+                _startingPoint.point.Fill = Brushes.Red;
+                CanvasImage.Children.Add(_startingPoint.point);
+
+                Canvas.SetLeft(_startingPoint.point, elem.X - 5);
+                Canvas.SetTop(_startingPoint.point, elem.Y - 5);
+            }
+        
+
+            
+        
         }
 
+
+        void pointPosition(MouseButtonEventArgs e)
+        {
+            var pos = e.GetPosition(this.CanvasImage);
+
+            for (int i = 1; i < _intersections.Count; i++)
+            {
+                if (pos.X > _intersections[i - 1].X && pos.X < _intersections[i].X)
+                {
+                    MessageBox.Show($"{i - 1}, {i}");
+                }
+            }
+        }
 
     }
 }

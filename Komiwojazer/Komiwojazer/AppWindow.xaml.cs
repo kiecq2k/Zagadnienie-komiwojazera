@@ -62,6 +62,7 @@ namespace Komiwojazer
                     Canvas.SetLeft(_startingPoint.point, coord.X - 5);
                     Canvas.SetTop(_startingPoint.point, coord.Y - 5);
                     _startingPoint.Coor = coord;
+                    pointPosition(e);
 
                 }
                 else if (_flag == 2)
@@ -78,6 +79,48 @@ namespace Komiwojazer
                     _counter++;
                 }
             }
+        }
+
+
+
+        void pointPosition(MouseButtonEventArgs e)
+        {
+            var pos = e.GetPosition(this.CanvasImage);
+            for (int i = 1; i < _intersections.Count; i++)
+            {
+                if (pos.X > _intersections[i - 1].X && pos.X < _intersections[i].X &&
+                    Math.Abs(pos.Y - _intersections[i-1].Y) < 6) 
+                {
+                    MessageBox.Show($"{i - 1}, {i}");
+                }
+                
+            }
+
+            double close1 = double.MaxValue;
+            int cross1 = -1;
+            double close2 = double.MaxValue;
+            int cross2 = -1;
+
+            for (int i = 0; i < _intersections.Count; i++)
+            {
+                double x = Math.Abs(_intersections[i].X - pos.X);
+                double y = Math.Abs(_intersections[i].Y - pos.Y);
+                double sum = x + y;
+                if (sum < close1)
+                {
+                    close2 = close1;
+                    cross2 = cross1;
+                    close1 = sum;
+                    cross1 = i;
+                }
+                else if (sum < close2 && sum != close1)
+                {
+                    close2 = sum;
+                    cross2 = i;
+                }
+            }
+            MessageBox.Show($"{cross1}, {cross2}");
+
         }
 
         private void startPointButton_Click(object sender, RoutedEventArgs e)
@@ -113,7 +156,6 @@ namespace Komiwojazer
         {
             foreach (var line in _lines)
             {
-                imageGrid.Children.Remove(line);
                 CanvasImage.Children.Remove(line);
             }
         }
