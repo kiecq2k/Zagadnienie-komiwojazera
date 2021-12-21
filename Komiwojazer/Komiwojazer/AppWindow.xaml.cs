@@ -383,7 +383,7 @@ namespace Komiwojazer
             foreach (var p in _points)
             {
                 if (p.Coor == minPoint)
-                    p.Used = true;
+                    p.Visited = true;
             }
 
             _usedPoints.Add(minPoint);
@@ -397,7 +397,7 @@ namespace Komiwojazer
         {
             foreach (var point in _points)
             {
-                if (!point.Used)
+                if (!point.Visited)
                     return false;
             }
 

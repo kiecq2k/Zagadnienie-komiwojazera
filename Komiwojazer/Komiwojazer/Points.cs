@@ -13,7 +13,7 @@ namespace Komiwojazer
         public Point Coor;
         public int Column = -1;
         public int Row = -1;
-        public bool Used = false;
+        public bool Visited = false;
         public Points()
         {
 

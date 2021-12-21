@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,6 +39,10 @@ namespace Komiwojazer
             InitializeComponent();
             FillIntersections();
             graphFillMatrixStartup();
+            for(int i = 0; i < 26; i++)
+            {
+                _points.Add(new Points { Coor = _intersections[i] });
+            }
         }
 
         private void endButton_Click(object sender, RoutedEventArgs e)
@@ -68,19 +73,20 @@ namespace Komiwojazer
                     
                     pointPosition(e, _flag);
                     _startingPoint.Coor = coord;
+                    _points.Add(new Points { Coor = _startingPoint.Coor });
                 }
                 else if (_flag == 2)
                 {
 
                     _points.Add(new Points());
-                    _points[_counter].point = new Ellipse();
-                    _points[_counter].point.Width = 10;
-                    _points[_counter].point.Height = 10;
-                    _points[_counter].point.Fill = Brushes.Blue;
-                    Canvas.SetLeft(_points[_counter].point, coord.X - 5);
-                    Canvas.SetTop(_points[_counter].point, coord.Y - 5);
-                    CanvasImage.Children.Add(_points[_counter].point);
-                    _points[_counter].Coor = coord;
+                    _points[_pointCounter].point = new Ellipse();
+                    _points[_pointCounter].point.Width = 10;
+                    _points[_pointCounter].point.Height = 10;
+                    _points[_pointCounter].point.Fill = Brushes.Blue;
+                    Canvas.SetLeft(_points[_pointCounter].point, coord.X - 5);
+                    Canvas.SetTop(_points[_pointCounter].point, coord.Y - 5);
+                    CanvasImage.Children.Add(_points[_pointCounter].point);
+                    _points[_pointCounter].Coor = coord;
                     
                     pointPosition(e, _flag);
                     _counter++;
@@ -110,6 +116,9 @@ namespace Komiwojazer
 
         private void startAlgorithmButton_Click(object sender, RoutedEventArgs e)
         {
+            var result = NajblizszySasiad();
+            DrawPath(result);
+
             if (_startingPoint == null || _counter < 1)
             {
                 MessageBox.Show("Nie wybrano punktów");
@@ -356,6 +365,138 @@ namespace Komiwojazer
             
         }
 
+        private IList<int> NajblizszySasiad()
+        {
+            var result = new List<int>();
+            int v = 26;
+            result.Add(v);
+
+            while(!AllPointsVisited())
+            {
+                v = NajblizszyWierzcholek(v);
+                File.AppendAllText("p.txt", $"{v.ToString()}\n");
+                if(v == 28)
+                {
+                    //
+                }
+                _points[v].Visited = true;
+                result.Add(v);
+            }
+            
+
+            return result;
+        }
+
+        private int NajblizszyWierzcholek(int v)
+        {
+            double min = int.MaxValue;
+            int vertice = 0;
+
+            foreach (var edge in _graph.OutEdges(v))
+            {
+                //if(edge.Tag < min)
+                //{
+                //    min = edge.Tag;
+                //    vertice = edge.Target;
+                //}
+                var nextVertice = edge.Target;
+                var nextVerticeCoord = _points[nextVertice].Coor;
+                for(int i= 27; i < _points.Count; i++)
+                {
+                    var odl = GetDistance(nextVerticeCoord, _points[i].Coor);
+                    if(odl < min && !_points[i].Visited)
+                    {
+                        min = odl;
+                        vertice = nextVertice;
+                    }
+                }
+
+            }
+
+            return vertice;
+        }
+
+        private void DrawPath(IList<int> result)
+        {
+            var result2 = result.Where(index => index < _intersections.Count).ToList();
+
+            var line = new Line
+            {
+                Stroke = System.Windows.Media.Brushes.Red,
+                Fill = System.Windows.Media.Brushes.Red,
+                X1 = _startingPoint.Coor.X,
+                Y1 = _startingPoint.Coor.Y,
+                X2 = _intersections[result2[0]].X,
+                Y2 = _intersections[result2[0]].Y,
+                StrokeThickness = 4,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Bottom
+
+            };
+
+            _lines.Add(line);
+            CanvasImage.Children.Add(line);
+
+            for(int i=0; i<result2.Count-1; i++)
+            {
+                line = new Line
+                {
+                    Stroke = System.Windows.Media.Brushes.Red,
+                    Fill = System.Windows.Media.Brushes.Red,
+                    X1 = _intersections[result2[i]].X,
+                    Y1 = _intersections[result2[i]].Y,
+                    X2 = _intersections[result2[i+1]].X,
+                    Y2 = _intersections[result2[i+1]].Y,
+                    StrokeThickness = 4,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Bottom
+
+                };
+
+                _lines.Add(line);
+                CanvasImage.Children.Add(line);
+            }
+
+            var s1 = _intersections[result.Count - 2].Y;
+            var s2 = result[result.Count - 1];
+            line = new Line
+            {
+                Stroke = System.Windows.Media.Brushes.Red,
+                Fill = System.Windows.Media.Brushes.Red,
+                X1 = _intersections[result[result.Count- 2]].X,
+                Y1 = _intersections[result[result.Count - 2]].Y,
+                X2 = _points[result[result.Count - 1]].Coor.X,
+                Y2 = _points[result[result.Count - 1]].Coor.Y,
+                StrokeThickness = 4,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Bottom
+
+            };
+
+            _lines.Add(line);
+            CanvasImage.Children.Add(line);
+        }
+
+        private void removeRoadButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var line in _lines)
+            {
+                CanvasImage.Children.Remove(line);
+            }
+        }
+
+        private bool AllPointsVisited()
+        {
+            for(int i=27; i <_points.Count; i++)
+            {
+                if (!_points[i].Visited)
+                    return false;
+            }
+
+            return true;
+        }
+
+        private double GetDistance(Point p1, Point p2) => Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));
     }
 }
 
