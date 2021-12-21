@@ -406,19 +406,18 @@ namespace Komiwojazer
 
         private void graphFill()
         {
-            int counter = 0;
-            int[] vertex = new int[200];
-            for (int i = 0; i < 200; i++)
+            IList<int> vertex = new List<int>();
+            for (int i = 0; i < _adjMatrix.Count; i++)
             {
-                vertex[i] = i;
+                vertex.Add(i);
             }
             var graph = new AdjacencyGraph<int, TaggedEdge<int, int>>();
             
-            for (int i = 0; i < 140; i++)
+            for (int i = 0; i < _adjMatrix.Count; i++)
             {
                 graph.AddVertex(vertex[i]);
             }
-            TaggedEdge<int, int>[] edge = new TaggedEdge<int, int>[1000];
+            IList<TaggedEdge<int, int>> edge = new List<TaggedEdge<int, int>>();
 
 
             for (int i = 0; i < _adjMatrix.Count; i++)
@@ -427,7 +426,7 @@ namespace Komiwojazer
                 {
                     if (_adjMatrix[i][j] != 0)
                     {
-                        edge[counter++] = new TaggedEdge<int, int>(vertex[i], vertex[j], _adjMatrix[i][j]);
+                        edge.Add(new TaggedEdge<int, int>(vertex[i], vertex[j], _adjMatrix[i][j]));
                     }
                 }
             }

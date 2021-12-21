@@ -27,8 +27,9 @@ namespace Komiwojazer
         private int _counter = 0;
         private IList<Point> _intersections = new List<Point>();
         private IList<Point> _usedPoints = new List<Point>();
-
+        private int _pointCounter = 27;
         private IList<IList<int>> _adjMatrix = new List<IList<int>>();
+        private AdjacencyGraph<int, TaggedEdge<int, int>> _graph = new AdjacencyGraph<int, TaggedEdge<int, int>>();
 
 
 
@@ -36,8 +37,7 @@ namespace Komiwojazer
         {
             InitializeComponent();
             FillIntersections();
-            graphFillMatrix();
-            
+            graphFillMatrixStartup();
         }
 
         private void endButton_Click(object sender, RoutedEventArgs e)
@@ -66,7 +66,7 @@ namespace Komiwojazer
                     Canvas.SetLeft(_startingPoint.point, coord.X - 5);
                     Canvas.SetTop(_startingPoint.point, coord.Y - 5);
                     
-                    pointPosition(e);
+                    pointPosition(e, _flag);
                     _startingPoint.Coor = coord;
                 }
                 else if (_flag == 2)
@@ -81,8 +81,8 @@ namespace Komiwojazer
                     Canvas.SetTop(_points[_counter].point, coord.Y - 5);
                     CanvasImage.Children.Add(_points[_counter].point);
                     _points[_counter].Coor = coord;
-                    MessageBox.Show($"{coord.X}, {coord.Y}");
-
+                    
+                    pointPosition(e, _flag);
                     _counter++;
                 }
             }
@@ -131,18 +131,18 @@ namespace Komiwojazer
             }
         }
 
-        private void graphFillMatrix()
+        private void graphFillMatrixStartup()
         {
-            int counter = 0;
-            TaggedEdge<int, int>[] edge1 = new TaggedEdge<int, int>[300];
+           
+            IList<TaggedEdge<int, int>> edge = new List<TaggedEdge<int, int>>();
             adjMatrixFill();
-            int[] vertex = new int[100];
-            for (int i = 0; i < 26; i++)
+            IList<int> vertex = new List<int>();
+            for (int i = 0; i < _adjMatrix.Count; i++)
             {
-                vertex[i] = i;
+                vertex.Add(i);
             }
             var graph = new AdjacencyGraph<int, TaggedEdge<int, int>>();
-            for (int i = 0; i < 26; i++)
+            for (int i = 0; i < _adjMatrix.Count; i++)
             {
                 graph.AddVertex(vertex[i]);
             }
@@ -153,19 +153,20 @@ namespace Komiwojazer
                 {
                     if (_adjMatrix[i][j] != 0)
                     {
-                        edge1[counter++] = new TaggedEdge<int, int>(vertex[i], vertex[j], _adjMatrix[i][j]);
+                        edge.Add(new TaggedEdge<int, int>(vertex[i], vertex[j], _adjMatrix[i][j]));
                     }
                 }
             }
 
-            foreach (var elem in edge1)
+            foreach (var elem in edge)
             {
                 if(elem != null)
                 {
                     graph.AddEdge(elem);
                 }
             }
-            
+            _graph = graph;
+            addToMatrix();
         }
 
         private void FillIntersections()
@@ -207,18 +208,18 @@ namespace Komiwojazer
             _intersections.Add(new Point(677.9000000000001, 369.6));
 
 
-            foreach (var elem in _intersections)
-            {
-                _startingPoint = new Points();
-                _startingPoint.point = new Ellipse();
-                _startingPoint.point.Width = 10;
-                _startingPoint.point.Height = 10;
-                _startingPoint.point.Fill = Brushes.Red;
-                CanvasImage.Children.Add(_startingPoint.point);
+            //foreach (var elem in _intersections)
+            //{
+            //    _startingPoint = new Points();
+            //    _startingPoint.point = new Ellipse();
+            //    _startingPoint.point.Width = 10;
+            //    _startingPoint.point.Height = 10;
+            //    _startingPoint.point.Fill = Brushes.Red;
+            //    CanvasImage.Children.Add(_startingPoint.point);
 
-                Canvas.SetLeft(_startingPoint.point, elem.X - 5);
-                Canvas.SetTop(_startingPoint.point, elem.Y - 5);
-            }
+            //    Canvas.SetLeft(_startingPoint.point, elem.X - 5);
+            //    Canvas.SetTop(_startingPoint.point, elem.Y - 5);
+            //}
         
 
             
@@ -226,17 +227,133 @@ namespace Komiwojazer
         }
 
 
-        void pointPosition(MouseButtonEventArgs e)
+        void pointPosition(MouseButtonEventArgs e, int flag)
         {
             var pos = e.GetPosition(this.CanvasImage);
+            int cross1 = -1;
+            int cross2 = -1;
+            double x1;
+            double x2;
+            //double y;
+            int road1 = 0;
+            int road2 = 0;
 
             for (int i = 1; i < _intersections.Count; i++)
             {
-                if (pos.X > _intersections[i - 1].X && pos.X < _intersections[i].X)
+                if (pos.X > _intersections[i - 1].X && pos.X < _intersections[i].X &&
+                    Math.Abs(pos.Y - _intersections[i - 1].Y) < 7)
                 {
-                    MessageBox.Show($"{i - 1}, {i}");
+                    road1 = (int)(Math.Abs(_intersections[i - 1].X - pos.X) * 0.4);
+                    road2 = (int)(Math.Abs(_intersections[i].X - pos.X) * 0.4);
+                    cross1 = i - 1;
+                    cross2 = i;
                 }
             }
+            if (cross1 == -1)
+            {
+
+                double close1 = double.MaxValue;
+                double close2 = double.MaxValue;
+                for (int i = 0; i < _intersections.Count; i++)
+                {
+                    double x = Math.Abs(_intersections[i].X - pos.X);
+                    double y = Math.Abs(_intersections[i].Y - pos.Y);
+                    double sum = x + y;
+                    if (sum < close1)
+                    {
+                        close2 = close1;
+                        cross2 = cross1;
+                        road2 = road1;
+                        close1 = sum;
+                        cross1 = i;
+                        road1 = (int)(y * 0.4);
+                    }
+                    else if (sum < close2 && sum != close1)
+                    {
+                        close2 = sum;
+                        cross2 = i;
+                        road2 = (int)(y * 0.4);
+                    }
+                }
+                //MessageBox.Show($"{cross1} droga: {road1}, {cross2} droga: {road2}");
+            }
+            
+
+
+            //add point to matrix and delete roads between crossroads
+            int indexOfPoint;
+            if(flag == 1)
+            {
+                indexOfPoint = 26;
+            }
+            else
+            {
+                indexOfPoint = _pointCounter++;
+                addToMatrix();
+            }
+            if (_adjMatrix[cross1][cross2] != 0)
+            {
+                _adjMatrix[cross1][cross2] = 0;
+                _adjMatrix[cross1][indexOfPoint] = road1;
+                _adjMatrix[indexOfPoint][cross2] = road2;
+            }
+            if (_adjMatrix[cross2][cross1] != 0)
+            {
+                _adjMatrix[cross2][cross1] = 0;
+                _adjMatrix[cross2][indexOfPoint] = road2;
+                _adjMatrix[indexOfPoint][cross1] = road1;
+            }
+            matrixToGraph();
+        }
+
+        private void addToMatrix()
+        {
+            foreach(var elem in _adjMatrix)
+            {
+                elem.Add(0);
+            }
+            _adjMatrix.Add(new List<int>());
+            for (int i = 0; i < _adjMatrix.Count; i++)
+            {
+                _adjMatrix[_adjMatrix.Count-1].Add(0);
+            }
+        }
+
+        private void matrixToGraph()
+        {
+           
+            IList<TaggedEdge<int, int>> edge = new List<TaggedEdge<int, int>>();
+            IList<int> vertex = new List<int>();
+            for (int i = 0; i < _adjMatrix.Count; i++)
+            {
+                vertex.Add(i);
+            }
+            var graphTMP = new AdjacencyGraph<int, TaggedEdge<int, int>>();
+            for (int i = 0; i < _adjMatrix.Count; i++)
+            {
+                graphTMP.AddVertex(vertex[i]);
+            }
+
+            for (int i = 0; i < _adjMatrix.Count; i++)
+            {
+                for (int j = 0; j < _adjMatrix[i].Count; j++)
+                {
+                    if (_adjMatrix[i][j] != 0)
+                    {
+                        edge.Add(new TaggedEdge<int, int>(vertex[i], vertex[j], _adjMatrix[i][j]));
+                    }
+                }
+            }
+
+            foreach (var elem in edge)
+            {
+                if (elem != null)
+                {
+                    graphTMP.AddEdge(elem);
+                }
+            }
+            _graph = graphTMP;
+            
         }
 
     }
