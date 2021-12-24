@@ -11,8 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Komiwojazer.Algorithms;
+using Priority_Queue;
 using QuickGraph;
-
+using Point = System.Windows.Point;
 
 namespace Komiwojazer
 {
@@ -31,6 +33,7 @@ namespace Komiwojazer
         private int _pointCounter = 27;
         private IList<IList<int>> _adjMatrix = new List<IList<int>>();
         private AdjacencyGraph<int, TaggedEdge<int, int>> _graph = new AdjacencyGraph<int, TaggedEdge<int, int>>();
+        private const int STARTING_POINT = 26;
 
 
 
@@ -367,86 +370,28 @@ namespace Komiwojazer
 
         private IList<int> NajblizszySasiad()
         {
-            var result = new List<int>();
-            int v = 26;
-            result.Add(v);
-
-            while(!AllPointsVisited())
-            {
-                v = NajblizszyWierzcholek(v);
-                File.AppendAllText("p.txt", $"{v.ToString()}\n");
-                if(v == 28)
-                {
-                    //
-                }
-                _points[v].Visited = true;
-                result.Add(v);
-            }
-            
-
+            var dijsktra = new DijkstraAlgorithm(_adjMatrix);
+            var result = dijsktra.GetPath();
             return result;
-        }
-
-        private int NajblizszyWierzcholek(int v)
-        {
-            double min = int.MaxValue;
-            int vertice = 0;
-
-            foreach (var edge in _graph.OutEdges(v))
-            {
-                //if(edge.Tag < min)
-                //{
-                //    min = edge.Tag;
-                //    vertice = edge.Target;
-                //}
-                var nextVertice = edge.Target;
-                var nextVerticeCoord = _points[nextVertice].Coor;
-                for(int i= 27; i < _points.Count; i++)
-                {
-                    var odl = GetDistance(nextVerticeCoord, _points[i].Coor);
-                    if(odl < min && !_points[i].Visited)
-                    {
-                        min = odl;
-                        vertice = nextVertice;
-                    }
-                }
-
-            }
-
-            return vertice;
         }
 
         private void DrawPath(IList<int> result)
         {
-            var result2 = result.Where(index => index < _intersections.Count).ToList();
-
-            var line = new Line
+            for(int i = 0; i < result.Count - 1; i++)
             {
-                Stroke = System.Windows.Media.Brushes.Red,
-                Fill = System.Windows.Media.Brushes.Red,
-                X1 = _startingPoint.Coor.X,
-                Y1 = _startingPoint.Coor.Y,
-                X2 = _intersections[result2[0]].X,
-                Y2 = _intersections[result2[0]].Y,
-                StrokeThickness = 4,
-                HorizontalAlignment = HorizontalAlignment.Right,
-                VerticalAlignment = VerticalAlignment.Bottom
+                var point1Index = result[i];
+                var point1Coor = _points[point1Index].Coor;
+                var point2Index = result[i + 1];
+                var point2Coor = _points[point2Index].Coor;
 
-            };
-
-            _lines.Add(line);
-            CanvasImage.Children.Add(line);
-
-            for(int i=0; i<result2.Count-1; i++)
-            {
-                line = new Line
+                var line = new Line
                 {
                     Stroke = System.Windows.Media.Brushes.Red,
                     Fill = System.Windows.Media.Brushes.Red,
-                    X1 = _intersections[result2[i]].X,
-                    Y1 = _intersections[result2[i]].Y,
-                    X2 = _intersections[result2[i+1]].X,
-                    Y2 = _intersections[result2[i+1]].Y,
+                    X1 = point1Coor.X,
+                    Y1 = point1Coor.Y,
+                    X2 = point2Coor.X,
+                    Y2 = point2Coor.Y,
                     StrokeThickness = 4,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Bottom
@@ -456,25 +401,6 @@ namespace Komiwojazer
                 _lines.Add(line);
                 CanvasImage.Children.Add(line);
             }
-
-            var s1 = _intersections[result.Count - 2].Y;
-            var s2 = result[result.Count - 1];
-            line = new Line
-            {
-                Stroke = System.Windows.Media.Brushes.Red,
-                Fill = System.Windows.Media.Brushes.Red,
-                X1 = _intersections[result[result.Count- 2]].X,
-                Y1 = _intersections[result[result.Count - 2]].Y,
-                X2 = _points[result[result.Count - 1]].Coor.X,
-                Y2 = _points[result[result.Count - 1]].Coor.Y,
-                StrokeThickness = 4,
-                HorizontalAlignment = HorizontalAlignment.Right,
-                VerticalAlignment = VerticalAlignment.Bottom
-
-            };
-
-            _lines.Add(line);
-            CanvasImage.Children.Add(line);
         }
 
         private void removeRoadButton_Click(object sender, RoutedEventArgs e)

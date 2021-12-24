@@ -5,6 +5,11 @@
       "ProjectGuid": "c3334371-9206-4bf7-a2c5-1d12540526b9",
       "DisplayName": "Komiwojazer",
       "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
     }
   },
   "NextColorIndex": 1
