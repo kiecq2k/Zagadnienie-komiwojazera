@@ -22,7 +22,6 @@ namespace Komiwojazer.Algorithms
     public class DijkstraAlgorithm
     {
         public int _distanceBF { get; set; } = 0;
-        public int _distanceNN { get; set; } = 0;
         private readonly int N;
         private readonly IList<IList<int>> G;
         private IList<int> _usedPoints;
@@ -184,7 +183,6 @@ namespace Komiwojazer.Algorithms
                     if (paths[i].Distance < minDistance && !_usedPoints.Contains(i))
                     {
                         minDistance = paths[i].Distance;
-                        _distanceNN += minDistance;
                         startPoint = i;
                     }
                 }
@@ -257,7 +255,6 @@ namespace Komiwojazer.Algorithms
                     }
                     if (!AllPointsUsed())
                     {
-                        startPoint = i;
                         DFS(i, result2);
                     }
                 }

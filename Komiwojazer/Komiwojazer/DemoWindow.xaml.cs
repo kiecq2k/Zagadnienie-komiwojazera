@@ -373,7 +373,7 @@ namespace Komiwojazer
         {
             var dijsktra = new DijkstraAlgorithm(_adjMatrix);
             var result = dijsktra.GetPath();
-            road_alg1.Text += dijsktra._distanceNN;
+            road_alg1.Text += Disatnce(result);
             return result;
         }
 
@@ -381,7 +381,7 @@ namespace Komiwojazer
         {
             var dijkstra = new DijkstraAlgorithm(_adjMatrix);
             var result = dijkstra.GetPathBF();
-            road_alg2.Text += dijkstra._distanceBF;
+            road_alg2.Text += Disatnce(result);
             return result;
         }
 
@@ -431,6 +431,22 @@ namespace Komiwojazer
 
             return true;
         }
+
+        private int Disatnce(IList<int> result)
+        {
+            int distance = 0; 
+            for(int i =1;i<result.Count();i++)
+            {
+                distance += _adjMatrix[result[i - 1]][result[i]];
+            }
+            return distance;
+        }
+
+
+
+
+
+
 
         private double GetDistance(Point p1, Point p2) => Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));
     }
