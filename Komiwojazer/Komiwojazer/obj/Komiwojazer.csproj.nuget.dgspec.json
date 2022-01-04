@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\barto\\Documents\\University\\semestr5\\ProjektZespolowy\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj": {}
+    "C:\\Users\\olekm\\OneDrive\\Pulpit\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\barto\\Documents\\University\\semestr5\\ProjektZespolowy\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj": {
+    "C:\\Users\\olekm\\OneDrive\\Pulpit\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\barto\\Documents\\University\\semestr5\\ProjektZespolowy\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
+        "projectUniqueName": "C:\\Users\\olekm\\OneDrive\\Pulpit\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
         "projectName": "Komiwojazer",
-        "projectPath": "C:\\Users\\barto\\Documents\\University\\semestr5\\ProjektZespolowy\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
-        "packagesPath": "C:\\Users\\barto\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\barto\\Documents\\University\\semestr5\\ProjektZespolowy\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\obj\\",
+        "projectPath": "C:\\Users\\olekm\\OneDrive\\Pulpit\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
+        "packagesPath": "C:\\Users\\olekm\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\olekm\\OneDrive\\Pulpit\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\barto\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\olekm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -63,12 +67,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.21, 3.1.21]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -77,7 +75,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }

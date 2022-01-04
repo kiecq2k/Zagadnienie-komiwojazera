@@ -1,23 +1,22 @@
 {
   "version": 2,
-  "dgSpecHash": "3/08Sl370ddX84vXhWMf9DUlq6zlCQQtOS6cKPi31NuOpX6bp6+un97UNe4ID58YNOd4yVGXirqIfs5fUVKWzg==",
+  "dgSpecHash": "ntV0gH/ji8yzazOoH18kQumVe0x2+EebXgY3dF/3PYAtz1d9WfCovjHIvrls1Q1JLijYi4JpRokZMmj98ZVZoA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\barto\\Documents\\University\\semestr5\\ProjektZespolowy\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
+  "projectFilePath": "C:\\Users\\olekm\\OneDrive\\Pulpit\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\barto\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\barto\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
-    "C:\\Users\\barto\\.nuget\\packages\\optimizedpriorityqueue\\5.1.0\\optimizedpriorityqueue.5.1.0.nupkg.sha512",
-    "C:\\Users\\barto\\.nuget\\packages\\quickgraph\\3.6.61119.7\\quickgraph.3.6.61119.7.nupkg.sha512",
-    "C:\\Users\\barto\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
-    "C:\\Users\\barto\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512",
-    "C:\\Users\\barto\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.21\\microsoft.netcore.app.host.win-x64.3.1.21.nupkg.sha512"
+    "C:\\Users\\olekm\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\olekm\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "C:\\Users\\olekm\\.nuget\\packages\\optimizedpriorityqueue\\5.1.0\\optimizedpriorityqueue.5.1.0.nupkg.sha512",
+    "C:\\Users\\olekm\\.nuget\\packages\\quickgraph\\3.6.61119.7\\quickgraph.3.6.61119.7.nupkg.sha512",
+    "C:\\Users\\olekm\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
+    "C:\\Users\\olekm\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512"
   ],
   "logs": [
     {
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'QuickGraph 3.6.61119.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "message": "Pakiet „QuickGraph 3.6.61119.7” został przywrócony przy użyciu elementu „.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8” zamiast platformy docelowej projektu „.NETCoreApp,Version=v3.1”. Ten pakiet może nie być w pełni kompatybilny z Twoim projektem.",
       "libraryId": "QuickGraph",
       "targetGraphs": [
         ".NETCoreApp,Version=v3.1"

@@ -12,6 +12,7 @@ namespace Komiwojazer.Algorithms
         public int Distance { get; set; }
         public List<int> Route { get; set; }
 
+
         public Result()
         {
             Route = new List<int>();
@@ -20,6 +21,8 @@ namespace Komiwojazer.Algorithms
 
     public class DijkstraAlgorithm
     {
+        public int _distanceBF { get; set; } = 0;
+        public int _distanceNN { get; set; } = 0;
         private readonly int N;
         private readonly IList<IList<int>> G;
         private IList<int> _usedPoints;
@@ -176,11 +179,12 @@ namespace Komiwojazer.Algorithms
 
                 int minDistance = int.MaxValue;
 
-                for(int i = 27; i < N; i++)
+                for (int i = 27; i < N; i++)
                 {
-                    if(paths[i].Distance < minDistance && !_usedPoints.Contains(i))
+                    if (paths[i].Distance < minDistance && !_usedPoints.Contains(i))
                     {
                         minDistance = paths[i].Distance;
+                        _distanceNN += minDistance;
                         startPoint = i;
                     }
                 }
@@ -200,9 +204,70 @@ namespace Komiwojazer.Algorithms
             return result.RemoveDuplication();
         }
 
+        public IList<int> GetPathBF()
+        {
+            var result = new List<int>();
+            var result2 = new List<int>();
+            int startPoint = 26;
+            var paths = dijkstra(startPoint);
+            int minDistance = int.MaxValue;
+            for (int i = 27; i < N; i++)
+            {
+
+                _usedPoints.Clear();
+                result2.Clear();
+                startPoint = 26;
+                paths = dijkstra(startPoint);
+                _distanceBF = 0;
+                _distanceBF += paths[i].Distance;
+                for (int j = 0; j < paths[i].Route.Count(); j++)
+                {
+                    result2.Add(paths[i].Route[j]);
+                }
+
+                DFS(i, result2);
+
+                if (_distanceBF < minDistance)
+                {
+                    minDistance = _distanceBF;
+                    result.Clear();
+                    result.AddRange(result2);
+                }
+            }
+            var lastVisitedNode = result[result.Count - 1];
+            var cbPath = dijkstra(lastVisitedNode);
+            for (int i = 0; i < cbPath[26].Route.Count; i++)
+                result.Add((cbPath[26].Route[i]));
+
+            return result;
+        }
+
+        public void DFS(int startPoint, List<int> result2)
+        {
+            _usedPoints.Add(startPoint);
+            var paths = dijkstra(startPoint);
+            for (int i = 27; i < N; i++)
+            {
+                if (!_usedPoints.Contains(i))
+                {
+                    _distanceBF += paths[i].Distance;
+                    for (int j = 1; j < paths[i].Route.Count(); j++)
+                    {
+                        result2.Add(paths[i].Route[j]);
+                    }
+                    if (!AllPointsUsed())
+                    {
+                        startPoint = i;
+                        DFS(i, result2);
+                    }
+                }
+            }
+        }
+
+
         public bool AllPointsUsed()
         {
-            for(int i = 27; i < N; i++)
+            for (int i = 27; i < N; i++)
             {
                 if (!_usedPoints.Contains(i))
                     return false;
@@ -221,7 +286,7 @@ namespace Komiwojazer.Algorithms
             var resultList = new List<int>();
             resultList.Add(list[0]);
 
-            for(int i = 1; i < list.Count; i++)
+            for (int i = 1; i < list.Count; i++)
             {
                 if (resultList[resultList.Count - 1] != list[i])
                     resultList.Add(list[i]);

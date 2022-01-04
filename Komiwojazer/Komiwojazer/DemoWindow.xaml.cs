@@ -36,7 +36,6 @@ namespace Komiwojazer
         private const int STARTING_POINT = 26;
 
 
-
         public DemoWindow()
         {
             InitializeComponent();
@@ -121,6 +120,8 @@ namespace Komiwojazer
         {
             var result = NajblizszySasiad();
             DrawPath(result);
+            var result2 = BruteForce();
+            DrawPath(result2);
 
             if (_startingPoint == null || _counter < 1)
             {
@@ -372,6 +373,15 @@ namespace Komiwojazer
         {
             var dijsktra = new DijkstraAlgorithm(_adjMatrix);
             var result = dijsktra.GetPath();
+            road_alg1.Text += dijsktra._distanceNN;
+            return result;
+        }
+
+        public IList<int> BruteForce()
+        {
+            var dijkstra = new DijkstraAlgorithm(_adjMatrix);
+            var result = dijkstra.GetPathBF();
+            road_alg2.Text += dijkstra._distanceBF;
             return result;
         }
 
