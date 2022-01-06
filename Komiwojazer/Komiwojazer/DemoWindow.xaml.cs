@@ -23,6 +23,7 @@ namespace Komiwojazer
     /// </summary>
     public partial class DemoWindow : Window
     {
+        private int _startupCounter = 0;
         private int _flag = -1;
         private IList<Line> _lines = new List<Line>();
         private Points _startingPoint = null;
@@ -31,17 +32,28 @@ namespace Komiwojazer
         private IList<Point> _intersections = new List<Point>();
         private IList<Point> _usedPoints = new List<Point>();
         private int _pointCounter = 27;
-        private IList<IList<int>> _adjMatrix = new List<IList<int>>();
+
+        public IList<IList<int>> _adjMatrix = new List<IList<int>>();
         private AdjacencyGraph<int, TaggedEdge<int, int>> _graph = new AdjacencyGraph<int, TaggedEdge<int, int>>();
         private const int STARTING_POINT = 26;
+ 
 
 
         public DemoWindow()
         {
             InitializeComponent();
+            if (_adjMatrix.Count == 0) startup();
+            //DijkstraAlgorithm _dj = new DijkstraAlgorithm(_adjMatrix);
+            //_dijkstra = _dj;
+        }
+
+        private void startup()
+        {
+
+            _startupCounter++;
             FillIntersections();
             graphFillMatrixStartup();
-            for(int i = 0; i < 26; i++)
+            for (int i = 0; i < 26; i++)
             {
                 _points.Add(new Points { Coor = _intersections[i] });
             }
@@ -119,7 +131,7 @@ namespace Komiwojazer
         private void startAlgorithmButton_Click(object sender, RoutedEventArgs e)
         {
             var result = NajblizszySasiad();
-            DrawPath(result);
+            //DrawPath(result);
             var result2 = BruteForce();
             DrawPath(result2);
 
@@ -371,8 +383,9 @@ namespace Komiwojazer
 
         private IList<int> NajblizszySasiad()
         {
-            var dijsktra = new DijkstraAlgorithm(_adjMatrix);
-            var result = dijsktra.GetPath();
+            var dijkstra = new DijkstraAlgorithm(_adjMatrix);
+            var result = dijkstra.GetPath();
+         
             road_alg1.Text += Disatnce(result);
             return result;
         }
@@ -380,9 +393,10 @@ namespace Komiwojazer
         public IList<int> BruteForce()
         {
             var dijkstra = new DijkstraAlgorithm(_adjMatrix);
-            var result = dijkstra.GetPathBF();
-            road_alg2.Text += Disatnce(result);
-            return result;
+            var result = dijkstra.GetPathBF2();
+            var result2 = DistanceBF(result);
+            road_alg2.Text += Disatnce(result2);
+            return result2;
         }
 
         private void DrawPath(IList<int> result)
@@ -432,7 +446,7 @@ namespace Komiwojazer
             return true;
         }
 
-        private int Disatnce(IList<int> result)
+        public int Disatnce(IList<int> result)
         {
             int distance = 0; 
             for(int i =1;i<result.Count();i++)
@@ -442,7 +456,24 @@ namespace Komiwojazer
             return distance;
         }
 
-
+        public IList<int> DistanceBF(List<IList<int>> drogiBF)
+        {
+            var result = new List<int>();
+            int distance = int.MaxValue;
+            int minDistance = int.MaxValue;
+            foreach (var droga in drogiBF)
+            {
+                distance =Disatnce(droga);
+                if (distance < minDistance)
+                {
+                    result.Clear();
+                    result.AddRange(droga);
+                    minDistance = distance;
+                }
+            }
+            return result;
+        }
+        
 
 
 
