@@ -391,7 +391,7 @@ namespace Komiwojazer
 
         private IList<int> NajblizszySasiad()
         {
-            var dijkstra = new DijkstraAlgorithm(_adjMatrix);
+            var dijkstra = new Dijkstra(_adjMatrix);
             var result = dijkstra.GetPath();
          
             road_alg1.Text += Disatnce(result);
@@ -400,8 +400,8 @@ namespace Komiwojazer
 
         public IList<int> BruteForce()
         {
-            var dijkstra = new DijkstraAlgorithm(_adjMatrix);
-            var result = dijkstra.GetPathBF2();
+            var bruteForce = new BruteForce(_adjMatrix);
+            var result = bruteForce.GetPathBF2();
             var result2 = DistanceBF(result);
             road_alg2.Text += Disatnce(result2);
             return result2;
