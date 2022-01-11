@@ -264,7 +264,7 @@ namespace Komiwojazer.Algorithms
                 tab[i] = j;
             }
             DoPermute(tab, 0, i - 1, _drogiBF);
-            foreach(var droga in _drogiBF)
+            foreach (var droga in _drogiBF)
             {
                 droga.Insert(0, 26);
                 droga.Add(26);
@@ -273,14 +273,15 @@ namespace Komiwojazer.Algorithms
             foreach (var droga in _drogiBF)
             {
                 road.Clear();
-                for(int k=1;k<droga.Count();k++)
+                for (int k = 1; k < droga.Count(); k++)
                 {
-                    var paths = dijkstra(droga[k-1]);
+                    var paths = dijkstra(droga[k - 1]);
                     for (int j = 0; j < paths[droga[k]].Route.Count; j++)
+                    {
                         road.Add(paths[droga[k]].Route[j]);
+                    }
                 }
-                _drogiBF2.Add(road.ToList());
-                
+                _drogiBF2.Add(road.RemoveDuplication().ToList());
             }
 
 
