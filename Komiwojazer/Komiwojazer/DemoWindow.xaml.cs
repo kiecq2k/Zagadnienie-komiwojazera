@@ -15,6 +15,7 @@ using Komiwojazer.Algorithms;
 using Priority_Queue;
 using QuickGraph;
 using Point = System.Windows.Point;
+using System.Windows.Threading;
 
 namespace Komiwojazer
 {
@@ -42,6 +43,7 @@ namespace Komiwojazer
         public DemoWindow()
         {
             InitializeComponent();
+            //DrawingForm();
             if (_adjMatrix.Count == 0) startup();
             //DijkstraAlgorithm _dj = new DijkstraAlgorithm(_adjMatrix);
             //_dijkstra = _dj;
@@ -130,15 +132,21 @@ namespace Komiwojazer
 
         private void startAlgorithmButton_Click(object sender, RoutedEventArgs e)
         {
-            var result = NajblizszySasiad();
-            //DrawPath(result);
-            var result2 = BruteForce();
-            DrawPath(result2);
 
             if (_startingPoint == null || _counter < 1)
             {
                 MessageBox.Show("Nie wybrano punktów");
             }
+
+            resultNN = NajblizszySasiad();
+            DrawingFormNN();
+            //m_oTimer_Tick1(sender, e);
+            
+            //DrawPath(result);
+            //var result2 = BruteForce();
+            resultBF = BruteForce();
+            DrawingFormBF();
+            //DrawPath(result2);
         }
 
         private void adjMatrixFill()
@@ -473,11 +481,107 @@ namespace Komiwojazer
             }
             return result;
         }
-        
+
+        DispatcherTimer m_oTimer = new DispatcherTimer();
+        DispatcherTimer m_oTimer2 = new DispatcherTimer();
+
+        public void DrawingFormNN()
+        {
+            //InitializeComponent();
+
+            m_oTimer.Tick += m_oTimer_Tick1NN;
+            m_oTimer.Interval = new TimeSpan(0,0,0,0,300);
+            //m_oTimer.Enabled = false;
+            m_oTimer.Start();
+        }
+
+        // Enable the timer and call m_oTimer.Start () when
+        // you're ready to draw your lines.
+        private IList<int> resultNN;
+        private IList<int> resultBF;
+
+        private int increment = 0;
+        private int increment2 = 0;
+        void m_oTimer_Tick1NN(object sender, EventArgs e)
+        {
+            // Draw the next line here; disable
+            // the timer when done with drawing.
+            //m_oTimer.Start();
+            //for (int i = 0; i < result.Count - 1; i++)
+            if (increment < resultNN.Count-1)
+            {
+                var point1Index = resultNN[increment];
+                var point1Coor = _points[point1Index].Coor;
+                var point2Index = resultNN[increment + 1];
+                var point2Coor = _points[point2Index].Coor;
+
+                var line = new Line
+                {
+                    Stroke = System.Windows.Media.Brushes.Red,
+                    Fill = System.Windows.Media.Brushes.Red,
+                    X1 = point1Coor.X+(increment*0.05),
+                    Y1 = point1Coor.Y+(increment*0.05),
+                    X2 = point2Coor.X+(increment*0.05),
+                    Y2 = point2Coor.Y+(increment*0.05),
+                    StrokeThickness = 4,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Bottom
+
+                };
+
+                _lines.Add(line);
+                CanvasImage.Children.Add(line);
+                increment++;
+            }
+            else m_oTimer.Stop();
+            
+        }
 
 
+        public void DrawingFormBF()
+        {
+            //InitializeComponent();
 
+            m_oTimer2.Tick += m_oTimer_Tick1BF;
+            m_oTimer2.Interval = new TimeSpan(0, 0, 0, 0, 300);
+            //m_oTimer.Enabled = false;
+            m_oTimer2.Start();
+        }
 
+        void m_oTimer_Tick1BF(object sender, EventArgs e)
+        {
+            // Draw the next line here; disable
+            // the timer when done with drawing.
+            //m_oTimer.Start();
+            //for (int i = 0; i < result.Count - 1; i++)
+            if (increment2 < resultBF.Count - 1)
+            {
+                var point1Index = resultBF[increment2];
+                var point1Coor = _points[point1Index].Coor;
+                var point2Index = resultBF[increment2 + 1];
+                var point2Coor = _points[point2Index].Coor;
+
+                var line = new Line
+                {
+                    Stroke = System.Windows.Media.Brushes.DeepSkyBlue,
+                    Fill = System.Windows.Media.Brushes.DeepSkyBlue,
+                    X1 = point1Coor.X+4+(increment2*0.05),
+                    Y1 = point1Coor.Y+4+(increment2*0.05),
+                    X2 = point2Coor.X+4+(increment2*0.05),
+                    Y2 = point2Coor.Y+4+(increment2*0.05),
+                    StrokeThickness = 4,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Bottom
+
+                };
+
+                _lines.Add(line);
+                CanvasImage.Children.Add(line);
+                increment2++;
+            }
+            else m_oTimer2.Stop();
+            //m_oTimer.Stop();
+        }
 
         private double GetDistance(Point p1, Point p2) => Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));
     }

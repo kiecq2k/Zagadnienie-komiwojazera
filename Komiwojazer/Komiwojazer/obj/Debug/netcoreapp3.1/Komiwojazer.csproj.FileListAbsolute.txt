@@ -169,3 +169,4 @@ C:\Users\olekm\OneDrive\Pulpit\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\
 C:\Users\olekm\OneDrive\Pulpit\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj\Debug\netcoreapp3.1\DemoWindow.baml
 C:\Users\olekm\OneDrive\Pulpit\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj\Debug\netcoreapp3.1\Komiwojazer.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\olekm\OneDrive\Pulpit\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj\Debug\netcoreapp3.1\Komiwojazer.csproj.CopyComplete
+C:\Users\chudy\source\repos\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\bin\Debug\netcoreapp3.1\PriorityQueue.dll
