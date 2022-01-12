@@ -141,12 +141,16 @@ namespace Komiwojazer
             resultNN = NajblizszySasiad();
             DrawingFormNN();
             //m_oTimer_Tick1(sender, e);
-            
+
             //DrawPath(result);
             //var result2 = BruteForce();
             resultBF = BruteForce();
             DrawingFormBF();
             //DrawPath(result2);
+
+            //var greedy = new Greedy(_adjMatrix);
+            //var result = greedy.NajmniejszaKrawedz();
+            //DrawPath(result);
         }
 
         private void adjMatrixFill()
