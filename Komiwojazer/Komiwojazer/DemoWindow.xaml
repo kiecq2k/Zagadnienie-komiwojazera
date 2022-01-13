@@ -55,7 +55,7 @@
                 <TextBox x:Name="road_alg2" Grid.Row="2" Grid.Column="2" Margin="18,8,2,8" IsReadOnly="True" Cursor="Arrow"/>
 
                 <Label Grid.Row="3" Grid.Column="1" Content="Algorytm najm. krawędzi" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="37" Width="280"></Label>
-                <Rectangle  Grid.Column="0" HorizontalAlignment="Left" Height="20" Margin="10,0,0,0" Grid.Row="3" Stroke="Black" VerticalAlignment="Center" Width="20" Grid.ColumnSpan="2"/>
+                <Rectangle  Grid.Column="0" HorizontalAlignment="Left" Height="20" Margin="10,0,0,0" Grid.Row="3" Stroke="Black" VerticalAlignment="Center" Width="20" Grid.ColumnSpan="2" Fill="Green"/>
                 <TextBox x:Name="road_alg3" Grid.Row="3" Grid.Column="2" Margin="18,10,2,7" IsReadOnly="True" Cursor="Arrow"/>
 
             </Grid>
