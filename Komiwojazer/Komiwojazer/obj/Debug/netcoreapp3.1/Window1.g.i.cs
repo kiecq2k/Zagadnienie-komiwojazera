@@ -39,7 +39,7 @@ namespace Komiwojazer {
     /// <summary>
     /// Window1
     /// </summary>
-    public partial class demoWindow : System.Windows.Window, System.Windows.Markup.IComponentConnector {
+    public partial class Window1 : System.Windows.Window, System.Windows.Markup.IComponentConnector {
         
         private bool _contentLoaded;
         

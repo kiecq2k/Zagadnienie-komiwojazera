@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="AlgorithmsPick.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="AppWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -15,6 +18,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="AlgorithmsPick.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="AppWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

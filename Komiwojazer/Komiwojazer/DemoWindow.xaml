@@ -27,27 +27,35 @@
 
             <Grid Margin="0,14">
                 <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition Height="59*"></RowDefinition>
+                    <RowDefinition Height="36*"></RowDefinition>
+                    <RowDefinition Height="37*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
+                <Label Grid.Column="2" Content="Droga:" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Height="37" Width="70"/>
 
-                <Label Grid.Column="0" Content="Algorytm 1" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="37" Width="108"/>
-                <CheckBox x:Name="alg1" Grid.Column="1" Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="16"/>
-                <TextBox x:Name="road_alg1" Grid.Row="0" Grid.Column="2" Margin="15,0,0,0" Width="50" Height="20" />
+                <Label Grid.Row="1" Grid.Column="1" Content="Algorytm najbliższego sąsiada" FontSize="20" Margin="30,0,50,0" VerticalAlignment="Center" Height="37"/>
+                <Rectangle  Grid.Column="0" HorizontalAlignment="Left" Height="20" Margin="10,0,0,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Center" Width="20" Grid.ColumnSpan="2" Fill="OrangeRed"/>
+                <TextBox x:Name="road_alg1" Grid.Row="1" Grid.Column="2" Margin="18,9,2,8" IsReadOnly="True" Cursor="Arrow" />
 
-                <Label Grid.Row="1" Grid.Column="0" Content="Algorytm 2" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="36" Width="108"></Label>
-                <CheckBox x:Name="alg2" Grid.Row="1" Grid.Column="1" Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="16"></CheckBox>
-                <TextBox x:Name="road_alg2" Grid.Row="1" Grid.Column="2" Margin="15,0,0,0" Width="50" Height="20" />
+                <Label Grid.Row="1" Grid.Column="3" Content="Punkt startowy: " FontSize="20" Margin="30,0,50,0" VerticalAlignment="Center" Height="37"/>
+                <Ellipse Grid.Row="1" Grid.Column="3" Height="20" Stroke="Black" Fill="Black" Width="20" Margin="140,0,50,0"/>
+                <Label Grid.Row="2" Grid.Column="3" Content="Punkt do odwiedzenia: " FontSize="20" Margin="30,0,50,0" VerticalAlignment="Center" Height="37"/>
+                <Ellipse Grid.Row="2" Grid.Column="3" Height="20" Stroke="Black" Fill="SaddleBrown" Width="20" Margin="250,0,50,0"/>
+                <Label Grid.Row="2" Grid.Column="1" Content="Algorytm zachłanny" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="36" Width="280"></Label>
+                <Rectangle  Grid.Column="0" HorizontalAlignment="Left" Height="20" Margin="10,0,0,0" Grid.Row="2" Stroke="Black" VerticalAlignment="Center" Width="20" Grid.ColumnSpan="2" Fill="DeepSkyBlue"/>
+                <TextBox x:Name="road_alg2" Grid.Row="2" Grid.Column="2" Margin="18,8,2,8" IsReadOnly="True" Cursor="Arrow"/>
 
-                <Label Grid.Row="2" Grid.Column="0" Content="Algorytm 3" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="37" Width="108"></Label>
-                <CheckBox x:Name="alg3" Grid.Row="2" Grid.Column="1" Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="16"></CheckBox>
-                <TextBox x:Name="road_alg3" Grid.Row="2" Grid.Column="2" Margin="15,0,0,0" Height="20" Width="50"  />
+                <Label Grid.Row="3" Grid.Column="1" Content="Algorytm 3" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="37" Width="280"></Label>
+                <Rectangle  Grid.Column="0" HorizontalAlignment="Left" Height="20" Margin="10,0,0,0" Grid.Row="3" Stroke="Black" VerticalAlignment="Center" Width="20" Grid.ColumnSpan="2"/>
+                <TextBox x:Name="road_alg3" Grid.Row="3" Grid.Column="2" Margin="18,10,2,7" IsReadOnly="True" Cursor="Arrow"/>
 
             </Grid>
         </StackPanel>

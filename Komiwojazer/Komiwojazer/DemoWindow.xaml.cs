@@ -79,9 +79,9 @@ namespace Komiwojazer
                     {
                         _startingPoint = new Points();
                         _startingPoint.point = new Ellipse();
-                        _startingPoint.point.Width = 10;
-                        _startingPoint.point.Height = 10;
-                        _startingPoint.point.Fill = Brushes.Red;
+                        _startingPoint.point.Width = 20;
+                        _startingPoint.point.Height = 20;
+                        _startingPoint.point.Fill = Brushes.Black;
                         CanvasImage.Children.Add(_startingPoint.point);
                     }
                     Canvas.SetLeft(_startingPoint.point, coord.X - 5);
@@ -96,9 +96,9 @@ namespace Komiwojazer
 
                     _points.Add(new Points());
                     _points[_pointCounter].point = new Ellipse();
-                    _points[_pointCounter].point.Width = 10;
-                    _points[_pointCounter].point.Height = 10;
-                    _points[_pointCounter].point.Fill = Brushes.Blue;
+                    _points[_pointCounter].point.Width = 18;
+                    _points[_pointCounter].point.Height = 18;
+                    _points[_pointCounter].point.Fill = Brushes.SaddleBrown;
                     Canvas.SetLeft(_points[_pointCounter].point, coord.X - 5);
                     Canvas.SetTop(_points[_pointCounter].point, coord.Y - 5);
                     CanvasImage.Children.Add(_points[_pointCounter].point);
@@ -136,17 +136,25 @@ namespace Komiwojazer
             if (_startingPoint == null || _counter < 1)
             {
                 MessageBox.Show("Nie wybrano punktów");
+                return;
+            }
+            AlgorithmsPick ap = new AlgorithmsPick();
+
+            if (ap.checkboxNN.IsChecked == true)
+            {
+                resultNN = NajblizszySasiad();
+                DrawingFormNN();
+            }
+            if (ap.checkboxBF.IsChecked == true)
+            {
+                resultBF = BruteForce();
+                DrawingFormBF();
+            }
+            if (ap.checkbox3.IsChecked == true)
+            {
+
             }
 
-            resultNN = NajblizszySasiad();
-            DrawingFormNN();
-            //m_oTimer_Tick1(sender, e);
-            
-            //DrawPath(result);
-            //var result2 = BruteForce();
-            resultBF = BruteForce();
-            DrawingFormBF();
-            //DrawPath(result2);
         }
 
         private void adjMatrixFill()
@@ -308,7 +316,7 @@ namespace Komiwojazer
                         road2 = (int)(y * 0.4);
                     }
                 }
-                //MessageBox.Show($"{cross1} droga: {road1}, {cross2} droga: {road2}");
+                
             }
             
 
@@ -491,25 +499,33 @@ namespace Komiwojazer
 
             m_oTimer.Tick += m_oTimer_Tick1NN;
             m_oTimer.Interval = new TimeSpan(0,0,0,0,300);
-            //m_oTimer.Enabled = false;
+            
             m_oTimer.Start();
         }
 
         // Enable the timer and call m_oTimer.Start () when
         // you're ready to draw your lines.
-        private IList<int> resultNN;
-        private IList<int> resultBF;
+        private IList<int> resultBF = null;
+        private IList<int> resultNN = null;
 
         private int increment = 0;
         private int increment2 = 0;
+
+        Polygon myPolygonBF = null;
+        Polygon myPolygonNN = null;
+
         void m_oTimer_Tick1NN(object sender, EventArgs e)
         {
             // Draw the next line here; disable
             // the timer when done with drawing.
             //m_oTimer.Start();
             //for (int i = 0; i < result.Count - 1; i++)
-            if (increment < resultNN.Count-1)
+            if (increment < resultNN.Count - 1)
             {
+                if (myPolygonNN != null)
+                {
+                    CanvasImage.Children.Remove(myPolygonNN);
+                }
                 var point1Index = resultNN[increment];
                 var point1Coor = _points[point1Index].Coor;
                 var point2Index = resultNN[increment + 1];
@@ -517,23 +533,76 @@ namespace Komiwojazer
 
                 var line = new Line
                 {
-                    Stroke = System.Windows.Media.Brushes.Red,
-                    Fill = System.Windows.Media.Brushes.Red,
-                    X1 = point1Coor.X+(increment*0.05),
-                    Y1 = point1Coor.Y+(increment*0.05),
-                    X2 = point2Coor.X+(increment*0.05),
-                    Y2 = point2Coor.Y+(increment*0.05),
+                    Stroke = System.Windows.Media.Brushes.OrangeRed,
+                    Fill = System.Windows.Media.Brushes.OrangeRed,
+                    X1 = point1Coor.X + (increment * 0.05),
+                    Y1 = point1Coor.Y + (increment * 0.05),
+                    X2 = point2Coor.X + (increment * 0.05),
+                    Y2 = point2Coor.Y + (increment * 0.05),
                     StrokeThickness = 4,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Bottom
 
                 };
+                double roznicaX = point1Coor.X - point2Coor.X;
+                double roznicaY = point1Coor.Y - point2Coor.Y;
+
+                System.Windows.Point Point2;
+                System.Windows.Point Point3;
+
+
+                if (Math.Abs(roznicaX) > Math.Abs(roznicaY))
+                {
+                    if (roznicaX > 0)
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X + 20, point2Coor.Y + 10);
+                        Point3 = new System.Windows.Point(point2Coor.X + 20, point2Coor.Y - 10);
+                    }
+                    else
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X - 20, point2Coor.Y + 10);
+                        Point3 = new System.Windows.Point(point2Coor.X - 20, point2Coor.Y - 10);
+                    }
+                }
+                else
+                {
+                    if (roznicaY > 0)
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X - 10, point2Coor.Y + 20);
+                        Point3 = new System.Windows.Point(point2Coor.X + 10, point2Coor.Y + 20);
+                    }
+                    else
+                    {
+                        Point3 = new System.Windows.Point(point2Coor.X + 10, point2Coor.Y - 20);
+                        Point2 = new System.Windows.Point(point2Coor.X - 10, point2Coor.Y - 20);
+                    }
+                }
+
+
+                myPolygonNN = new Polygon();
+                myPolygonNN.Stroke = System.Windows.Media.Brushes.Black;
+                myPolygonNN.Fill = System.Windows.Media.Brushes.OrangeRed;
+                myPolygonNN.StrokeThickness = 2;
+                myPolygonNN.HorizontalAlignment = HorizontalAlignment.Left;
+                myPolygonNN.VerticalAlignment = VerticalAlignment.Center;
+
+                PointCollection myPointCollection = new PointCollection();
+                System.Windows.Point Point1 = new System.Windows.Point(point2Coor.X, point2Coor.Y);
+                myPointCollection.Add(Point1);
+                myPointCollection.Add(Point2);
+                myPointCollection.Add(Point3);
+                myPolygonNN.Points = myPointCollection;
+                CanvasImage.Children.Add(myPolygonNN);
 
                 _lines.Add(line);
                 CanvasImage.Children.Add(line);
                 increment++;
             }
-            else m_oTimer.Stop();
+            else
+            {
+                CanvasImage.Children.Remove(myPolygonNN);
+                m_oTimer.Stop();
+            }
             
         }
 
@@ -548,14 +617,15 @@ namespace Komiwojazer
             m_oTimer2.Start();
         }
 
+        
         void m_oTimer_Tick1BF(object sender, EventArgs e)
         {
-            // Draw the next line here; disable
-            // the timer when done with drawing.
-            //m_oTimer.Start();
-            //for (int i = 0; i < result.Count - 1; i++)
             if (increment2 < resultBF.Count - 1)
             {
+                if (myPolygonBF != null)
+                {
+                    CanvasImage.Children.Remove(myPolygonBF);
+                }
                 var point1Index = resultBF[increment2];
                 var point1Coor = _points[point1Index].Coor;
                 var point2Index = resultBF[increment2 + 1];
@@ -565,21 +635,73 @@ namespace Komiwojazer
                 {
                     Stroke = System.Windows.Media.Brushes.DeepSkyBlue,
                     Fill = System.Windows.Media.Brushes.DeepSkyBlue,
-                    X1 = point1Coor.X+4+(increment2*0.05),
-                    Y1 = point1Coor.Y+4+(increment2*0.05),
-                    X2 = point2Coor.X+4+(increment2*0.05),
-                    Y2 = point2Coor.Y+4+(increment2*0.05),
+                    X1 = point1Coor.X + 4 + (increment2 * 0.05),
+                    Y1 = point1Coor.Y + 4 + (increment2 * 0.05),
+                    X2 = point2Coor.X + 4 + (increment2 * 0.05),
+                    Y2 = point2Coor.Y + 4 + (increment2 * 0.05),
                     StrokeThickness = 4,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Bottom
 
                 };
 
+                double roznicaX = point1Coor.X - point2Coor.X;
+                double roznicaY = point1Coor.Y - point2Coor.Y;
+
+                System.Windows.Point Point2;
+                System.Windows.Point Point3;
+
+                if (Math.Abs(roznicaX) > Math.Abs(roznicaY))
+                {
+                    if (roznicaX > 0)
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X + 4 + 20, point2Coor.Y + 4 + 10);
+                        Point3 = new System.Windows.Point(point2Coor.X + 4 + 20, point2Coor.Y + 4 - 10);
+                    }
+                    else
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X + 4 - 20, point2Coor.Y + 4 + 10);
+                        Point3 = new System.Windows.Point(point2Coor.X + 4 - 20, point2Coor.Y + 4 - 10);
+                    }
+                }
+                else
+                {
+                    if (roznicaY > 0)
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X + 4 - 10, point2Coor.Y + 4 + 20);
+                        Point3 = new System.Windows.Point(point2Coor.X + 4 + 10, point2Coor.Y + 4 + 20);
+                    }
+                    else
+                    {
+                        Point3 = new System.Windows.Point(point2Coor.X + 4 + 10, point2Coor.Y + 4 - 20);
+                        Point2 = new System.Windows.Point(point2Coor.X + 4 - 10, point2Coor.Y + 4 - 20);
+                    }
+                }
+
+                myPolygonBF = new Polygon();
+                myPolygonBF.Stroke = System.Windows.Media.Brushes.Black;
+                myPolygonBF.Fill = System.Windows.Media.Brushes.DeepSkyBlue;
+                myPolygonBF.StrokeThickness = 2;
+                myPolygonBF.HorizontalAlignment = HorizontalAlignment.Left;
+                myPolygonBF.VerticalAlignment = VerticalAlignment.Center;
+
+                PointCollection myPointCollection = new PointCollection();
+                System.Windows.Point Point1 = new System.Windows.Point(point2Coor.X + 4, point2Coor.Y + 4);
+                myPointCollection.Add(Point1);
+                myPointCollection.Add(Point2);
+                myPointCollection.Add(Point3);
+                myPolygonBF.Points = myPointCollection;
+                CanvasImage.Children.Add(myPolygonBF);
+
                 _lines.Add(line);
                 CanvasImage.Children.Add(line);
                 increment2++;
             }
-            else m_oTimer2.Stop();
+            else
+            {
+                CanvasImage.Children.Remove(myPolygonBF);
+                m_oTimer2.Stop();
+            }
             //m_oTimer.Stop();
         }
 
