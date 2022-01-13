@@ -152,11 +152,9 @@ namespace Komiwojazer
             }
             if (ap.checkbox3.IsChecked == true)
             {
-
+                resultGreedy = Greedy();
+                DrawingFormGreedy();
             }
-
-            var greedy = new Greedy(_adjMatrix);
-            var res = greedy.NajmniejszaKrawedz();
         }
 
         private void adjMatrixFill()
@@ -404,7 +402,7 @@ namespace Komiwojazer
             var dijkstra = new Dijkstra(_adjMatrix);
             var result = dijkstra.GetPath();
          
-            road_alg1.Text += Disatnce(result);
+            road_alg1.Text += Distance(result);
             return result;
         }
 
@@ -413,8 +411,16 @@ namespace Komiwojazer
             var bruteForce = new BruteForce(_adjMatrix);
             var result = bruteForce.GetPathBF2();
             var result2 = DistanceBF(result);
-            road_alg2.Text += Disatnce(result2);
+            road_alg2.Text += Distance(result2);
             return result2;
+        }
+
+        public IList<int> Greedy()
+        {
+            var greedy = new Greedy(_adjMatrix);
+            var result = greedy.NajmniejszaKrawedz();
+            road_alg3.Text += Distance(result);
+            return result;
         }
 
         private void DrawPath(IList<int> result)
@@ -464,7 +470,7 @@ namespace Komiwojazer
             return true;
         }
 
-        public int Disatnce(IList<int> result)
+        public int Distance(IList<int> result)
         {
             int distance = 0; 
             for(int i =1;i<result.Count();i++)
@@ -481,7 +487,7 @@ namespace Komiwojazer
             int minDistance = int.MaxValue;
             foreach (var droga in drogiBF)
             {
-                distance =Disatnce(droga);
+                distance =Distance(droga);
                 if (distance < minDistance)
                 {
                     result.Clear();
@@ -494,6 +500,7 @@ namespace Komiwojazer
 
         DispatcherTimer m_oTimer = new DispatcherTimer();
         DispatcherTimer m_oTimer2 = new DispatcherTimer();
+        DispatcherTimer m_oTimer3 = new DispatcherTimer();
 
         public void DrawingFormNN()
         {
@@ -505,16 +512,37 @@ namespace Komiwojazer
             m_oTimer.Start();
         }
 
+        public void DrawingFormBF()
+        {
+            //InitializeComponent();
+
+            m_oTimer2.Tick += m_oTimer_Tick1BF;
+            m_oTimer2.Interval = new TimeSpan(0, 0, 0, 0, 300);
+            //m_oTimer.Enabled = false;
+            m_oTimer2.Start();
+        }
+
+        public void DrawingFormGreedy()
+        {
+            m_oTimer3.Tick += m_oTimer_Tick1Greedy;
+            m_oTimer3.Interval = new TimeSpan(0, 0, 0, 0, 300);
+
+            m_oTimer3.Start();
+        }
+
         // Enable the timer and call m_oTimer.Start () when
         // you're ready to draw your lines.
         private IList<int> resultBF = null;
         private IList<int> resultNN = null;
+        private IList<int> resultGreedy = null;
 
         private int increment = 0;
         private int increment2 = 0;
+        private int increment3 = 0;
 
         Polygon myPolygonBF = null;
         Polygon myPolygonNN = null;
+        Polygon myPolygonGreedy = null;
 
         void m_oTimer_Tick1NN(object sender, EventArgs e)
         {
@@ -608,18 +636,6 @@ namespace Komiwojazer
             
         }
 
-
-        public void DrawingFormBF()
-        {
-            //InitializeComponent();
-
-            m_oTimer2.Tick += m_oTimer_Tick1BF;
-            m_oTimer2.Interval = new TimeSpan(0, 0, 0, 0, 300);
-            //m_oTimer.Enabled = false;
-            m_oTimer2.Start();
-        }
-
-        
         void m_oTimer_Tick1BF(object sender, EventArgs e)
         {
             if (increment2 < resultBF.Count - 1)
@@ -705,6 +721,98 @@ namespace Komiwojazer
                 m_oTimer2.Stop();
             }
             //m_oTimer.Stop();
+        }
+
+        void m_oTimer_Tick1Greedy(object sender, EventArgs e)
+        {
+            // Draw the next line here; disable
+            // the timer when done with drawing.
+            //m_oTimer.Start();
+            //for (int i = 0; i < result.Count - 1; i++)
+            if (increment3 < resultGreedy.Count - 1)
+            {
+                if (myPolygonGreedy != null)
+                {
+                    CanvasImage.Children.Remove(myPolygonGreedy);
+                }
+                var point1Index = resultGreedy[increment3];
+                var point1Coor = _points[point1Index].Coor;
+                var point2Index = resultGreedy[increment3 + 1];
+                var point2Coor = _points[point2Index].Coor;
+
+                var line = new Line
+                {
+                    Stroke = System.Windows.Media.Brushes.Green,
+                    Fill = System.Windows.Media.Brushes.Green,
+                    X1 = point1Coor.X + (increment3 * 0.05),
+                    Y1 = point1Coor.Y + (increment3 * 0.05),
+                    X2 = point2Coor.X + (increment3 * 0.05),
+                    Y2 = point2Coor.Y + (increment3 * 0.05),
+                    StrokeThickness = 4,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Bottom
+
+                };
+                double roznicaX = point1Coor.X - point2Coor.X;
+                double roznicaY = point1Coor.Y - point2Coor.Y;
+
+                System.Windows.Point Point2;
+                System.Windows.Point Point3;
+
+
+                if (Math.Abs(roznicaX) > Math.Abs(roznicaY))
+                {
+                    if (roznicaX > 0)
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X + 20, point2Coor.Y + 10);
+                        Point3 = new System.Windows.Point(point2Coor.X + 20, point2Coor.Y - 10);
+                    }
+                    else
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X - 20, point2Coor.Y + 10);
+                        Point3 = new System.Windows.Point(point2Coor.X - 20, point2Coor.Y - 10);
+                    }
+                }
+                else
+                {
+                    if (roznicaY > 0)
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X - 10, point2Coor.Y + 20);
+                        Point3 = new System.Windows.Point(point2Coor.X + 10, point2Coor.Y + 20);
+                    }
+                    else
+                    {
+                        Point3 = new System.Windows.Point(point2Coor.X + 10, point2Coor.Y - 20);
+                        Point2 = new System.Windows.Point(point2Coor.X - 10, point2Coor.Y - 20);
+                    }
+                }
+
+
+                myPolygonGreedy = new Polygon();
+                myPolygonGreedy.Stroke = System.Windows.Media.Brushes.Black;
+                myPolygonGreedy.Fill = System.Windows.Media.Brushes.Green;
+                myPolygonGreedy.StrokeThickness = 2;
+                myPolygonGreedy.HorizontalAlignment = HorizontalAlignment.Left;
+                myPolygonGreedy.VerticalAlignment = VerticalAlignment.Center;
+
+                PointCollection myPointCollection = new PointCollection();
+                System.Windows.Point Point1 = new System.Windows.Point(point2Coor.X, point2Coor.Y);
+                myPointCollection.Add(Point1);
+                myPointCollection.Add(Point2);
+                myPointCollection.Add(Point3);
+                myPolygonGreedy.Points = myPointCollection;
+                CanvasImage.Children.Add(myPolygonGreedy);
+
+                _lines.Add(line);
+                CanvasImage.Children.Add(line);
+                increment3++;
+            }
+            else
+            {
+                CanvasImage.Children.Remove(myPolygonGreedy);
+                m_oTimer3.Stop();
+            }
+
         }
 
         private double GetDistance(Point p1, Point p2) => Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));

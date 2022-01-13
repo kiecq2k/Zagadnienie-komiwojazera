@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Komiwojazer"
         mc:Ignorable="d"
-        Title="Zagadnienie komiwojażera" Height="825" Width="1140" ResizeMode="NoResize">
+        Title="Zagadnienie komiwojażera" Height="825" Width="1140" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>

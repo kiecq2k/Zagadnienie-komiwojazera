@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Komiwojazer"
         mc:Ignorable="d"
-        Title="Zagadnienie komiwojażera" Height="371" Width="744">
+        Title="Zagadnienie komiwojażera" Height="371" Width="744"
+        WindowStartupLocation="CenterScreen">
     <StackPanel>
         <Label Content="Zagadnienie komiwojażera" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="35"
                Padding="0" Margin="0,30,0,0"></Label>
