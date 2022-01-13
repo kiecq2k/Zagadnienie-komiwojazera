@@ -155,6 +155,8 @@ namespace Komiwojazer
 
             }
 
+            var greedy = new Greedy(_adjMatrix);
+            var res = greedy.NajmniejszaKrawedz();
         }
 
         private void adjMatrixFill()

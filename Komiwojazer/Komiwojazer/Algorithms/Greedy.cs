@@ -46,25 +46,40 @@ namespace Komiwojazer.Algorithms
 
             int n = N - 26 + 1;
             var dict = new Dictionary<int, int>();
-            
-            //for(int i=0; i< sortedPaths.Count; i++)
+
+            // 26 27 w slowniku
+            // chce dojsc 27 26
+
+            dict.Add(sortedPaths[0].From, sortedPaths[0].To);
+
+            for (int i = 1; i < sortedPaths.Count; i++)
+            {
+                if (!dict.ContainsKey(sortedPaths[i].From) &&
+                    !dict.ContainsValue(sortedPaths[i].To))
+                {
+                    int value;
+                    if((!dict.TryGetValue(sortedPaths[i].To, out value) ||
+                       value != sortedPaths[i].From) && KrawedzOK(dict, sortedPaths, i))
+                        dict.Add(sortedPaths[i].From, sortedPaths[i].To);
+                }   
+            }
+
+            //for(int i = 26; i < N; i++)
             //{
-            //    if (!dict.ContainsKey(sortedPaths[i].From) &&
-            //        !dict.ContainsValue(sortedPaths[i].To) &&
-            //        (!dict.ContainsKey(sortedPaths[i].To) &&
-            //        !dict.ContainsValue(sortedPaths[i].From)))
-            //        dict.Add(sortedPaths[i].From, sortedPaths[i].To);
+            //    int value;
+            //    if(!dict.TryGetValue(i, out value))
+            //        dict.Add(i, sortedPaths.First(p => p.From == i).To);
             //}
 
-            for(int i = 26; i < N; i++)
-            {
-                var el = sortedPaths.First(p =>
-                {
-                    return p.From == i && !dict.ContainsValue(p.To);
-                });
+            //for(int i = 26; i < N; i++)
+            //{
+            //    var el = sortedPaths.First(p =>
+            //    {
+            //        return p.From == i && !dict.ContainsValue(p.To);
+            //    });
 
-                dict.Add(el.From, el.To);
-            }
+            //    dict.Add(el.From, el.To);
+            //}
 
             var list = new List<int>();
 
@@ -90,6 +105,27 @@ namespace Komiwojazer.Algorithms
             result.AddRange(dijkstra2[26].Route);
 
             return result.RemoveDuplication();
+        }
+
+        private bool KrawedzOK(Dictionary<int,int> dict, List<Path> sortedPaths, int i)
+        {
+            var dictCopy = new Dictionary<int,int>(dict);
+            dictCopy.Add(sortedPaths[i].From, sortedPaths[i].To);
+
+            for (int j = i+1; j < sortedPaths.Count; j++)
+            {
+                if (!dictCopy.ContainsKey(sortedPaths[j].From) &&
+                    !dictCopy.ContainsValue(sortedPaths[j].To))
+                {
+                    int value;
+                    if (!dictCopy.TryGetValue(sortedPaths[j].To, out value) ||
+                       value != sortedPaths[j].From)
+                        dictCopy.Add(sortedPaths[j].From, sortedPaths[j].To);
+                }
+            }
+
+            int n = N - 26;
+            return (dictCopy.Count == n);
         }
         
     }
