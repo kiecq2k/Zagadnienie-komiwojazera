@@ -16,6 +16,7 @@ using Priority_Queue;
 using QuickGraph;
 using Point = System.Windows.Point;
 using System.Windows.Threading;
+using System.Threading.Tasks;
 
 namespace Komiwojazer
 {
@@ -24,7 +25,7 @@ namespace Komiwojazer
     /// </summary>
     public partial class DemoWindow : Window
     {
-        private int _startupCounter = 0;
+        
         private int _flag = -1;
         private IList<Line> _lines = new List<Line>();
         private Points _startingPoint = null;
@@ -32,12 +33,13 @@ namespace Komiwojazer
         private int _counter = 0;
         private IList<Point> _intersections = new List<Point>();
         private IList<Point> _dots = new List<Point>();
-        private int _dotsCounter = 26;
-        private IList<Point> _usedPoints = new List<Point>();
+        //private int _dotsCounter = 26;
+        //private IList<Point> _usedPoints = new List<Point>();
         private int _pointCounter = 27;
         private int _zIndexCounter = 1;
 
         public IList<IList<int>> _adjMatrix = new List<IList<int>>();
+        public IList<IList<int>> _startingAdjMatrix = new List<IList<int>>();
         private AdjacencyGraph<int, TaggedEdge<int, int>> _graph = new AdjacencyGraph<int, TaggedEdge<int, int>>();
         private const int STARTING_POINT = 26;
 
@@ -45,16 +47,6 @@ namespace Komiwojazer
         public DemoWindow()
         {
             InitializeComponent();
-            //DrawingForm();
-            if (_adjMatrix.Count == 0) startup();
-            //DijkstraAlgorithm _dj = new DijkstraAlgorithm(_adjMatrix);
-            //_dijkstra = _dj;
-        }
-
-        private void startup()
-        {
-
-            _startupCounter++;
             FillIntersections();
             graphFillMatrixStartup();
             for (int i = 0; i < 26; i++)
@@ -88,6 +80,8 @@ namespace Komiwojazer
             return true;
         }
 
+        
+
         private void CanvasImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var coord = e.GetPosition(this.CanvasImage);
@@ -107,12 +101,16 @@ namespace Komiwojazer
                         _startingPoint.point.Fill = Brushes.Black;
                         CanvasImage.Children.Add(_startingPoint.point);
                     }
+                    
                     Canvas.SetLeft(_startingPoint.point, coord.X - 5);
                     Canvas.SetTop(_startingPoint.point, coord.Y - 5);
                     Canvas.SetZIndex(_startingPoint.point, _zIndexCounter++);
                     pointPosition(e, _flag);
                     _startingPoint.Coor = coord;
                     _points.Add(new Points { Coor = _startingPoint.Coor });
+                    endPointsButton.IsEnabled = true;
+                    startPointButton.IsEnabled = false;
+                    _flag = 2;
                 }
                 else if (_flag == 2)
                 {
@@ -129,6 +127,7 @@ namespace Komiwojazer
                     Canvas.SetZIndex(_points[_pointCounter].point, _zIndexCounter++);
                     pointPosition(e, _flag);
                     _counter++;
+                    startAlgorithmButton.IsEnabled = true;
                 }
             }
         }
@@ -140,17 +139,50 @@ namespace Komiwojazer
 
         private void endPointsButton_Click(object sender, RoutedEventArgs e)
         {
-            _flag = 2;
+            if (_startingPoint == null)
+            {
+                MessageBox.Show("Najpierw wybierz punkt startowy");
+            }
+            else
+            {
+                _flag = 2;
+                
+            }
         }
 
         private void removePointsButton_Click(object sender, RoutedEventArgs e)
         {
+            foreach (var line in _lines)
+            {
+                CanvasImage.Children.Remove(line);
+            }
             foreach (var point in _points)
             {
                 CanvasImage.Children.Remove(point.point);
-
             }
+            CanvasImage.Children.Remove(_startingPoint.point);
+            road_alg1.Clear();
+            road_alg2.Clear();
+            road_alg3.Clear();
+            _points.Clear();
+            _adjMatrix.Clear();
+            _startingPoint = null;
+            _flag = -1;
             _counter = 0;
+            _pointCounter = 27;
+            endPointsButton.IsEnabled = false;
+            startAlgorithmButton.IsEnabled = false;
+            startPointButton.IsEnabled = true;
+            for (int i = 0; i < 27; i++)
+            {
+                _adjMatrix.Add(new List<int>());
+                _adjMatrix[i] = new List<int>(_startingAdjMatrix[i]);
+            }
+            _dots = _intersections.ToList();
+            for (int i = 0; i < 26; i++)
+            {
+                _points.Add(new Points { Coor = _intersections[i] });
+            }
         }
 
         private void startAlgorithmButton_Click(object sender, RoutedEventArgs e)
@@ -167,6 +199,7 @@ namespace Komiwojazer
             {
                 resultNN = NajblizszySasiad();
                 DrawingFormNN();
+                
             }
             if (ap.checkboxBF.IsChecked == true)
             {
@@ -193,6 +226,7 @@ namespace Komiwojazer
                     _adjMatrix[i].Add(int.Parse(numberAsString));
                 }
             }
+            
         }
 
         private void graphFillMatrixStartup()
@@ -231,6 +265,13 @@ namespace Komiwojazer
             }
             _graph = graph;
             addToMatrix();
+
+
+            for (int i = 0; i < 27; i++)
+            {
+                _startingAdjMatrix.Add(new List<int>());
+                _startingAdjMatrix[i] = new List<int>(_adjMatrix[i]);
+            }
         }
 
         private void FillIntersections()
@@ -272,10 +313,6 @@ namespace Komiwojazer
             _intersections.Add(new Point(678, 369.6));
 
             _dots = _intersections.ToList<Point>();
-
-
-
-
         }
 
 
@@ -284,14 +321,8 @@ namespace Komiwojazer
             var pos = e.GetPosition(this.CanvasImage);
             int cross1 = -1;
             int cross2 = -1;
-            double x1;
-            double x2;
-            //double y;
             int road1 = 0;
             int road2 = 0;
-
-            int debbug = -1;
-
 
             for (int i = 1; i < _intersections.Count; i++)
             {
@@ -307,12 +338,10 @@ namespace Komiwojazer
             }
             if (cross1 != -1)
             {
-
                 for (int i = 26; i < _dots.Count; i++)
                 {
-                    debbug = 6;
                     int dotsRoad = (int)(Math.Abs(_dots[i].X - pos.X) * 0.4);
-                    if (Math.Abs(pos.Y - _dots[i].Y) < 20/*&&(_dots[i].X > _intersections[cross1].X + 10 && _dots[i].X < _intersections[cross2].X- 10)*/)
+                    if (Math.Abs(pos.Y - _dots[i].Y) < 20) 
                     {
                         if (_dots[i].X < pos.X)
                         {
@@ -333,14 +362,12 @@ namespace Komiwojazer
 
                         }
                     }
-
                 }
 
             }
 
             if (cross1 == -1)
             {
-
                 double close1 = double.MaxValue;
                 double close2 = double.MaxValue;
                 for (int i = 0; i < _intersections.Count; i++)
@@ -366,26 +393,13 @@ namespace Komiwojazer
                 }
                 int tmpcross1 = cross1;
                 int tmpcross2 = cross2;
-                int top;
-                int bottom;
-                if (tmpcross1 < tmpcross2)
-                {
-                    bottom = tmpcross2;
-                    top = tmpcross1;
-                }
-                else
-                {
-                    top = tmpcross2;
-                    bottom = tmpcross1;
-                }
 
                 for (int i = 26; i < _dots.Count; i++)
                 {
-
                     int dotsRoad = (int)(Math.Abs(_dots[i].Y - pos.Y) * 0.4);
-                    if (Math.Abs(pos.X - _dots[i].X) < 20 /*&&( _dots[i].Y > _intersections[top].Y +5 && _dots[i].Y < _intersections[bottom].Y - 5)*/)
+                    if (Math.Abs(pos.X - _dots[i].X) < 20)
                     {
-                        if (_dots[i].Y < pos.Y) // to znaczy ze wpisany jest pod juz obecnym
+                        if (_dots[i].Y < pos.Y) 
                         {
                             if (cross1 < cross2)
                             {
@@ -417,7 +431,7 @@ namespace Komiwojazer
                             }
                             else
                             {
-                                if (dotsRoad < road1)
+                                if (dotsRoad < road2)
                                 {
                                     road2 = dotsRoad;
                                     tmpcross2 = i;
@@ -439,46 +453,38 @@ namespace Komiwojazer
 
             //add point to matrix and delete roads between crossroads
             int indexOfPoint;
-            //if (_adjMatrix[cross1][cross2] == 0 && _adjMatrix[cross2][cross1] == 0)
+            if (flag == 1)
             {
-                if (flag == 1)
-                {
-                    indexOfPoint = 26;
-                    _dots.Add(pos);
-
-                    _dotsCounter++;
-                }
-                else
-                {
-                    //if (_adjMatrix[cross1][cross2] == 0 && _adjMatrix[cross2][cross1] == 0)
-                    {
-                        indexOfPoint = _pointCounter++;
-                        _dots.Add(pos);
-                        _dotsCounter++;
-                        addToMatrix();
-                    }
-                }
-                int check = 0;
-                if (_adjMatrix[cross1][cross2] != 0)
-                {
-                    _adjMatrix[cross1][cross2] = 0;
-                    _adjMatrix[cross1][indexOfPoint] = road1;
-                    _adjMatrix[indexOfPoint][cross2] = road2;
-                    check = 1;
-                }
-                if (_adjMatrix[cross2][cross1] != 0)
-                {
-                    _adjMatrix[cross2][cross1] = 0;
-                    _adjMatrix[cross2][indexOfPoint] = road2;
-                    _adjMatrix[indexOfPoint][cross1] = road1;
-                    check = 1;
-                }
-                if (check == 0)
-                {
-                    MessageBox.Show("jeblo");
-                }
-                matrixToGraph();
+                indexOfPoint = 26;
+                _dots.Add(pos);
             }
+            else
+            {
+                indexOfPoint = _pointCounter++;
+                _dots.Add(pos);
+                addToMatrix();
+            }
+            int check = 0;
+            if (_adjMatrix[cross1][cross2] != 0)
+            {
+                _adjMatrix[cross1][cross2] = 0;
+                _adjMatrix[cross1][indexOfPoint] = road1;
+                _adjMatrix[indexOfPoint][cross2] = road2;
+                check = 1;
+            }
+            if (_adjMatrix[cross2][cross1] != 0)
+            {
+                _adjMatrix[cross2][cross1] = 0;
+                _adjMatrix[cross2][indexOfPoint] = road2;
+                _adjMatrix[indexOfPoint][cross1] = road1;
+                check = 1;
+            }
+            if (check == 0)
+            {
+                MessageBox.Show("Blad dodawania punktow");
+            }
+            //matrixToGraph();
+
         }
 
         private void addToMatrix()
@@ -497,37 +503,37 @@ namespace Komiwojazer
         private void matrixToGraph()
         {
            
-            IList<TaggedEdge<int, int>> edge = new List<TaggedEdge<int, int>>();
-            IList<int> vertex = new List<int>();
-            for (int i = 0; i < _adjMatrix.Count; i++)
-            {
-                vertex.Add(i);
-            }
-            var graphTMP = new AdjacencyGraph<int, TaggedEdge<int, int>>();
-            for (int i = 0; i < _adjMatrix.Count; i++)
-            {
-                graphTMP.AddVertex(vertex[i]);
-            }
+            //IList<TaggedEdge<int, int>> edge = new List<TaggedEdge<int, int>>();
+            //IList<int> vertex = new List<int>();
+            //for (int i = 0; i < _adjMatrix.Count; i++)
+            //{
+            //    vertex.Add(i);
+            //}
+            //var graphTMP = new AdjacencyGraph<int, TaggedEdge<int, int>>();
+            //for (int i = 0; i < _adjMatrix.Count; i++)
+            //{
+            //    graphTMP.AddVertex(vertex[i]);
+            //}
 
-            for (int i = 0; i < _adjMatrix.Count; i++)
-            {
-                for (int j = 0; j < _adjMatrix[i].Count; j++)
-                {
-                    if (_adjMatrix[i][j] != 0)
-                    {
-                        edge.Add(new TaggedEdge<int, int>(vertex[i], vertex[j], _adjMatrix[i][j]));
-                    }
-                }
-            }
+            //for (int i = 0; i < _adjMatrix.Count; i++)
+            //{
+            //    for (int j = 0; j < _adjMatrix[i].Count; j++)
+            //    {
+            //        if (_adjMatrix[i][j] != 0)
+            //        {
+            //            edge.Add(new TaggedEdge<int, int>(vertex[i], vertex[j], _adjMatrix[i][j]));
+            //        }
+            //    }
+            //}
 
-            foreach (var elem in edge)
-            {
-                if (elem != null)
-                {
-                    graphTMP.AddEdge(elem);
-                }
-            }
-            _graph = graphTMP;
+            //foreach (var elem in edge)
+            //{
+            //    if (elem != null)
+            //    {
+            //        graphTMP.AddEdge(elem);
+            //    }
+            //}
+            //_graph = graphTMP;
             
         }
 
@@ -557,41 +563,7 @@ namespace Komiwojazer
             return result;
         }
 
-        private void DrawPath(IList<int> result)
-        {
-            for(int i = 0; i < result.Count - 1; i++)
-            {
-                var point1Index = result[i];
-                var point1Coor = _points[point1Index].Coor;
-                var point2Index = result[i + 1];
-                var point2Coor = _points[point2Index].Coor;
 
-                var line = new Line
-                {
-                    Stroke = System.Windows.Media.Brushes.Red,
-                    Fill = System.Windows.Media.Brushes.Red,
-                    X1 = point1Coor.X,
-                    Y1 = point1Coor.Y,
-                    X2 = point2Coor.X,
-                    Y2 = point2Coor.Y,
-                    StrokeThickness = 4,
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Bottom
-
-                };
-
-                _lines.Add(line);
-                CanvasImage.Children.Add(line);
-            }
-        }
-
-        private void removeRoadButton_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var line in _lines)
-            {
-                CanvasImage.Children.Remove(line);
-            }
-        }
 
         private bool AllPointsVisited()
         {
@@ -632,13 +604,14 @@ namespace Komiwojazer
             return result;
         }
 
-        DispatcherTimer m_oTimer = new DispatcherTimer();
-        DispatcherTimer m_oTimer2 = new DispatcherTimer();
-        DispatcherTimer m_oTimer3 = new DispatcherTimer();
+        DispatcherTimer m_oTimer;
+        DispatcherTimer m_oTimer2;
+        DispatcherTimer m_oTimer3;
 
         public void DrawingFormNN()
         {
-            //InitializeComponent();
+            m_oTimer = new DispatcherTimer();
+
 
             m_oTimer.Tick += m_oTimer_Tick1NN;
             m_oTimer.Interval = new TimeSpan(0,0,0,0,300);
@@ -648,24 +621,20 @@ namespace Komiwojazer
 
         public void DrawingFormBF()
         {
-            //InitializeComponent();
-
+            m_oTimer2 = new DispatcherTimer();
             m_oTimer2.Tick += m_oTimer_Tick1BF;
             m_oTimer2.Interval = new TimeSpan(0, 0, 0, 0, 300);
-            //m_oTimer.Enabled = false;
             m_oTimer2.Start();
         }
 
         public void DrawingFormGreedy()
         {
+            m_oTimer3 = new DispatcherTimer();
             m_oTimer3.Tick += m_oTimer_Tick1Greedy;
             m_oTimer3.Interval = new TimeSpan(0, 0, 0, 0, 300);
-
             m_oTimer3.Start();
         }
 
-        // Enable the timer and call m_oTimer.Start () when
-        // you're ready to draw your lines.
         private IList<int> resultBF = null;
         private IList<int> resultNN = null;
         private IList<int> resultGreedy = null;
@@ -680,10 +649,6 @@ namespace Komiwojazer
 
         void m_oTimer_Tick1NN(object sender, EventArgs e)
         {
-            // Draw the next line here; disable
-            // the timer when done with drawing.
-            //m_oTimer.Start();
-            //for (int i = 0; i < result.Count - 1; i++)
             if (increment < resultNN.Count - 1)
             {
                 if (myPolygonNN != null)
@@ -766,6 +731,7 @@ namespace Komiwojazer
             {
                 CanvasImage.Children.Remove(myPolygonNN);
                 m_oTimer.Stop();
+                increment = 0;
             }
             
         }
@@ -853,16 +819,12 @@ namespace Komiwojazer
             {
                 CanvasImage.Children.Remove(myPolygonBF);
                 m_oTimer2.Stop();
+                increment2 = 0;
             }
-            //m_oTimer.Stop();
         }
 
         void m_oTimer_Tick1Greedy(object sender, EventArgs e)
         {
-            // Draw the next line here; disable
-            // the timer when done with drawing.
-            //m_oTimer.Start();
-            //for (int i = 0; i < result.Count - 1; i++)
             if (increment3 < resultGreedy.Count - 1)
             {
                 if (myPolygonGreedy != null)
@@ -945,6 +907,7 @@ namespace Komiwojazer
             {
                 CanvasImage.Children.Remove(myPolygonGreedy);
                 m_oTimer3.Stop();
+                increment3 = 0;
             }
 
         }

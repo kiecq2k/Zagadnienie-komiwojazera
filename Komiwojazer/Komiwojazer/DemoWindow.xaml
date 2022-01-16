@@ -44,7 +44,7 @@
 
                 <Label Grid.Row="1" Grid.Column="1" Content="Algorytm najbliższego sąsiada" FontSize="20" Margin="30,0,50,0" VerticalAlignment="Center" Height="37"/>
                 <Rectangle  Grid.Column="0" HorizontalAlignment="Left" Height="20" Margin="10,0,0,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Center" Width="20" Grid.ColumnSpan="2" Fill="OrangeRed"/>
-                <TextBox x:Name="road_alg1" Grid.Row="1" Grid.Column="2" Margin="18,9,2,8" IsReadOnly="True" Cursor="Arrow" />
+                <TextBox x:Name="road_alg1" Grid.Row="1" Grid.Column="2" Margin="18,9,2,8" FontSize="18" IsReadOnly="True" Cursor="Arrow" />
 
                 <Label Grid.Row="1" Grid.Column="3" Content="Punkt startowy: " FontSize="20" Margin="30,0,50,0" VerticalAlignment="Center" Height="37"/>
                 <Ellipse Grid.Row="1" Grid.Column="3" Height="20" Stroke="Black" Fill="Black" Width="20" Margin="140,0,50,0"/>
@@ -52,21 +52,20 @@
                 <Ellipse Grid.Row="2" Grid.Column="3" Height="20" Stroke="Black" Fill="SaddleBrown" Width="20" Margin="250,0,50,0"/>
                 <Label Grid.Row="2" Grid.Column="1" Content="Algorytm zachłanny" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="36" Width="280"></Label>
                 <Rectangle  Grid.Column="0" HorizontalAlignment="Left" Height="20" Margin="10,0,0,0" Grid.Row="2" Stroke="Black" VerticalAlignment="Center" Width="20" Grid.ColumnSpan="2" Fill="DeepSkyBlue"/>
-                <TextBox x:Name="road_alg2" Grid.Row="2" Grid.Column="2" Margin="18,8,2,8" IsReadOnly="True" Cursor="Arrow"/>
+                <TextBox x:Name="road_alg2" Grid.Row="2" Grid.Column="2" Margin="18,8,2,8" FontSize="18" IsReadOnly="True" Cursor="Arrow"/>
 
                 <Label Grid.Row="3" Grid.Column="1" Content="Algorytm najm. krawędzi" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="37" Width="280"></Label>
                 <Rectangle  Grid.Column="0" HorizontalAlignment="Left" Height="20" Margin="10,0,0,0" Grid.Row="3" Stroke="Black" VerticalAlignment="Center" Width="20" Grid.ColumnSpan="2" Fill="Green"/>
-                <TextBox x:Name="road_alg3" Grid.Row="3" Grid.Column="2" Margin="18,10,2,7" IsReadOnly="True" Cursor="Arrow"/>
+                <TextBox x:Name="road_alg3" Grid.Row="3" Grid.Column="2" Margin="18,10,2,7" FontSize="18" IsReadOnly="True" Cursor="Arrow"/>
 
             </Grid>
         </StackPanel>
 
         <StackPanel Grid.Column="1">
             <Button x:Name="startPointButton" Cursor="Hand" Content="Zaznacz punkt początkowy" Height="50" Margin="13,20" FontSize="22" Click="startPointButton_Click"></Button>
-            <Button x:Name="endPointsButton" Cursor="Hand" Content="Zaznacz resztę punktów" Height="50" Margin="13,20" FontSize="22" Click="endPointsButton_Click"></Button>
-            <Button x:Name="startAlgorithmButton" Cursor="Hand" Content="Znajdź trasę" Height="50" Margin="13,20" FontSize="22" Click="startAlgorithmButton_Click"></Button>
-            <Button x:Name="removePointsButton" Cursor="Hand" Content="Wyczyść punkty" Height="50" Margin="13,20" FontSize="22" Click="removePointsButton_Click"></Button>
-            <Button x:Name="removeRoadButton" Cursor="Hand" Content="Wyczyść trasę" Height="50" Margin="13,20" FontSize="22" Click="removeRoadButton_Click"></Button>
+            <Button x:Name="endPointsButton" IsEnabled="False" Cursor="Hand" Content="Zaznacz resztę punktów" Height="50" Margin="13,20" FontSize="22" Click="endPointsButton_Click"></Button>
+            <Button x:Name="startAlgorithmButton" IsEnabled="False" Cursor="Hand" Content="Znajdź trasę" Height="50" Margin="13,20" FontSize="22" Click="startAlgorithmButton_Click"></Button>
+            <Button x:Name="removePointsButton" Cursor="Hand" Content="Wyczyść mape" Height="50" Margin="13,20" FontSize="22" Click="removePointsButton_Click"></Button>
             <Button x:Name="endButton" Cursor="Hand" Content="Wyjście" Height="50" Margin="13,20" FontSize="22" Click="endButton_Click"></Button>
         </StackPanel>
     </Grid>

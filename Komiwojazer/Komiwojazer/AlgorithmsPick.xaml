@@ -11,7 +11,7 @@
         <TextBlock HorizontalAlignment="Left" Text="Algorytm najbliższego sąsiada" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,97,0,0" FontSize="25"/>
         <TextBlock HorizontalAlignment="Left" Text="Algorytm zachłanny" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,142,0,0" FontSize="25"/>
         <TextBlock HorizontalAlignment="Left" Text="Algorytm najmniejszej krawędzi" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,189,0,0" FontSize="25"/>
-        <CheckBox  x:Name="checkboxNN" HorizontalAlignment="Left" Margin="366,109,0,0"  VerticalAlignment="Top" />
+        <CheckBox  x:Name="checkboxNN" HorizontalAlignment="Left" Margin="366,109,0,0"  VerticalAlignment="Top" IsChecked="True"/>
         <CheckBox  x:Name="checkboxBF" HorizontalAlignment="Left" Margin="366,151,0,0" VerticalAlignment="Top" />
         <CheckBox  x:Name="checkbox3" HorizontalAlignment="Left" Margin="366,198,0,0" VerticalAlignment="Top"/>
         <Button x:Name="buttonAP" Content="OK" HorizontalAlignment="Center" Width="100" Height="25" Margin="0,240,0,0" VerticalAlignment="Top" Click="buttonAP_Click" />
