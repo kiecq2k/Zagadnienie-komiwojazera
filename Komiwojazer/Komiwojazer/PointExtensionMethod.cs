@@ -101,11 +101,11 @@ namespace Komiwojazer
                 return false;
             }
 
-            if ((point.X >= 176 && point.X <= 690 && point.Y >= 6 && point.Y <= 17) ||
-               (point.X >= 5 && point.X <= 690 && point.Y >= 91 && point.Y <= 103) ||
-               (point.X >= 5 && point.X <= 690 && point.Y >= 178 && point.Y <= 192) ||
-               (point.X >= 5 && point.X <= 690 && point.Y >= 269 && point.Y <= 280) ||
-               (point.X >= 5 && point.X <= 690 && point.Y >= 365 && point.Y <= 375))
+            if ((point.X >= 176 && point.X <= 678 && point.Y >= 6 && point.Y <= 17) ||
+               (point.X >= 5 && point.X <= 678 && point.Y >= 91 && point.Y <= 103) ||
+               (point.X >= 5 && point.X <= 678 && point.Y >= 178 && point.Y <= 192) ||
+               (point.X >= 5 && point.X <= 678 && point.Y >= 269 && point.Y <= 280) ||
+               (point.X >= 5 && point.X <= 678 && point.Y >= 365 && point.Y <= 375))
             {
                 return true;
             }
@@ -128,8 +128,8 @@ namespace Komiwojazer
                (point.X >= 308 && point.X <= 319 && point.Y >= 181 && point.Y <= 376) ||
                (point.X >= 81 && point.X <= 92 && point.Y >= 269 && point.Y <= 376) ||
                (point.X >= 522 && point.X <= 532 && point.Y >= 93 && point.Y <= 191) ||
-               (point.X >= 669 && point.X <= 686 && point.Y >= 0 && point.Y <= 105) ||
-               (point.X >= 669 && point.X <= 686 && point.Y >= 182 && point.Y <= 376))
+               (point.X >= 669 && point.X <= 678 && point.Y >= 0 && point.Y <= 105) ||
+               (point.X >= 669 && point.X <= 678 && point.Y >= 182 && point.Y <= 376))
             {
                 return true;
             }

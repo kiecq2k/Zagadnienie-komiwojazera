@@ -31,13 +31,15 @@ namespace Komiwojazer
         private IList<Points> _points = new List<Points>();
         private int _counter = 0;
         private IList<Point> _intersections = new List<Point>();
+        private IList<Point> _dots = new List<Point>();
+        private int _dotsCounter = 26;
         private IList<Point> _usedPoints = new List<Point>();
         private int _pointCounter = 27;
+        private int _zIndexCounter = 1;
 
         public IList<IList<int>> _adjMatrix = new List<IList<int>>();
         private AdjacencyGraph<int, TaggedEdge<int, int>> _graph = new AdjacencyGraph<int, TaggedEdge<int, int>>();
         private const int STARTING_POINT = 26;
- 
 
 
         public DemoWindow()
@@ -65,12 +67,33 @@ namespace Komiwojazer
         {
             this.Close();
         }
+        private bool crossCheck(Point p)
+        {
+            foreach (var cross in _intersections)
+            {
+                if (cross.X + 20 > p.X && cross.X - 20 < p.X &&
+                    cross.Y + 20 > p.Y && cross.Y - 20 < p.Y)
+                    return false;
+            }
+            return true;
+        }
+
+        private bool pointCheck(Point p)
+        {
+            for (int i = 26; i < _dots.Count; i++)
+            {
+                if (Math.Abs(_dots[i].X - p.X) < 18 && Math.Abs(_dots[i].Y - p.Y) < 18)
+                    return false;
+            }
+            return true;
+        }
 
         private void CanvasImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var coord = e.GetPosition(this.CanvasImage);
 
-            if (coord.IsOnRoad(Version.Demo))
+            if (coord.IsOnRoad(Version.Demo) &&
+                crossCheck(coord) && pointCheck(coord))
             {
                 if (_flag == 1)
                 {
@@ -86,7 +109,7 @@ namespace Komiwojazer
                     }
                     Canvas.SetLeft(_startingPoint.point, coord.X - 5);
                     Canvas.SetTop(_startingPoint.point, coord.Y - 5);
-                    
+                    Canvas.SetZIndex(_startingPoint.point, _zIndexCounter++);
                     pointPosition(e, _flag);
                     _startingPoint.Coor = coord;
                     _points.Add(new Points { Coor = _startingPoint.Coor });
@@ -103,7 +126,7 @@ namespace Komiwojazer
                     Canvas.SetTop(_points[_pointCounter].point, coord.Y - 5);
                     CanvasImage.Children.Add(_points[_pointCounter].point);
                     _points[_pointCounter].Coor = coord;
-                    
+                    Canvas.SetZIndex(_points[_pointCounter].point, _zIndexCounter++);
                     pointPosition(e, _flag);
                     _counter++;
                 }
@@ -215,14 +238,14 @@ namespace Komiwojazer
             // 1 row
             _intersections.Add(new Point(185.90000000000003, 10.400000000000002));
             _intersections.Add(new Point(425.1000000000001, 10.400000000000002));
-            _intersections.Add(new Point(677.9000000000001, 10.400000000000002));
+            _intersections.Add(new Point(678, 10.400000000000002));
 
             // 2 row
             _intersections.Add(new Point(14.700000000000035, 97.60000000000001));
             _intersections.Add(new Point(185.90000000000003, 97.60000000000001));
             _intersections.Add(new Point(425.1000000000001, 97.60000000000001));
             _intersections.Add(new Point(527.5, 97.60000000000001));
-            _intersections.Add(new Point(677.9000000000001, 97.60000000000001));
+            _intersections.Add(new Point(678, 97.60000000000001));
 
             // 3 row
             _intersections.Add(new Point(16.300000000000036, 184.8));
@@ -230,7 +253,7 @@ namespace Komiwojazer
             _intersections.Add(new Point(313.1000000000001, 184.8));
             _intersections.Add(new Point(425.1000000000001, 184.8));
             _intersections.Add(new Point(527.5, 184.8));
-            _intersections.Add(new Point(677.9000000000001, 184.8));
+            _intersections.Add(new Point(678, 184.8));
 
             // 4 row
             _intersections.Add(new Point(16.300000000000036, 275.2));
@@ -238,7 +261,7 @@ namespace Komiwojazer
             _intersections.Add(new Point(185.90000000000003, 275.2));
             _intersections.Add(new Point(313.1000000000001, 275.2));
             _intersections.Add(new Point(425.1000000000001, 275.2));
-            _intersections.Add(new Point(677.9000000000001, 275.2));
+            _intersections.Add(new Point(678, 275.2));
 
             // 5 row
             _intersections.Add(new Point(16.300000000000036, 369.6));
@@ -246,25 +269,13 @@ namespace Komiwojazer
             _intersections.Add(new Point(185.90000000000003, 369.6));
             _intersections.Add(new Point(315.50000000000006, 369.6));
             _intersections.Add(new Point(425.1000000000001, 369.6));
-            _intersections.Add(new Point(677.9000000000001, 369.6));
+            _intersections.Add(new Point(678, 369.6));
+
+            _dots = _intersections.ToList<Point>();
 
 
-            //foreach (var elem in _intersections)
-            //{
-            //    _startingPoint = new Points();
-            //    _startingPoint.point = new Ellipse();
-            //    _startingPoint.point.Width = 10;
-            //    _startingPoint.point.Height = 10;
-            //    _startingPoint.point.Fill = Brushes.Red;
-            //    CanvasImage.Children.Add(_startingPoint.point);
 
-            //    Canvas.SetLeft(_startingPoint.point, elem.X - 5);
-            //    Canvas.SetTop(_startingPoint.point, elem.Y - 5);
-            //}
-        
 
-            
-        
         }
 
 
@@ -279,17 +290,54 @@ namespace Komiwojazer
             int road1 = 0;
             int road2 = 0;
 
+            int debbug = -1;
+
+
             for (int i = 1; i < _intersections.Count; i++)
             {
-                if (pos.X > _intersections[i - 1].X && pos.X < _intersections[i].X &&
-                    Math.Abs(pos.Y - _intersections[i - 1].Y) < 7)
+                if (pos.X > _dots[i - 1].X && pos.X < _dots[i].X &&
+                    Math.Abs(pos.Y - _dots[i - 1].Y) < 8)
                 {
-                    road1 = (int)(Math.Abs(_intersections[i - 1].X - pos.X) * 0.4);
-                    road2 = (int)(Math.Abs(_intersections[i].X - pos.X) * 0.4);
+                    road1 = (int)(Math.Abs(_dots[i - 1].X - pos.X) * 0.4);
+                    road2 = (int)(Math.Abs(_dots[i].X - pos.X) * 0.4);
                     cross1 = i - 1;
                     cross2 = i;
                 }
+
             }
+            if (cross1 != -1)
+            {
+
+                for (int i = 26; i < _dots.Count; i++)
+                {
+                    debbug = 6;
+                    int dotsRoad = (int)(Math.Abs(_dots[i].X - pos.X) * 0.4);
+                    if (Math.Abs(pos.Y - _dots[i].Y) < 20/*&&(_dots[i].X > _intersections[cross1].X + 10 && _dots[i].X < _intersections[cross2].X- 10)*/)
+                    {
+                        if (_dots[i].X < pos.X)
+                        {
+                            if (dotsRoad < road1)
+                            {
+                                road1 = dotsRoad;
+                                cross1 = i;
+                            }
+
+                        }
+                        else
+                        {
+                            if (dotsRoad < road2)
+                            {
+                                road2 = dotsRoad;
+                                cross2 = i;
+                            }
+
+                        }
+                    }
+
+                }
+
+            }
+
             if (cross1 == -1)
             {
 
@@ -297,8 +345,8 @@ namespace Komiwojazer
                 double close2 = double.MaxValue;
                 for (int i = 0; i < _intersections.Count; i++)
                 {
-                    double x = Math.Abs(_intersections[i].X - pos.X);
-                    double y = Math.Abs(_intersections[i].Y - pos.Y);
+                    double x = Math.Abs(_dots[i].X - pos.X);
+                    double y = Math.Abs(_dots[i].Y - pos.Y);
                     double sum = x + y;
                     if (sum < close1)
                     {
@@ -316,35 +364,121 @@ namespace Komiwojazer
                         road2 = (int)(y * 0.4);
                     }
                 }
-                
+                int tmpcross1 = cross1;
+                int tmpcross2 = cross2;
+                int top;
+                int bottom;
+                if (tmpcross1 < tmpcross2)
+                {
+                    bottom = tmpcross2;
+                    top = tmpcross1;
+                }
+                else
+                {
+                    top = tmpcross2;
+                    bottom = tmpcross1;
+                }
+
+                for (int i = 26; i < _dots.Count; i++)
+                {
+
+                    int dotsRoad = (int)(Math.Abs(_dots[i].Y - pos.Y) * 0.4);
+                    if (Math.Abs(pos.X - _dots[i].X) < 20 /*&&( _dots[i].Y > _intersections[top].Y +5 && _dots[i].Y < _intersections[bottom].Y - 5)*/)
+                    {
+                        if (_dots[i].Y < pos.Y) // to znaczy ze wpisany jest pod juz obecnym
+                        {
+                            if (cross1 < cross2)
+                            {
+                                if (dotsRoad < road1)
+                                {
+                                    road1 = dotsRoad;
+                                    tmpcross1 = i;
+                                }
+                            }
+                            else if (cross1 > cross2)
+                            {
+                                if (dotsRoad < road2)
+                                {
+                                    road2 = dotsRoad;
+                                    tmpcross2 = i;
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            if (cross1 > cross2)
+                            {
+                                if (dotsRoad < road1)
+                                {
+                                    road1 = dotsRoad;
+                                    tmpcross1 = i;
+                                }
+                            }
+                            else
+                            {
+                                if (dotsRoad < road1)
+                                {
+                                    road2 = dotsRoad;
+                                    tmpcross2 = i;
+                                }
+                            }
+
+                        }
+                    }
+
+                }
+                cross1 = tmpcross1;
+                cross2 = tmpcross2;
+
             }
-            
+
+            if (road1 == 0) road1 = 1;
+            if (road2 == 0) road2 = 1;
 
 
             //add point to matrix and delete roads between crossroads
             int indexOfPoint;
-            if(flag == 1)
+            //if (_adjMatrix[cross1][cross2] == 0 && _adjMatrix[cross2][cross1] == 0)
             {
-                indexOfPoint = 26;
+                if (flag == 1)
+                {
+                    indexOfPoint = 26;
+                    _dots.Add(pos);
+
+                    _dotsCounter++;
+                }
+                else
+                {
+                    //if (_adjMatrix[cross1][cross2] == 0 && _adjMatrix[cross2][cross1] == 0)
+                    {
+                        indexOfPoint = _pointCounter++;
+                        _dots.Add(pos);
+                        _dotsCounter++;
+                        addToMatrix();
+                    }
+                }
+                int check = 0;
+                if (_adjMatrix[cross1][cross2] != 0)
+                {
+                    _adjMatrix[cross1][cross2] = 0;
+                    _adjMatrix[cross1][indexOfPoint] = road1;
+                    _adjMatrix[indexOfPoint][cross2] = road2;
+                    check = 1;
+                }
+                if (_adjMatrix[cross2][cross1] != 0)
+                {
+                    _adjMatrix[cross2][cross1] = 0;
+                    _adjMatrix[cross2][indexOfPoint] = road2;
+                    _adjMatrix[indexOfPoint][cross1] = road1;
+                    check = 1;
+                }
+                if (check == 0)
+                {
+                    MessageBox.Show("jeblo");
+                }
+                matrixToGraph();
             }
-            else
-            {
-                indexOfPoint = _pointCounter++;
-                addToMatrix();
-            }
-            if (_adjMatrix[cross1][cross2] != 0)
-            {
-                _adjMatrix[cross1][cross2] = 0;
-                _adjMatrix[cross1][indexOfPoint] = road1;
-                _adjMatrix[indexOfPoint][cross2] = road2;
-            }
-            if (_adjMatrix[cross2][cross1] != 0)
-            {
-                _adjMatrix[cross2][cross1] = 0;
-                _adjMatrix[cross2][indexOfPoint] = road2;
-                _adjMatrix[indexOfPoint][cross1] = road1;
-            }
-            matrixToGraph();
         }
 
         private void addToMatrix()
@@ -565,10 +699,10 @@ namespace Komiwojazer
                 {
                     Stroke = System.Windows.Media.Brushes.OrangeRed,
                     Fill = System.Windows.Media.Brushes.OrangeRed,
-                    X1 = point1Coor.X + (increment * 0.05),
-                    Y1 = point1Coor.Y + (increment * 0.05),
-                    X2 = point2Coor.X + (increment * 0.05),
-                    Y2 = point2Coor.Y + (increment * 0.05),
+                    X1 = point1Coor.X,
+                    Y1 = point1Coor.Y,
+                    X2 = point2Coor.X,
+                    Y2 = point2Coor.Y,
                     StrokeThickness = 4,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Bottom
@@ -653,10 +787,10 @@ namespace Komiwojazer
                 {
                     Stroke = System.Windows.Media.Brushes.DeepSkyBlue,
                     Fill = System.Windows.Media.Brushes.DeepSkyBlue,
-                    X1 = point1Coor.X + 4 + (increment2 * 0.05),
-                    Y1 = point1Coor.Y + 4 + (increment2 * 0.05),
-                    X2 = point2Coor.X + 4 + (increment2 * 0.05),
-                    Y2 = point2Coor.Y + 4 + (increment2 * 0.05),
+                    X1 = point1Coor.X + 4,
+                    Y1 = point1Coor.Y + 4,
+                    X2 = point2Coor.X + 4,
+                    Y2 = point2Coor.Y + 4,
                     StrokeThickness = 4,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Bottom
@@ -744,10 +878,10 @@ namespace Komiwojazer
                 {
                     Stroke = System.Windows.Media.Brushes.Green,
                     Fill = System.Windows.Media.Brushes.Green,
-                    X1 = point1Coor.X + (increment3 * 0.05),
-                    Y1 = point1Coor.Y + (increment3 * 0.05),
-                    X2 = point2Coor.X + (increment3 * 0.05),
-                    Y2 = point2Coor.Y + (increment3 * 0.05),
+                    X1 = point1Coor.X -4,
+                    Y1 = point1Coor.Y -4,
+                    X2 = point2Coor.X -4,
+                    Y2 = point2Coor.Y -4,
                     StrokeThickness = 4,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Bottom
@@ -764,26 +898,26 @@ namespace Komiwojazer
                 {
                     if (roznicaX > 0)
                     {
-                        Point2 = new System.Windows.Point(point2Coor.X + 20, point2Coor.Y + 10);
-                        Point3 = new System.Windows.Point(point2Coor.X + 20, point2Coor.Y - 10);
+                        Point2 = new System.Windows.Point(point2Coor.X-4 + 20, point2Coor.Y-4 + 10);
+                        Point3 = new System.Windows.Point(point2Coor.X-4 + 20, point2Coor.Y-4 - 10);
                     }
                     else
                     {
-                        Point2 = new System.Windows.Point(point2Coor.X - 20, point2Coor.Y + 10);
-                        Point3 = new System.Windows.Point(point2Coor.X - 20, point2Coor.Y - 10);
+                        Point2 = new System.Windows.Point(point2Coor.X-4 - 20, point2Coor.Y-4 + 10);
+                        Point3 = new System.Windows.Point(point2Coor.X-4 - 20, point2Coor.Y-4 - 10);
                     }
                 }
                 else
                 {
                     if (roznicaY > 0)
                     {
-                        Point2 = new System.Windows.Point(point2Coor.X - 10, point2Coor.Y + 20);
-                        Point3 = new System.Windows.Point(point2Coor.X + 10, point2Coor.Y + 20);
+                        Point2 = new System.Windows.Point(point2Coor.X-4 - 10, point2Coor.Y-4 + 20);
+                        Point3 = new System.Windows.Point(point2Coor.X-4 + 10, point2Coor.Y-4 + 20);
                     }
                     else
                     {
-                        Point3 = new System.Windows.Point(point2Coor.X + 10, point2Coor.Y - 20);
-                        Point2 = new System.Windows.Point(point2Coor.X - 10, point2Coor.Y - 20);
+                        Point3 = new System.Windows.Point(point2Coor.X-4 + 10, point2Coor.Y-4 - 20);
+                        Point2 = new System.Windows.Point(point2Coor.X-4 - 10, point2Coor.Y-4 - 20);
                     }
                 }
 
@@ -796,7 +930,7 @@ namespace Komiwojazer
                 myPolygonGreedy.VerticalAlignment = VerticalAlignment.Center;
 
                 PointCollection myPointCollection = new PointCollection();
-                System.Windows.Point Point1 = new System.Windows.Point(point2Coor.X, point2Coor.Y);
+                System.Windows.Point Point1 = new System.Windows.Point(point2Coor.X-4, point2Coor.Y-4);
                 myPointCollection.Add(Point1);
                 myPointCollection.Add(Point2);
                 myPointCollection.Add(Point3);
