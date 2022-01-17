@@ -201,16 +201,19 @@ namespace Komiwojazer
                 DrawingFormNN();
                 
             }
-            if (ap.checkboxBF.IsChecked == true)
+
+            if(ap.checkboxBF.IsChecked == true)
             {
                 resultBF = BruteForce();
                 DrawingFormBF();
             }
-            if (ap.checkbox3.IsChecked == true)
+            
+            if(ap.checkbox3.IsChecked == true)
             {
                 resultGreedy = Greedy();
                 DrawingFormGreedy();
             }
+
         }
 
         private void adjMatrixFill()
@@ -614,7 +617,7 @@ namespace Komiwojazer
 
 
             m_oTimer.Tick += m_oTimer_Tick1NN;
-            m_oTimer.Interval = new TimeSpan(0,0,0,0,300);
+            m_oTimer.Interval = new TimeSpan(0,0,0,0,500);
             
             m_oTimer.Start();
         }
@@ -623,7 +626,7 @@ namespace Komiwojazer
         {
             m_oTimer2 = new DispatcherTimer();
             m_oTimer2.Tick += m_oTimer_Tick1BF;
-            m_oTimer2.Interval = new TimeSpan(0, 0, 0, 0, 300);
+            m_oTimer2.Interval = new TimeSpan(0, 0, 0, 0, 500);
             m_oTimer2.Start();
         }
 
@@ -631,7 +634,7 @@ namespace Komiwojazer
         {
             m_oTimer3 = new DispatcherTimer();
             m_oTimer3.Tick += m_oTimer_Tick1Greedy;
-            m_oTimer3.Interval = new TimeSpan(0, 0, 0, 0, 300);
+            m_oTimer3.Interval = new TimeSpan(0, 0, 0, 0, 500);
             m_oTimer3.Start();
         }
 
@@ -651,6 +654,7 @@ namespace Komiwojazer
         {
             if (increment < resultNN.Count - 1)
             {
+
                 if (myPolygonNN != null)
                 {
                     CanvasImage.Children.Remove(myPolygonNN);
@@ -738,8 +742,9 @@ namespace Komiwojazer
 
         void m_oTimer_Tick1BF(object sender, EventArgs e)
         {
-            if (increment2 < resultBF.Count - 1)
+            if (increment2 < resultBF.Count - 1 && !m_oTimer.IsEnabled)
             {
+
                 if (myPolygonBF != null)
                 {
                     CanvasImage.Children.Remove(myPolygonBF);
@@ -815,7 +820,7 @@ namespace Komiwojazer
                 CanvasImage.Children.Add(line);
                 increment2++;
             }
-            else
+            else if(increment2 == resultBF.Count - 1)
             {
                 CanvasImage.Children.Remove(myPolygonBF);
                 m_oTimer2.Stop();
@@ -825,8 +830,9 @@ namespace Komiwojazer
 
         void m_oTimer_Tick1Greedy(object sender, EventArgs e)
         {
-            if (increment3 < resultGreedy.Count - 1)
+            if (increment3 < resultGreedy.Count - 1 && !m_oTimer2.IsEnabled)
             {
+
                 if (myPolygonGreedy != null)
                 {
                     CanvasImage.Children.Remove(myPolygonGreedy);
@@ -903,7 +909,7 @@ namespace Komiwojazer
                 CanvasImage.Children.Add(line);
                 increment3++;
             }
-            else
+            else if(increment3 == resultGreedy.Count - 1)
             {
                 CanvasImage.Children.Remove(myPolygonGreedy);
                 m_oTimer3.Stop();
