@@ -44,7 +44,7 @@ namespace Komiwojazer.Algorithms
 
             var sortedPaths = _paths.OrderBy(p => p.Distance).ToList();
 
-            int n = N - 26 + 1;
+            int n = N - 26;
             var dict = new Dictionary<int, int>();
 
             // 26 27 w slowniku
@@ -58,9 +58,20 @@ namespace Komiwojazer.Algorithms
                     !dict.ContainsValue(sortedPaths[i].To))
                 {
                     int value;
-                    if((!dict.TryGetValue(sortedPaths[i].To, out value) ||
-                       value != sortedPaths[i].From) && KrawedzOK(dict, sortedPaths, i))
+                    if(n > 2)
+                    {
+                        if ((!dict.TryGetValue(sortedPaths[i].To, out value) ||
+                            value != sortedPaths[i].From) && KrawedzOK(dict, sortedPaths, i))
+                        {
+                            dict.Add(sortedPaths[i].From, sortedPaths[i].To);
+                        }
+                            
+                    }
+                    else
+                    {
                         dict.Add(sortedPaths[i].From, sortedPaths[i].To);
+                    }
+                    
                 }   
             }
 
@@ -98,8 +109,11 @@ namespace Komiwojazer.Algorithms
             for(int i = 0; i < list.Count - 1; i++)
             {
                 var dijkstra1 = new Dijkstra(G).dijkstra(list[i]);
+                
                 result.AddRange(dijkstra1[list[i + 1]].Route);
             }
+
+            RemoveDuplication(ref result);
 
             var dijkstra2 = new Dijkstra(G).dijkstra(result[result.Count - 1]);
             result.AddRange(dijkstra2[26].Route);
@@ -124,8 +138,50 @@ namespace Komiwojazer.Algorithms
                 }
             }
 
+            var list = new List<int>();
+            int index = 26;
+            int dictCopySize = dictCopy.Count;
+
+            try
+            {
+                while (dictCopy.Count > 0)
+                {
+                    list.Add(index);
+                    var to = dictCopy[index];
+                    dictCopy.Remove(index);
+                    index = to;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            
+
             int n = N - 26;
-            return (dictCopy.Count == n);
+            return (dictCopySize == n);
+        }
+
+        private void RemoveDuplication(ref List<int> result)
+        {
+            int n = N - 26;
+            var temp = new List<int>();
+            int index = result.Count - 1;
+
+            for(int i = 0;i < result.Count; i++)
+            {
+                if(result[i] >= 26 && !temp.Contains(result[i]))
+                    temp.Add(result[i]);
+
+                if (temp.Count == n)
+                {
+                    index = i;
+                    break;
+                }
+                    
+            }
+
+            result = result.Take(index + 1).ToList();
         }
         
     }
