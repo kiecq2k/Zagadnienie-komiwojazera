@@ -42,6 +42,7 @@ namespace Komiwojazer
         public IList<IList<int>> _startingAdjMatrix = new List<IList<int>>();
         private AdjacencyGraph<int, TaggedEdge<int, int>> _graph = new AdjacencyGraph<int, TaggedEdge<int, int>>();
         private const int STARTING_POINT = 26;
+        private const int SPEED = 500;
 
 
         public DemoWindow()
@@ -617,7 +618,7 @@ namespace Komiwojazer
 
 
             m_oTimer.Tick += m_oTimer_Tick1NN;
-            m_oTimer.Interval = new TimeSpan(0,0,0,0,500);
+            m_oTimer.Interval = new TimeSpan(0,0,0,0,SPEED);
             
             m_oTimer.Start();
         }
@@ -626,7 +627,7 @@ namespace Komiwojazer
         {
             m_oTimer2 = new DispatcherTimer();
             m_oTimer2.Tick += m_oTimer_Tick1BF;
-            m_oTimer2.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            m_oTimer2.Interval = new TimeSpan(0, 0, 0, 0, SPEED);
             m_oTimer2.Start();
         }
 
@@ -634,7 +635,7 @@ namespace Komiwojazer
         {
             m_oTimer3 = new DispatcherTimer();
             m_oTimer3.Tick += m_oTimer_Tick1Greedy;
-            m_oTimer3.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            m_oTimer3.Interval = new TimeSpan(0, 0, 0, 0, SPEED);
             m_oTimer3.Start();
         }
 
