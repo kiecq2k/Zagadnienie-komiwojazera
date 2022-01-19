@@ -33,13 +33,11 @@ namespace Komiwojazer
         private int _counter = 0;
         private IList<Point> _intersections = new List<Point>();
         private IList<Point> _dots = new List<Point>();
-        //private int _dotsCounter = 26;
-        //private IList<Point> _usedPoints = new List<Point>();
         private int _pointCounter = 27;
         private int _zIndexCounter = 1;
 
-        public IList<IList<int>> _adjMatrix = new List<IList<int>>();
-        public IList<IList<int>> _startingAdjMatrix = new List<IList<int>>();
+        private IList<IList<int>> _adjMatrix = new List<IList<int>>();
+        private IList<IList<int>> _startingAdjMatrix = new List<IList<int>>();
         private AdjacencyGraph<int, TaggedEdge<int, int>> _graph = new AdjacencyGraph<int, TaggedEdge<int, int>>();
         private const int STARTING_POINT = 26;
         private const int SPEED = 500;
@@ -49,10 +47,17 @@ namespace Komiwojazer
         {
             InitializeComponent();
             FillIntersections();
-            graphFillMatrixStartup();
+            adjMatrixFill();
+            addToMatrix();
+            
             for (int i = 0; i < 26; i++)
             {
                 _points.Add(new Points { Coor = _intersections[i] });
+            }
+            for (int i = 0; i < 27; i++)
+            {
+                _startingAdjMatrix.Add(new List<int>());
+                _startingAdjMatrix[i] = new List<int>(_adjMatrix[i]);
             }
         }
 
@@ -268,14 +273,10 @@ namespace Komiwojazer
                 }
             }
             _graph = graph;
-            addToMatrix();
+            
 
 
-            for (int i = 0; i < 27; i++)
-            {
-                _startingAdjMatrix.Add(new List<int>());
-                _startingAdjMatrix[i] = new List<int>(_adjMatrix[i]);
-            }
+            
         }
 
         private void FillIntersections()
@@ -317,6 +318,7 @@ namespace Komiwojazer
             _intersections.Add(new Point(678, 369.6));
 
             _dots = _intersections.ToList<Point>();
+            
         }
 
 
