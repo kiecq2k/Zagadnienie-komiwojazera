@@ -181,6 +181,9 @@ namespace Komiwojazer
             startAlgorithmButton.IsEnabled = false;
             startPointButton.IsEnabled = true;
             removePointsButton.IsEnabled = false;
+            checkboxNN.IsChecked = false;
+            checkboxBF.IsChecked = false;
+            checkbox3.IsChecked = false;
             for (int i = 0; i < 27; i++)
             {
                 _adjMatrix.Add(new List<int>());
@@ -201,27 +204,29 @@ namespace Komiwojazer
                 MessageBox.Show("Nie wybrano punktów");
                 return;
             }
-            AlgorithmsPick ap = new AlgorithmsPick();
+            int buttonCheck = 0;
 
-            if (ap.checkboxNN.IsChecked == true)
+            if (checkboxNN.IsChecked == true)
             {
                 resultNN = NajblizszySasiad();
                 DrawingFormNN();
-                
+                buttonCheck = 1;
             }
 
-            if(ap.checkboxBF.IsChecked == true)
+            if(checkboxBF.IsChecked == true)
             {
                 resultBF = BruteForce();
                 DrawingFormBF();
+                buttonCheck = 1;
             }
             
-            if(ap.checkbox3.IsChecked == true)
+            if(checkbox3.IsChecked == true)
             {
                 resultGreedy = Greedy();
                 DrawingFormGreedy();
+                buttonCheck = 1;
             }
-
+            if (buttonCheck == 1) removePointsButton.IsEnabled = false;
         }
 
         private void adjMatrixFill()
@@ -644,7 +649,12 @@ namespace Komiwojazer
                 m_oTimer.Stop();
                 increment = 0;
             }
-            
+
+            if (!m_oTimer.IsEnabled && !m_oTimer2.IsEnabled && !m_oTimer3.IsEnabled)
+            {
+                removePointsButton.IsEnabled = true;
+            }
+
         }
 
         void m_oTimer_Tick1BF(object sender, EventArgs e)
@@ -733,6 +743,10 @@ namespace Komiwojazer
                 m_oTimer2.Stop();
                 increment2 = 0;
             }
+            if (!m_oTimer.IsEnabled && !m_oTimer2.IsEnabled && !m_oTimer3.IsEnabled)
+            {
+                removePointsButton.IsEnabled = true;
+            }
         }
 
         void m_oTimer_Tick1Greedy(object sender, EventArgs e)
@@ -819,6 +833,11 @@ namespace Komiwojazer
                 CanvasImage.Children.Remove(myPolygonGreedy);
                 m_oTimer3.Stop();
                 increment3 = 0;
+            }
+
+            if(!m_oTimer.IsEnabled && !m_oTimer2.IsEnabled && !m_oTimer3.IsEnabled)
+            {
+                removePointsButton.IsEnabled = true;
             }
 
         }
