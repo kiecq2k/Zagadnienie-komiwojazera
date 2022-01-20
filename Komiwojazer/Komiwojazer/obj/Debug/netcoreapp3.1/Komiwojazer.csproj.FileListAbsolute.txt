@@ -174,3 +174,5 @@ C:\Users\chudy\source\repos\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj
 C:\Users\barto\Documents\University\semestr5\ProjektZespolowy\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj\Debug\netcoreapp3.1\AlgorithmsPick.g.cs
 C:\Users\barto\Documents\University\semestr5\ProjektZespolowy\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj\Debug\netcoreapp3.1\AlgorithmsPick.baml
 C:\Users\barto\Documents\University\semestr5\ProjektZespolowy\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj\Debug\netcoreapp3.1\Komiwojazer.csproj.AssemblyReference.cache
+C:\Users\chudy\source\repos\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj\Debug\netcoreapp3.1\AlgorithmsPickFull.g.cs
+C:\Users\chudy\source\repos\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj\Debug\netcoreapp3.1\AlgorithmsPickFull.baml

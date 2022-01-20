@@ -38,7 +38,7 @@ namespace Komiwojazer
 
         private IList<IList<int>> _adjMatrix = new List<IList<int>>();
         private IList<IList<int>> _startingAdjMatrix = new List<IList<int>>();
-        private AdjacencyGraph<int, TaggedEdge<int, int>> _graph = new AdjacencyGraph<int, TaggedEdge<int, int>>();
+        
         private const int STARTING_POINT = 26;
         private const int SPEED = 500;
 
@@ -116,6 +116,7 @@ namespace Komiwojazer
                     _points.Add(new Points { Coor = _startingPoint.Coor });
                     endPointsButton.IsEnabled = true;
                     startPointButton.IsEnabled = false;
+                    removePointsButton.IsEnabled = true;
                     _flag = 2;
                 }
                 else if (_flag == 2)
@@ -179,6 +180,7 @@ namespace Komiwojazer
             endPointsButton.IsEnabled = false;
             startAlgorithmButton.IsEnabled = false;
             startPointButton.IsEnabled = true;
+            removePointsButton.IsEnabled = false;
             for (int i = 0; i < 27; i++)
             {
                 _adjMatrix.Add(new List<int>());
@@ -238,46 +240,6 @@ namespace Komiwojazer
             
         }
 
-        private void graphFillMatrixStartup()
-        {
-           
-            IList<TaggedEdge<int, int>> edge = new List<TaggedEdge<int, int>>();
-            adjMatrixFill();
-            IList<int> vertex = new List<int>();
-            for (int i = 0; i < _adjMatrix.Count; i++)
-            {
-                vertex.Add(i);
-            }
-            var graph = new AdjacencyGraph<int, TaggedEdge<int, int>>();
-            for (int i = 0; i < _adjMatrix.Count; i++)
-            {
-                graph.AddVertex(vertex[i]);
-            }
-
-            for (int i = 0; i < _adjMatrix.Count; i++)
-            {
-                for (int j = 0; j < _adjMatrix[i].Count; j++)
-                {
-                    if (_adjMatrix[i][j] != 0)
-                    {
-                        edge.Add(new TaggedEdge<int, int>(vertex[i], vertex[j], _adjMatrix[i][j]));
-                    }
-                }
-            }
-
-            foreach (var elem in edge)
-            {
-                if(elem != null)
-                {
-                    graph.AddEdge(elem);
-                }
-            }
-            _graph = graph;
-            
-
-
-            
-        }
 
         private void FillIntersections()
         {
@@ -320,7 +282,6 @@ namespace Komiwojazer
             _dots = _intersections.ToList<Point>();
             
         }
-
 
         void pointPosition(MouseButtonEventArgs e, int flag)
         {
@@ -450,13 +411,9 @@ namespace Komiwojazer
                 }
                 cross1 = tmpcross1;
                 cross2 = tmpcross2;
-
             }
-
             if (road1 == 0) road1 = 1;
             if (road2 == 0) road2 = 1;
-
-
             //add point to matrix and delete roads between crossroads
             int indexOfPoint;
             if (flag == 1)
@@ -489,8 +446,6 @@ namespace Komiwojazer
             {
                 MessageBox.Show("Blad dodawania punktow");
             }
-            //matrixToGraph();
-
         }
 
         private void addToMatrix()
@@ -506,42 +461,7 @@ namespace Komiwojazer
             }
         }
 
-        private void matrixToGraph()
-        {
-           
-            //IList<TaggedEdge<int, int>> edge = new List<TaggedEdge<int, int>>();
-            //IList<int> vertex = new List<int>();
-            //for (int i = 0; i < _adjMatrix.Count; i++)
-            //{
-            //    vertex.Add(i);
-            //}
-            //var graphTMP = new AdjacencyGraph<int, TaggedEdge<int, int>>();
-            //for (int i = 0; i < _adjMatrix.Count; i++)
-            //{
-            //    graphTMP.AddVertex(vertex[i]);
-            //}
-
-            //for (int i = 0; i < _adjMatrix.Count; i++)
-            //{
-            //    for (int j = 0; j < _adjMatrix[i].Count; j++)
-            //    {
-            //        if (_adjMatrix[i][j] != 0)
-            //        {
-            //            edge.Add(new TaggedEdge<int, int>(vertex[i], vertex[j], _adjMatrix[i][j]));
-            //        }
-            //    }
-            //}
-
-            //foreach (var elem in edge)
-            //{
-            //    if (elem != null)
-            //    {
-            //        graphTMP.AddEdge(elem);
-            //    }
-            //}
-            //_graph = graphTMP;
-            
-        }
+        
 
         private IList<int> NajblizszySasiad()
         {
@@ -567,19 +487,6 @@ namespace Komiwojazer
             var result = greedy.NajmniejszaKrawedz();
             road_alg3.Text += Distance(result);
             return result;
-        }
-
-
-
-        private bool AllPointsVisited()
-        {
-            for(int i=27; i <_points.Count; i++)
-            {
-                if (!_points[i].Visited)
-                    return false;
-            }
-
-            return true;
         }
 
         public int Distance(IList<int> result)
@@ -610,18 +517,15 @@ namespace Komiwojazer
             return result;
         }
 
-        DispatcherTimer m_oTimer;
-        DispatcherTimer m_oTimer2;
-        DispatcherTimer m_oTimer3;
+        DispatcherTimer m_oTimer = new DispatcherTimer();
+        DispatcherTimer m_oTimer2 = new DispatcherTimer();
+        DispatcherTimer m_oTimer3 = new DispatcherTimer();
 
         public void DrawingFormNN()
         {
             m_oTimer = new DispatcherTimer();
-
-
             m_oTimer.Tick += m_oTimer_Tick1NN;
             m_oTimer.Interval = new TimeSpan(0,0,0,0,SPEED);
-            
             m_oTimer.Start();
         }
 
@@ -833,7 +737,7 @@ namespace Komiwojazer
 
         void m_oTimer_Tick1Greedy(object sender, EventArgs e)
         {
-            if (increment3 < resultGreedy.Count - 1 && !m_oTimer2.IsEnabled)
+            if (increment3 < resultGreedy.Count - 1 && !m_oTimer2.IsEnabled && !m_oTimer.IsEnabled)
             {
 
                 if (myPolygonGreedy != null)
@@ -849,10 +753,10 @@ namespace Komiwojazer
                 {
                     Stroke = System.Windows.Media.Brushes.Green,
                     Fill = System.Windows.Media.Brushes.Green,
-                    X1 = point1Coor.X -4,
-                    Y1 = point1Coor.Y -4,
-                    X2 = point2Coor.X -4,
-                    Y2 = point2Coor.Y -4,
+                    X1 = point1Coor.X - 4,
+                    Y1 = point1Coor.Y - 4,
+                    X2 = point2Coor.X - 4,
+                    Y2 = point2Coor.Y - 4,
                     StrokeThickness = 4,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Bottom
@@ -863,8 +767,6 @@ namespace Komiwojazer
 
                 System.Windows.Point Point2;
                 System.Windows.Point Point3;
-
-
                 if (Math.Abs(roznicaX) > Math.Abs(roznicaY))
                 {
                     if (roznicaX > 0)
@@ -920,12 +822,5 @@ namespace Komiwojazer
             }
 
         }
-
-        private double GetDistance(Point p1, Point p2) => Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));
     }
 }
-
-
-
-
- 

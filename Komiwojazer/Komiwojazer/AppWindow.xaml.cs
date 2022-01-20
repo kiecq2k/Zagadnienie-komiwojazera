@@ -40,6 +40,7 @@ namespace Komiwojazer
         private IList<IList<int>> _adjMatrix = new List<IList<int>>();
         private IList<IList<int>> _startingAdjMatrix = new List<IList<int>>();
         private IList<Tuple<int, int>> _verticalCross = new List<Tuple<int, int>>();
+        private const int SPEED = 500;
 
         public AppWindow()
         {
@@ -97,8 +98,8 @@ namespace Komiwojazer
         {
             foreach (var cross in _intersections)
             {
-                if (cross.X + 20 > p.X && cross.X - 20 < p.X &&
-                    cross.Y + 20 > p.Y && cross.Y - 20 < p.Y)
+                if (cross.X + 5 > p.X && cross.X-5 < p.X &&
+                    cross.Y + 5 > p.Y && cross.Y-5 < p.Y)
                     return false;
             }
             return true;
@@ -108,7 +109,7 @@ namespace Komiwojazer
         {
             for (int i = 26; i < _dots.Count; i++)
             {
-                if (Math.Abs(_dots[i].X - p.X) < 18 && Math.Abs(_dots[i].Y - p.Y) < 18)
+                if (Math.Abs(_dots[i].X - p.X) < 10 && Math.Abs(_dots[i].Y - p.Y) < 10)
                     return false;
             }
             return true;
@@ -322,16 +323,50 @@ namespace Komiwojazer
 
         private void endPointsButton_Click(object sender, RoutedEventArgs e)
         {
-            _flag = 2;
+            if (_startingPoint == null)
+            {
+                MessageBox.Show("Najpierw wybierz punkt startowy");
+            }
+            else
+            {
+                _flag = 2;
+
+            }
         }
 
         private void removePointsButton_Click(object sender, RoutedEventArgs e)
         {
+            foreach (var line in _lines)
+            {
+                CanvasImage.Children.Remove(line);
+            }
             foreach (var point in _points)
             {
                 CanvasImage.Children.Remove(point.point);
             }
+            CanvasImage.Children.Remove(_startingPoint.point);
+            road_alg1.Clear();
+            road_alg2.Clear();
+            road_alg3.Clear();
+            _points.Clear();
+            _adjMatrix.Clear();
+            _startingPoint = null;
+            _flag = -1;
             _counter = 0;
+            _pointCounter = 133;
+            endPointsButton.IsEnabled = false;
+            startAlgorithmButton.IsEnabled = false;
+            startPointButton.IsEnabled = true;
+            for (int i = 0; i < 133; i++)
+            {
+                _adjMatrix.Add(new List<int>());
+                _adjMatrix[i] = new List<int>(_startingAdjMatrix[i]);
+            }
+            _dots = _intersections.ToList();
+            for (int i = 0; i < 132; i++)
+            {
+                _points.Add(new Points { Coor = _intersections[i] });
+            }
         }
 
         private void startAlgorithmButton_Click(object sender, RoutedEventArgs e)
@@ -339,17 +374,90 @@ namespace Komiwojazer
             if (_startingPoint == null || _counter < 1)
             {
                 MessageBox.Show("Nie wybrano punktów");
+                return;
             }
-            else { DrawPath(); }
+            AlgorithmsPickFull ap = new AlgorithmsPickFull();
+
+            if(ap.radioButtonNN.IsChecked == true)
+            {
+                resultNN = NajblizszySasiad();
+                DrawingFormNN();
+            }
+            else if(ap.radioButtonBF.IsChecked == true)
+            {
+                resultBF = BruteForce();
+                DrawingFormBF();
+            }
+            else if(ap.radioButton3.IsChecked == true)
+            {
+                resultGreedy = Greedy();
+                DrawingFormGreedy();
+            }
         }
 
 
-        private void removeRoadButton_Click(object sender, RoutedEventArgs e)
+     
+        private IList<int> NajblizszySasiad()
         {
-            foreach (var line in _lines)
+            // var dijkstra = new Dijkstra(_adjMatrix);
+            // var result = dijkstra.GetPath();
+            //
+            // road_alg1.Text += Distance(result);
+            //return result;
+
+            IList<int> doUsuniecia = new List<int>();
+            return doUsuniecia;
+        }
+
+        public IList<int> BruteForce()
+        {
+            //var bruteForce = new BruteForce(_adjMatrix);
+            //var result = bruteForce.GetPathBF2();
+            //var result2 = DistanceBF(result);
+            //road_alg2.Text += Distance(result2);
+            //return result2;
+
+            IList<int> doUsuniecia = new List<int>();
+            return doUsuniecia;
+        }
+
+        public IList<int> Greedy()
+        {
+            //var greedy = new Greedy(_adjMatrix);
+            //var result = greedy.NajmniejszaKrawedz();
+            //road_alg3.Text += Distance(result);
+            //return result;
+
+            IList<int> doUsuniecia = new List<int>();
+            return doUsuniecia;
+        }
+
+        public int Distance(IList<int> result)
+        {
+            int distance = 0;
+            for (int i = 1; i < result.Count(); i++)
             {
-                CanvasImage.Children.Remove(line);
+                distance += _adjMatrix[result[i - 1]][result[i]];
             }
+            return distance;
+        }
+
+        public IList<int> DistanceBF(List<IList<int>> drogiBF)
+        {
+            var result = new List<int>();
+            int distance = int.MaxValue;
+            int minDistance = int.MaxValue;
+            foreach (var droga in drogiBF)
+            {
+                distance = Distance(droga);
+                if (distance < minDistance)
+                {
+                    result.Clear();
+                    result.AddRange(droga);
+                    minDistance = distance;
+                }
+            }
+            return result;
         }
 
         private void FillIntersections()
@@ -506,102 +614,6 @@ namespace Komiwojazer
 
         }
 
-        private void DrawPath()
-        {
-            var np1 = GetNearestPoint(_startingPoint.Coor);
-            var line = new Line
-            {
-                Stroke = System.Windows.Media.Brushes.Red,
-                Fill = System.Windows.Media.Brushes.Red,
-                X1 = _startingPoint.Coor.X,
-                Y1 = _startingPoint.Coor.Y,
-                X2 = np1.X,
-                Y2 = np1.Y,
-                StrokeThickness = 4,
-                HorizontalAlignment = HorizontalAlignment.Right,
-                VerticalAlignment = VerticalAlignment.Bottom
-
-            };
-
-            _lines.Add(line);
-            CanvasImage.Children.Add(line);
-            _usedPoints.Add(_startingPoint.Coor);
-
-            Point last = np1;
-
-            while (!AllPointsUsed())
-            {
-                var line2 = new Line
-                {
-                    Stroke = System.Windows.Media.Brushes.Red,
-                    Fill = System.Windows.Media.Brushes.Red,
-                    X1 = last.X,
-                    Y1 = last.Y,
-                    StrokeThickness = 4,
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Bottom
-                };
-
-                last = GetNearestPoint(last);
-                line2.X2 = last.X;
-                line2.Y2 = last.Y;
-
-                _lines.Add(line2);
-                CanvasImage.Children.Add(line2);
-            }
-        }
-
-        private Point GetNearestPoint(Point point)
-        {
-            double minDistance = 1000000;
-            Point minPoint;
-
-            foreach (var p in _intersections)
-            {
-                double distance = GetDistance(point, p);
-                if (p != point && distance < minDistance && !_usedPoints.Contains(p))
-                {
-                    minDistance = distance;
-                    minPoint = p;
-                }
-            }
-
-            foreach (var p in _points)
-            {
-                double distance = GetDistance(point, p.Coor);
-                if (p.Coor != point && distance < minDistance && !_usedPoints.Contains(p.Coor))
-                {
-                    minDistance = distance;
-                    minPoint = p.Coor;
-                }
-            }
-
-            foreach (var p in _points)
-            {
-                if (p.Coor == minPoint)
-                    p.Visited = true;
-            }
-
-            _usedPoints.Add(minPoint);
-
-            return minPoint;
-        }
-
-        private double GetDistance(Point p1, Point p2) => Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));
-
-        private bool AllPointsUsed()
-        {
-            foreach (var point in _points)
-            {
-                if (!point.Visited)
-                    return false;
-            }
-
-            return true;
-        }
-
-
-
         private void matrixFill()
         {
             string[] lines = File.ReadAllLines("graph_matrix_full.txt");
@@ -615,6 +627,306 @@ namespace Komiwojazer
                     _adjMatrix[i].Add(int.Parse(numberAsString));
                 }
             }
+        }
+
+        DispatcherTimer m_oTimer = new DispatcherTimer();
+        DispatcherTimer m_oTimer2 = new DispatcherTimer();
+        DispatcherTimer m_oTimer3 = new DispatcherTimer();
+        public void DrawingFormNN()
+        {
+            m_oTimer.Tick += m_oTimer_Tick1NN;
+            m_oTimer.Interval = new TimeSpan(0, 0, 0, 0, SPEED);
+            m_oTimer.Start();
+        }
+
+        public void DrawingFormBF()
+        {
+            m_oTimer2.Tick += m_oTimer_Tick1BF;
+            m_oTimer2.Interval = new TimeSpan(0, 0, 0, 0, SPEED);
+            m_oTimer2.Start();
+        }
+
+        public void DrawingFormGreedy()
+        {
+            m_oTimer3.Tick += m_oTimer_Tick1Greedy;
+            m_oTimer3.Interval = new TimeSpan(0, 0, 0, 0, SPEED);
+            m_oTimer3.Start();
+        }
+
+        private IList<int> resultBF = null;
+        private IList<int> resultNN = null;
+        private IList<int> resultGreedy = null;
+
+        private int increment = 0;
+        private int increment2 = 0;
+        private int increment3 = 0;
+
+        Polygon myPolygonBF = null;
+        Polygon myPolygonNN = null;
+        Polygon myPolygonGreedy = null;
+
+        void m_oTimer_Tick1NN(object sender, EventArgs e)
+        {
+            if (increment < resultNN.Count - 1)
+            {
+
+                if (myPolygonNN != null)
+                {
+                    CanvasImage.Children.Remove(myPolygonNN);
+                }
+                var point1Index = resultNN[increment];
+                var point1Coor = _points[point1Index].Coor;
+                var point2Index = resultNN[increment + 1];
+                var point2Coor = _points[point2Index].Coor;
+
+                var line = new Line
+                {
+                    Stroke = System.Windows.Media.Brushes.OrangeRed,
+                    Fill = System.Windows.Media.Brushes.OrangeRed,
+                    X1 = point1Coor.X,
+                    Y1 = point1Coor.Y,
+                    X2 = point2Coor.X,
+                    Y2 = point2Coor.Y,
+                    StrokeThickness = 4,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Bottom
+
+                };
+                double roznicaX = point1Coor.X - point2Coor.X;
+                double roznicaY = point1Coor.Y - point2Coor.Y;
+
+                System.Windows.Point Point2;
+                System.Windows.Point Point3;
+
+
+                if (Math.Abs(roznicaX) > Math.Abs(roznicaY))
+                {
+                    if (roznicaX > 0)
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X + 20, point2Coor.Y + 10);
+                        Point3 = new System.Windows.Point(point2Coor.X + 20, point2Coor.Y - 10);
+                    }
+                    else
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X - 20, point2Coor.Y + 10);
+                        Point3 = new System.Windows.Point(point2Coor.X - 20, point2Coor.Y - 10);
+                    }
+                }
+                else
+                {
+                    if (roznicaY > 0)
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X - 10, point2Coor.Y + 20);
+                        Point3 = new System.Windows.Point(point2Coor.X + 10, point2Coor.Y + 20);
+                    }
+                    else
+                    {
+                        Point3 = new System.Windows.Point(point2Coor.X + 10, point2Coor.Y - 20);
+                        Point2 = new System.Windows.Point(point2Coor.X - 10, point2Coor.Y - 20);
+                    }
+                }
+
+
+                myPolygonNN = new Polygon();
+                myPolygonNN.Stroke = System.Windows.Media.Brushes.Black;
+                myPolygonNN.Fill = System.Windows.Media.Brushes.OrangeRed;
+                myPolygonNN.StrokeThickness = 2;
+                myPolygonNN.HorizontalAlignment = HorizontalAlignment.Left;
+                myPolygonNN.VerticalAlignment = VerticalAlignment.Center;
+
+                PointCollection myPointCollection = new PointCollection();
+                System.Windows.Point Point1 = new System.Windows.Point(point2Coor.X, point2Coor.Y);
+                myPointCollection.Add(Point1);
+                myPointCollection.Add(Point2);
+                myPointCollection.Add(Point3);
+                myPolygonNN.Points = myPointCollection;
+                CanvasImage.Children.Add(myPolygonNN);
+
+                _lines.Add(line);
+                CanvasImage.Children.Add(line);
+                increment++;
+            }
+            else
+            {
+                CanvasImage.Children.Remove(myPolygonNN);
+                m_oTimer.Stop();
+                increment = 0;
+            }
+
+        }
+
+        void m_oTimer_Tick1BF(object sender, EventArgs e)
+        {
+            if (increment2 < resultBF.Count - 1)
+            {
+
+                if (myPolygonBF != null)
+                {
+                    CanvasImage.Children.Remove(myPolygonBF);
+                }
+                var point1Index = resultBF[increment2];
+                var point1Coor = _points[point1Index].Coor;
+                var point2Index = resultBF[increment2 + 1];
+                var point2Coor = _points[point2Index].Coor;
+
+                var line = new Line
+                {
+                    Stroke = System.Windows.Media.Brushes.DeepSkyBlue,
+                    Fill = System.Windows.Media.Brushes.DeepSkyBlue,
+                    X1 = point1Coor.X + 4,
+                    Y1 = point1Coor.Y + 4,
+                    X2 = point2Coor.X + 4,
+                    Y2 = point2Coor.Y + 4,
+                    StrokeThickness = 4,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Bottom
+
+                };
+
+                double roznicaX = point1Coor.X - point2Coor.X;
+                double roznicaY = point1Coor.Y - point2Coor.Y;
+
+                System.Windows.Point Point2;
+                System.Windows.Point Point3;
+
+                if (Math.Abs(roznicaX) > Math.Abs(roznicaY))
+                {
+                    if (roznicaX > 0)
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X + 4 + 20, point2Coor.Y + 4 + 10);
+                        Point3 = new System.Windows.Point(point2Coor.X + 4 + 20, point2Coor.Y + 4 - 10);
+                    }
+                    else
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X + 4 - 20, point2Coor.Y + 4 + 10);
+                        Point3 = new System.Windows.Point(point2Coor.X + 4 - 20, point2Coor.Y + 4 - 10);
+                    }
+                }
+                else
+                {
+                    if (roznicaY > 0)
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X + 4 - 10, point2Coor.Y + 4 + 20);
+                        Point3 = new System.Windows.Point(point2Coor.X + 4 + 10, point2Coor.Y + 4 + 20);
+                    }
+                    else
+                    {
+                        Point3 = new System.Windows.Point(point2Coor.X + 4 + 10, point2Coor.Y + 4 - 20);
+                        Point2 = new System.Windows.Point(point2Coor.X + 4 - 10, point2Coor.Y + 4 - 20);
+                    }
+                }
+
+                myPolygonBF = new Polygon();
+                myPolygonBF.Stroke = System.Windows.Media.Brushes.Black;
+                myPolygonBF.Fill = System.Windows.Media.Brushes.DeepSkyBlue;
+                myPolygonBF.StrokeThickness = 2;
+                myPolygonBF.HorizontalAlignment = HorizontalAlignment.Left;
+                myPolygonBF.VerticalAlignment = VerticalAlignment.Center;
+
+                PointCollection myPointCollection = new PointCollection();
+                System.Windows.Point Point1 = new System.Windows.Point(point2Coor.X + 4, point2Coor.Y + 4);
+                myPointCollection.Add(Point1);
+                myPointCollection.Add(Point2);
+                myPointCollection.Add(Point3);
+                myPolygonBF.Points = myPointCollection;
+                CanvasImage.Children.Add(myPolygonBF);
+
+                _lines.Add(line);
+                CanvasImage.Children.Add(line);
+                increment2++;
+            }
+            else if (increment2 == resultBF.Count - 1)
+            {
+                CanvasImage.Children.Remove(myPolygonBF);
+                m_oTimer2.Stop();
+                increment2 = 0;
+            }
+        }
+
+        void m_oTimer_Tick1Greedy(object sender, EventArgs e)
+        {
+            if (increment3 < resultGreedy.Count - 1)
+            {
+                if (myPolygonGreedy != null)
+                {
+                    CanvasImage.Children.Remove(myPolygonGreedy);
+                }
+                var point1Index = resultGreedy[increment3];
+                var point1Coor = _points[point1Index].Coor;
+                var point2Index = resultGreedy[increment3 + 1];
+                var point2Coor = _points[point2Index].Coor;
+
+                var line = new Line
+                {
+                    Stroke = System.Windows.Media.Brushes.Green,
+                    Fill = System.Windows.Media.Brushes.Green,
+                    X1 = point1Coor.X - 4,
+                    Y1 = point1Coor.Y - 4,
+                    X2 = point2Coor.X - 4,
+                    Y2 = point2Coor.Y - 4,
+                    StrokeThickness = 4,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Bottom
+
+                };
+                double roznicaX = point1Coor.X - point2Coor.X;
+                double roznicaY = point1Coor.Y - point2Coor.Y;
+                System.Windows.Point Point2;
+                System.Windows.Point Point3;
+                if (Math.Abs(roznicaX) > Math.Abs(roznicaY))
+                {
+                    if (roznicaX > 0)
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X - 4 + 20, point2Coor.Y - 4 + 10);
+                        Point3 = new System.Windows.Point(point2Coor.X - 4 + 20, point2Coor.Y - 4 - 10);
+                    }
+                    else
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X - 4 - 20, point2Coor.Y - 4 + 10);
+                        Point3 = new System.Windows.Point(point2Coor.X - 4 - 20, point2Coor.Y - 4 - 10);
+                    }
+                }
+                else
+                {
+                    if (roznicaY > 0)
+                    {
+                        Point2 = new System.Windows.Point(point2Coor.X - 4 - 10, point2Coor.Y - 4 + 20);
+                        Point3 = new System.Windows.Point(point2Coor.X - 4 + 10, point2Coor.Y - 4 + 20);
+                    }
+                    else
+                    {
+                        Point3 = new System.Windows.Point(point2Coor.X - 4 + 10, point2Coor.Y - 4 - 20);
+                        Point2 = new System.Windows.Point(point2Coor.X - 4 - 10, point2Coor.Y - 4 - 20);
+                    }
+                }
+
+
+                myPolygonGreedy = new Polygon();
+                myPolygonGreedy.Stroke = System.Windows.Media.Brushes.Black;
+                myPolygonGreedy.Fill = System.Windows.Media.Brushes.Green;
+                myPolygonGreedy.StrokeThickness = 2;
+                myPolygonGreedy.HorizontalAlignment = HorizontalAlignment.Left;
+                myPolygonGreedy.VerticalAlignment = VerticalAlignment.Center;
+
+                PointCollection myPointCollection = new PointCollection();
+                System.Windows.Point Point1 = new System.Windows.Point(point2Coor.X - 4, point2Coor.Y - 4);
+                myPointCollection.Add(Point1);
+                myPointCollection.Add(Point2);
+                myPointCollection.Add(Point3);
+                myPolygonGreedy.Points = myPointCollection;
+                CanvasImage.Children.Add(myPolygonGreedy);
+
+                _lines.Add(line);
+                CanvasImage.Children.Add(line);
+                increment3++;
+            }
+            else if (increment3 == resultGreedy.Count - 1)
+            {
+                CanvasImage.Children.Remove(myPolygonGreedy);
+                m_oTimer3.Stop();
+                increment3 = 0;
+            }
+
         }
     }
 }

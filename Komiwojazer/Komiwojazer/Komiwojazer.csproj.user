@@ -10,6 +10,9 @@
     <Compile Update="AlgorithmsPick.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="AlgorithmsPickFull.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="AppWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -19,6 +22,9 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="AlgorithmsPick.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="AlgorithmsPickFull.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="AppWindow.xaml">

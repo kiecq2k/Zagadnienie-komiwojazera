@@ -71,57 +71,5 @@ namespace Komiwojazer.Algorithms
             a = b;
             b = temp;
         }
-
-        /*
-public IList<int> GetPathBF()
-{
-    var result = new List<int>();
-    var result2 = new List<int>();
-    int startPoint = 26;
-    var paths = dijkstra(startPoint);
-    for (int i = 27; i < N; i++)
-    {
-
-        _usedPoints.Clear();
-        result2.Clear();
-        startPoint = 26;
-        paths = dijkstra(startPoint);
-
-        for (int j = 0; j < paths[i].Route.Count(); j++)
-        {
-            result2.Add(paths[i].Route[j]);
-        }
-
-        DFS(i, result2);
-
-    }
-    var lastVisitedNode = result[result.Count - 1];
-    var cbPath = dijkstra(lastVisitedNode);
-    for (int i = 0; i < cbPath[26].Route.Count; i++)
-        result.Add((cbPath[26].Route[i]));
-
-    return result;
-}
-
-public void DFS(int startPoint, List<int> result2)
-{
-    _usedPoints.Add(startPoint);
-    var paths = dijkstra(startPoint);
-    for (int i = 27; i < N; i++)
-    {
-        if (!_usedPoints.Contains(i))
-        {
-            for (int j = 1; j < paths[i].Route.Count(); j++)
-            {
-                result2.Add(paths[i].Route[j]);
-            }
-            if (!AllPointsUsed())
-            {
-                DFS(i, result2);
-            }
-        }
-    }
-}
-*/
     }
 }
