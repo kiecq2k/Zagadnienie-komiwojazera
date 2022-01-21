@@ -16,19 +16,19 @@ namespace Komiwojazer.Algorithms
     {
         private readonly List<Path> _paths;
 
-        public Greedy(IList<IList<int>> g) : base(g)
+        public Greedy(Version version, IList<IList<int>> g) : base(version, g)
         {
             _paths = new List<Path>();
         }
 
         public IList<int> NajmniejszaKrawedz()
         {
-            for(int i=26; i < N; i++)
+            for(int i= STARTING_POINT; i < N; i++)
             {
-                var dijkstra = new Dijkstra(G);
+                var dijkstra = new Dijkstra(Version, G);
                 var distances = dijkstra.dijkstra(i);
                 
-                for(int j=26; j < distances.Length; j++)
+                for(int j=STARTING_POINT; j < distances.Length; j++)
                 {
                     if(distances[j].Distance != 0)
                     {
@@ -44,7 +44,7 @@ namespace Komiwojazer.Algorithms
 
             var sortedPaths = _paths.OrderBy(p => p.Distance).ToList();
 
-            int n = N - 26;
+            int n = N - STARTING_POINT;
             var dict = new Dictionary<int, int>();
 
             // 26 27 w slowniku
@@ -94,7 +94,7 @@ namespace Komiwojazer.Algorithms
 
             var list = new List<int>();
 
-            int index = 26;
+            int index = STARTING_POINT;
 
             while(dict.Count > 0)
             {
@@ -108,15 +108,15 @@ namespace Komiwojazer.Algorithms
 
             for(int i = 0; i < list.Count - 1; i++)
             {
-                var dijkstra1 = new Dijkstra(G).dijkstra(list[i]);
+                var dijkstra1 = new Dijkstra(Version, G).dijkstra(list[i]);
                 
                 result.AddRange(dijkstra1[list[i + 1]].Route);
             }
 
             RemoveDuplication(ref result);
 
-            var dijkstra2 = new Dijkstra(G).dijkstra(result[result.Count - 1]);
-            result.AddRange(dijkstra2[26].Route);
+            var dijkstra2 = new Dijkstra(Version, G).dijkstra(result[result.Count - 1]);
+            result.AddRange(dijkstra2[STARTING_POINT].Route);
 
             return result.RemoveDuplication();
         }
@@ -139,7 +139,7 @@ namespace Komiwojazer.Algorithms
             }
 
             var list = new List<int>();
-            int index = 26;
+            int index = STARTING_POINT;
             int dictCopySize = dictCopy.Count;
 
             try
@@ -158,19 +158,19 @@ namespace Komiwojazer.Algorithms
             }
             
 
-            int n = N - 26;
+            int n = N - STARTING_POINT;
             return (dictCopySize == n);
         }
 
         private void RemoveDuplication(ref List<int> result)
         {
-            int n = N - 26;
+            int n = N - STARTING_POINT;
             var temp = new List<int>();
             int index = result.Count - 1;
 
             for(int i = 0;i < result.Count; i++)
             {
-                if(result[i] >= 26 && !temp.Contains(result[i]))
+                if(result[i] >= STARTING_POINT && !temp.Contains(result[i]))
                     temp.Add(result[i]);
 
                 if (temp.Count == n)

@@ -41,6 +41,7 @@ namespace Komiwojazer
         
         private const int STARTING_POINT = 26;
         private const int SPEED = 500;
+        private Version _version = Version.Demo;
 
 
         public DemoWindow()
@@ -470,7 +471,7 @@ namespace Komiwojazer
 
         private IList<int> NajblizszySasiad()
         {
-            var dijkstra = new Dijkstra(_adjMatrix);
+            var dijkstra = new Dijkstra(_version, _adjMatrix);
             var result = dijkstra.GetPath();
          
             road_alg1.Text += Distance(result);
@@ -479,7 +480,7 @@ namespace Komiwojazer
 
         public IList<int> BruteForce()
         {
-            var bruteForce = new BruteForce(_adjMatrix);
+            var bruteForce = new BruteForce(_version, _adjMatrix);
             var result = bruteForce.GetPathBF2();
             var result2 = DistanceBF(result);
             road_alg2.Text += Distance(result2);
@@ -488,7 +489,7 @@ namespace Komiwojazer
 
         public IList<int> Greedy()
         {
-            var greedy = new Greedy(_adjMatrix);
+            var greedy = new Greedy(_version, _adjMatrix);
             var result = greedy.NajmniejszaKrawedz();
             road_alg3.Text += Distance(result);
             return result;

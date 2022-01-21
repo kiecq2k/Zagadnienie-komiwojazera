@@ -41,6 +41,7 @@ namespace Komiwojazer
         private IList<IList<int>> _startingAdjMatrix = new List<IList<int>>();
         private IList<Tuple<int, int>> _verticalCross = new List<Tuple<int, int>>();
         private const int SPEED = 500;
+        private Version _version = Version.Full;
 
         public AppWindow()
         {
@@ -400,37 +401,27 @@ namespace Komiwojazer
      
         private IList<int> NajblizszySasiad()
         {
-            // var dijkstra = new Dijkstra(_adjMatrix);
-            // var result = dijkstra.GetPath();
-            //
-            // road_alg1.Text += Distance(result);
-            //return result;
-
-            IList<int> doUsuniecia = new List<int>();
-            return doUsuniecia;
+            var dijkstra = new Dijkstra(_version, _adjMatrix);
+            var result = dijkstra.GetPath();
+            road_alg1.Text += Distance(result);
+            return result;
         }
 
         public IList<int> BruteForce()
         {
-            //var bruteForce = new BruteForce(_adjMatrix);
-            //var result = bruteForce.GetPathBF2();
-            //var result2 = DistanceBF(result);
-            //road_alg2.Text += Distance(result2);
-            //return result2;
-
-            IList<int> doUsuniecia = new List<int>();
-            return doUsuniecia;
+            var bruteForce = new BruteForce(_version, _adjMatrix);
+            var result = bruteForce.GetPathBF2();
+            var result2 = DistanceBF(result);
+            road_alg2.Text += Distance(result2);
+            return result2;
         }
 
         public IList<int> Greedy()
         {
-            //var greedy = new Greedy(_adjMatrix);
-            //var result = greedy.NajmniejszaKrawedz();
-            //road_alg3.Text += Distance(result);
-            //return result;
-
-            IList<int> doUsuniecia = new List<int>();
-            return doUsuniecia;
+            var greedy = new Greedy(_version, _adjMatrix);
+            var result = greedy.NajmniejszaKrawedz();
+            road_alg3.Text += Distance(result);
+            return result;
         }
 
         public int Distance(IList<int> result)

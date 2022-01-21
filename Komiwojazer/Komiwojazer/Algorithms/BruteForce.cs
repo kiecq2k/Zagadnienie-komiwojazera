@@ -10,13 +10,13 @@ namespace Komiwojazer.Algorithms
         public List<IList<int>> _drogiBF = new List<IList<int>>();
         public List<IList<int>> _drogiBF2 = new List<IList<int>>();
 
-        public BruteForce(IList<IList<int>> g) : base(g)
+        public BruteForce(Version version, IList<IList<int>> g) : base(version, g)
         {
         }
 
         public List<IList<int>> GetPathBF2()
         {
-            int[] tab = new int[N - 27];
+            int[] tab = new int[N - STARTING_POINT + 1];
             int i = 0;
             for (int j = 27; j < N; i++, j++)
             {
@@ -25,8 +25,8 @@ namespace Komiwojazer.Algorithms
             DoPermute(tab, 0, i - 1, _drogiBF);
             foreach (var droga in _drogiBF)
             {
-                droga.Insert(0, 26);
-                droga.Add(26);
+                droga.Insert(0, STARTING_POINT);
+                droga.Add(STARTING_POINT);
             }
             var road = new List<int>();
             foreach (var droga in _drogiBF)
@@ -34,7 +34,7 @@ namespace Komiwojazer.Algorithms
                 road.Clear();
                 for (int k = 1; k < droga.Count(); k++)
                 {
-                    var paths = new Dijkstra(G).dijkstra(droga[k - 1]);
+                    var paths = new Dijkstra(Version, G).dijkstra(droga[k - 1]);
                     for (int j = 0; j < paths[droga[k]].Route.Count; j++)
                     {
                         road.Add(paths[droga[k]].Route[j]);

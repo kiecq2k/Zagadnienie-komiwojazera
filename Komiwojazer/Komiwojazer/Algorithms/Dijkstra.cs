@@ -23,7 +23,7 @@ namespace Komiwojazer.Algorithms
     {
         private static readonly int NO_PARENT = -1;
 
-        public Dijkstra(IList<IList<int>> g) : base(g)
+        public Dijkstra(Version version, IList<IList<int>> g) : base(version, g)
         {
         }
 
@@ -163,7 +163,7 @@ namespace Komiwojazer.Algorithms
         public IList<int> GetPath()
         {
             var result = new List<int>();
-            int startPoint = 26;
+            int startPoint = STARTING_POINT;
 
             while (!AllPointsUsed())
             {
@@ -171,7 +171,7 @@ namespace Komiwojazer.Algorithms
 
                 int minDistance = int.MaxValue;
 
-                for (int i = 27; i < N; i++)
+                for (int i = STARTING_POINT + 1; i < N; i++)
                 {
                     if (paths[i].Distance < minDistance && !_usedPoints.Contains(i))
                     {
@@ -189,8 +189,8 @@ namespace Komiwojazer.Algorithms
             // comeback path
             var lastVisitedNode = result[result.Count - 1];
             var cbPath = dijkstra(lastVisitedNode);
-            for (int i = 0; i < cbPath[26].Route.Count; i++)
-                result.Add((cbPath[26].Route[i]));
+            for (int i = 0; i < cbPath[STARTING_POINT].Route.Count; i++)
+                result.Add((cbPath[STARTING_POINT].Route[i]));
 
             return result.RemoveDuplication();
         }
