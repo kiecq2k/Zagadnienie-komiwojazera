@@ -118,6 +118,7 @@ namespace Komiwojazer
         {
             var coord = e.GetPosition(this.CanvasImage);
 
+
             if (coord.IsOnRoad(Version.Full) &&
                 crossCheck(coord) && pointCheck(coord))
             {
@@ -463,153 +464,153 @@ namespace Komiwojazer
         private void FillIntersections()
         {
             // 1 row
-            _intersections.Add(new Point(11.200000000000003, 10));
-            _intersections.Add(new Point(173.60000000000002, 10));
-            _intersections.Add(new Point(187.20000000000002, 10));
-            _intersections.Add(new Point(351.20000000000005, 10));
-            _intersections.Add(new Point(472.8, 10));
-            _intersections.Add(new Point(719.2, 10));
+            _intersections.Add(new Point(8.2, 15.6));
+            _intersections.Add(new Point(222.6, 15.6));
+            _intersections.Add(new Point(239.4, 15.6));
+            _intersections.Add(new Point(457.8, 15.6));
+            _intersections.Add(new Point(614.6, 15.6));
+            _intersections.Add(new Point(937.8, 15.6));
             // 2 row
-            _intersections.Add(new Point(11.200000000000003, 54));
-            _intersections.Add(new Point(65.60000000000001, 54));
-            _intersections.Add(new Point(173.60000000000002, 54));
-            _intersections.Add(new Point(187.20000000000002, 54));
-            _intersections.Add(new Point(268.8, 54));
-            _intersections.Add(new Point(351.20000000000005, 54));
-            _intersections.Add(new Point(472.8, 54));
-            _intersections.Add(new Point(599.2, 54));
-            _intersections.Add(new Point(719.2, 54));
+            _intersections.Add(new Point(8.2, 74.8));
+            _intersections.Add(new Point(79.4, 74.8));
+            _intersections.Add(new Point(222.6, 74.8));
+            _intersections.Add(new Point(239.4, 74.8));
+            _intersections.Add(new Point(347.4, 74.8));
+            _intersections.Add(new Point(457.8, 74.8));
+            _intersections.Add(new Point(614.6, 74.8));
+            _intersections.Add(new Point(781, 74.8));
+            _intersections.Add(new Point(937.8, 74.8));
             // 3 row
-            _intersections.Add(new Point(11.200000000000003, 98));
-            _intersections.Add(new Point(65.60000000000001, 98));
-            _intersections.Add(new Point(96, 98));
-            _intersections.Add(new Point(173.60000000000002, 98));
-            _intersections.Add(new Point(187.20000000000002, 98));
-            _intersections.Add(new Point(268.8, 98));
-            _intersections.Add(new Point(351.20000000000005, 98));
-            _intersections.Add(new Point(472.8, 98));
-            _intersections.Add(new Point(599.2, 98));
+            _intersections.Add(new Point(8.2, 133.2));
+            _intersections.Add(new Point(79.4, 133.2));
+            _intersections.Add(new Point(120.2, 133.2));
+            _intersections.Add(new Point(222.6, 133.2));
+            _intersections.Add(new Point(239.4, 133.2));
+            _intersections.Add(new Point(347.4, 133.2));
+            _intersections.Add(new Point(457.8, 133.2));
+            _intersections.Add(new Point(614.6, 133.2));
+            _intersections.Add(new Point(781, 133.2));
             // 4 row
-            _intersections.Add(new Point(11.200000000000003, 142.8));
-            _intersections.Add(new Point(96, 142.8));
-            _intersections.Add(new Point(173.60000000000002, 142.8));
-            _intersections.Add(new Point(187.20000000000002, 142.8));
-            _intersections.Add(new Point(268.8, 142.8));
-            _intersections.Add(new Point(351.20000000000005, 142.8));
-            _intersections.Add(new Point(409.6, 142.8));
-            _intersections.Add(new Point(472.8, 142.8));
-            _intersections.Add(new Point(599.2, 142.8));
-            _intersections.Add(new Point(719.2, 142.8));
+            _intersections.Add(new Point(8.2, 194.8));
+            _intersections.Add(new Point(120.2, 194.8));
+            _intersections.Add(new Point(222.6, 194.8));
+            _intersections.Add(new Point(239.4, 194.8));
+            _intersections.Add(new Point(347.4, 194.8));
+            _intersections.Add(new Point(457.8, 194.8));
+            _intersections.Add(new Point(529.8, 194.8));
+            _intersections.Add(new Point(614.6, 194.8));
+            _intersections.Add(new Point(781, 194.8));
+            _intersections.Add(new Point(937.8, 194.8));
             // 5 row
-            _intersections.Add(new Point(11.200000000000003, 190));
-            _intersections.Add(new Point(96, 190));
-            _intersections.Add(new Point(173.60000000000002, 190));
-            _intersections.Add(new Point(187.20000000000002, 190));
-            _intersections.Add(new Point(268.8, 190));
-            _intersections.Add(new Point(351.20000000000005, 190));
-            _intersections.Add(new Point(408.8, 190));
-            _intersections.Add(new Point(472.8, 190));
-            _intersections.Add(new Point(599.2, 190));
-            _intersections.Add(new Point(719.2, 190));
+            _intersections.Add(new Point(8.2, 250.8));
+            _intersections.Add(new Point(120.2, 250.8));
+            _intersections.Add(new Point(222.6, 250.8));
+            _intersections.Add(new Point(239.4, 250.8));
+            _intersections.Add(new Point(347.4, 250.8));
+            _intersections.Add(new Point(457.8, 250.8));
+            _intersections.Add(new Point(531.4, 250.8));
+            _intersections.Add(new Point(614.6, 250.8));
+            _intersections.Add(new Point(781, 250.8));
+            _intersections.Add(new Point(937.8, 250.8));
             // 6 row
-            _intersections.Add(new Point(11.200000000000003, 232.4));
-            _intersections.Add(new Point(96, 232.4));
-            _intersections.Add(new Point(173.60000000000002, 232.4));
-            _intersections.Add(new Point(187.20000000000002, 232.4));
-            _intersections.Add(new Point(268.8, 232.4));
-            _intersections.Add(new Point(351.20000000000005, 232.4));
-            _intersections.Add(new Point(472.8, 232.4));
-            _intersections.Add(new Point(599.2, 232.4));
-            _intersections.Add(new Point(719.2, 232.4));
+            _intersections.Add(new Point(8.2, 311.6));
+            _intersections.Add(new Point(120.2, 311.6));
+            _intersections.Add(new Point(222.6, 311.6));
+            _intersections.Add(new Point(239.4, 311.6));
+            _intersections.Add(new Point(347.4, 311.6));
+            _intersections.Add(new Point(457.8, 311.6));
+            _intersections.Add(new Point(614.6, 311.6));
+            _intersections.Add(new Point(781, 311.6));
+            _intersections.Add(new Point(937.8, 311.6));
             // 7 row
-            _intersections.Add(new Point(11.200000000000003, 281.2));
-            _intersections.Add(new Point(96, 281.2));
-            _intersections.Add(new Point(173.60000000000002, 281.2));
-            _intersections.Add(new Point(187.20000000000002, 281.2));
-            _intersections.Add(new Point(268.8, 281.2));
-            _intersections.Add(new Point(351.20000000000005, 281.2));
-            _intersections.Add(new Point(472.8, 281.2));
-            _intersections.Add(new Point(599.2, 281.2));
-            _intersections.Add(new Point(664.8000000000001, 281.2));
+            _intersections.Add(new Point(8.2, 374));
+            _intersections.Add(new Point(120.2, 374));
+            _intersections.Add(new Point(222.6, 374));
+            _intersections.Add(new Point(239.4, 374));
+            _intersections.Add(new Point(347.4, 374));
+            _intersections.Add(new Point(457.8, 374));
+            _intersections.Add(new Point(614.6, 374));
+            _intersections.Add(new Point(781, 374));
+            _intersections.Add(new Point(864.2, 374));
             // 8 row
-            _intersections.Add(new Point(11.200000000000003, 329.20000000000005));
-            _intersections.Add(new Point(96, 329.20000000000005));
-            _intersections.Add(new Point(173.60000000000002, 329.20000000000005));
-            _intersections.Add(new Point(187.20000000000002, 329.20000000000005));
-            _intersections.Add(new Point(268.8, 329.20000000000005));
-            _intersections.Add(new Point(351.20000000000005, 329.20000000000005));
-            _intersections.Add(new Point(472.8, 329.20000000000005));
-            _intersections.Add(new Point(599.2, 329.20000000000005));
-            _intersections.Add(new Point(664.8000000000001, 329.20000000000005));
-            _intersections.Add(new Point(719.2, 329.20000000000005));
+            _intersections.Add(new Point(8.2, 435.6));
+            _intersections.Add(new Point(119.4, 435.6));
+            _intersections.Add(new Point(222.6, 435.6));
+            _intersections.Add(new Point(239.4, 435.6));
+            _intersections.Add(new Point(347.4, 435.6));
+            _intersections.Add(new Point(457.8, 435.6));
+            _intersections.Add(new Point(614.6, 435.6));
+            _intersections.Add(new Point(781, 435.6));
+            _intersections.Add(new Point(867.4, 435.6));
+            _intersections.Add(new Point(937.8, 435.6));
             // 9 row
-            _intersections.Add(new Point(11.200000000000003, 373.20000000000005));
-            _intersections.Add(new Point(96, 373.20000000000005));
-            _intersections.Add(new Point(173.60000000000002, 373.20000000000005));
-            _intersections.Add(new Point(187.20000000000002, 373.20000000000005));
-            _intersections.Add(new Point(268.8, 373.20000000000005));
-            _intersections.Add(new Point(351.20000000000005, 373.20000000000005));
-            _intersections.Add(new Point(411.20000000000005, 373.20000000000005));
-            _intersections.Add(new Point(472.8, 373.20000000000005));
-            _intersections.Add(new Point(543.2, 373.20000000000005));
-            _intersections.Add(new Point(599.2, 373.20000000000005));
-            _intersections.Add(new Point(719.2, 373.20000000000005));
+            _intersections.Add(new Point(8.2, 495.6));
+            _intersections.Add(new Point(120.2, 495.6));
+            _intersections.Add(new Point(222.6, 495.6));
+            _intersections.Add(new Point(239.4, 496.4));
+            _intersections.Add(new Point(347.4, 495.6));
+            _intersections.Add(new Point(457.8, 495.6));
+            _intersections.Add(new Point(534.6, 495.6));
+            _intersections.Add(new Point(614.6, 495.6));
+            _intersections.Add(new Point(704.2, 495.6));
+            _intersections.Add(new Point(781, 495.6));
+            _intersections.Add(new Point(937.8, 495.6));
             // 10 row
-            _intersections.Add(new Point(96, 419.6));
-            _intersections.Add(new Point(173.60000000000002, 419.6));
-            _intersections.Add(new Point(187.20000000000002, 419.6));
-            _intersections.Add(new Point(268.8, 419.6));
-            _intersections.Add(new Point(351.20000000000005, 419.6));
-            _intersections.Add(new Point(411.20000000000005, 419.6));
-            _intersections.Add(new Point(472.8, 419.6));
-            _intersections.Add(new Point(543.2, 419.6));
-            _intersections.Add(new Point(599.2, 419.6));
-            _intersections.Add(new Point(719.2, 419.6));
+            _intersections.Add(new Point(121.8, 553.2));
+            _intersections.Add(new Point(222.6, 553.2));
+            _intersections.Add(new Point(239.4, 553.2));
+            _intersections.Add(new Point(347.4, 553.2));
+            _intersections.Add(new Point(457.8, 553.2));
+            _intersections.Add(new Point(533.8, 553.2));
+            _intersections.Add(new Point(614.6, 553.2));
+            _intersections.Add(new Point(708.2, 553.2));
+            _intersections.Add(new Point(781, 553.2));
+            _intersections.Add(new Point(937.8, 553.2));
             // 11 row
-            _intersections.Add(new Point(11.200000000000003, 462));
-            _intersections.Add(new Point(96, 462));
-            _intersections.Add(new Point(173.60000000000002, 462));
-            _intersections.Add(new Point(187.20000000000002, 462));
-            _intersections.Add(new Point(268.8, 462));
-            _intersections.Add(new Point(351.20000000000005, 462));
-            _intersections.Add(new Point(411.20000000000005, 462));
-            _intersections.Add(new Point(472.8, 462));
-            _intersections.Add(new Point(543.2, 462));
-            _intersections.Add(new Point(599.2, 462));
-            _intersections.Add(new Point(719.2, 462));
+            _intersections.Add(new Point(8.2, 613.2));
+            _intersections.Add(new Point(123.4, 613.2));
+            _intersections.Add(new Point(222.6, 613.2));
+            _intersections.Add(new Point(239.4, 613.2));
+            _intersections.Add(new Point(347.4, 613.2));
+            _intersections.Add(new Point(457.8, 613.2));
+            _intersections.Add(new Point(535.4, 613.2));
+            _intersections.Add(new Point(614.6, 613.2));
+            _intersections.Add(new Point(709, 613.2));
+            _intersections.Add(new Point(781, 613.2));
+            _intersections.Add(new Point(937.8, 613.2));
             // 12 row
-            _intersections.Add(new Point(11.200000000000003, 506));
-            _intersections.Add(new Point(96, 506));
-            _intersections.Add(new Point(173.60000000000002, 506));
-            _intersections.Add(new Point(187.20000000000002, 506));
-            _intersections.Add(new Point(268.8, 506));
-            _intersections.Add(new Point(351.20000000000005, 506));
-            _intersections.Add(new Point(411.20000000000005, 506));
-            _intersections.Add(new Point(472.8, 506));
-            _intersections.Add(new Point(543.2, 506));
-            _intersections.Add(new Point(599.2, 506));
-            _intersections.Add(new Point(719.2, 506));
+            _intersections.Add(new Point(8.2, 674));
+            _intersections.Add(new Point(123.4, 674));
+            _intersections.Add(new Point(222.6, 674));
+            _intersections.Add(new Point(239.4, 674));
+            _intersections.Add(new Point(347.4, 674));
+            _intersections.Add(new Point(457.8, 674));
+            _intersections.Add(new Point(536.2, 674));
+            _intersections.Add(new Point(614.6, 674));
+            _intersections.Add(new Point(710.6, 674));
+            _intersections.Add(new Point(781, 674));
+            _intersections.Add(new Point(937.8, 674));
             // 13 row
-            _intersections.Add(new Point(11.200000000000003, 550));
-            _intersections.Add(new Point(96, 550));
-            _intersections.Add(new Point(173.60000000000002, 550));
-            _intersections.Add(new Point(187.20000000000002, 550));
-            _intersections.Add(new Point(268.8, 550));
-            _intersections.Add(new Point(351.20000000000005, 550));
-            _intersections.Add(new Point(472.8, 550));
-            _intersections.Add(new Point(599.2, 550));
+            _intersections.Add(new Point(8.2, 731.6));
+            _intersections.Add(new Point(123.4, 731.6));
+            _intersections.Add(new Point(222.6, 731.6));
+            _intersections.Add(new Point(239.4, 731.6));
+            _intersections.Add(new Point(347.4, 731.6));
+            _intersections.Add(new Point(457.8, 731.6));
+            _intersections.Add(new Point(614.6, 731.6));
+            _intersections.Add(new Point(781, 731.6));
             // 14 row
-            _intersections.Add(new Point(11.200000000000003, 597.2));
-            _intersections.Add(new Point(96, 597.2));
-            _intersections.Add(new Point(173.60000000000002, 597.2));
-            _intersections.Add(new Point(187.20000000000002, 597.2));
-            _intersections.Add(new Point(268.8, 597.2));
-            _intersections.Add(new Point(351.20000000000005, 597.2));
-            _intersections.Add(new Point(472.8, 597.2));
-            _intersections.Add(new Point(599.2, 597.2));
-            _intersections.Add(new Point(719.2, 597.2));
+            _intersections.Add(new Point(8.2, 794));
+            _intersections.Add(new Point(125.8, 794));
+            _intersections.Add(new Point(222.6, 794));
+            _intersections.Add(new Point(239.4, 794));
+            _intersections.Add(new Point(347.4, 794));
+            _intersections.Add(new Point(457.8, 794));
+            _intersections.Add(new Point(614.6, 794));
+            _intersections.Add(new Point(781, 794));
+            _intersections.Add(new Point(937.8, 794));
 
-            
+
             _dots = _intersections.ToList<Point>();
 
         }

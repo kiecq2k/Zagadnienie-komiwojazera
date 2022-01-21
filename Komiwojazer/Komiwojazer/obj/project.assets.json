@@ -319,19 +319,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\chudy\\.nuget\\packages\\": {}
+    "C:\\Users\\barto\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\chudy\\source\\repos\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
+      "projectUniqueName": "C:\\Users\\barto\\Documents\\University\\semestr5\\ProjektZespolowy\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
       "projectName": "Komiwojazer",
-      "projectPath": "C:\\Users\\chudy\\source\\repos\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
-      "packagesPath": "C:\\Users\\chudy\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\chudy\\source\\repos\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\obj\\",
+      "projectPath": "C:\\Users\\barto\\Documents\\University\\semestr5\\ProjektZespolowy\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
+      "packagesPath": "C:\\Users\\barto\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\barto\\Documents\\University\\semestr5\\ProjektZespolowy\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\chudy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\barto\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -380,6 +380,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[3.1.21, 3.1.21]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
@@ -388,7 +394,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   },

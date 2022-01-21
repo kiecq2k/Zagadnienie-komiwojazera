@@ -107,7 +107,7 @@ namespace Komiwojazer
                         _startingPoint.point.Fill = Brushes.Black;
                         CanvasImage.Children.Add(_startingPoint.point);
                     }
-                    
+
                     Canvas.SetLeft(_startingPoint.point, coord.X - 5);
                     Canvas.SetTop(_startingPoint.point, coord.Y - 5);
                     Canvas.SetZIndex(_startingPoint.point, _zIndexCounter++);
@@ -249,40 +249,40 @@ namespace Komiwojazer
         private void FillIntersections()
         {
             // 1 row
-            _intersections.Add(new Point(185.90000000000003, 10.400000000000002));
-            _intersections.Add(new Point(425.1000000000001, 10.400000000000002));
-            _intersections.Add(new Point(678, 10.400000000000002));
+            _intersections.Add(new Point(241.4, 16.8));
+            _intersections.Add(new Point(551, 16.8));
+            _intersections.Add(new Point(877.4, 16.8));
 
             // 2 row
-            _intersections.Add(new Point(14.700000000000035, 97.60000000000001));
-            _intersections.Add(new Point(185.90000000000003, 97.60000000000001));
-            _intersections.Add(new Point(425.1000000000001, 97.60000000000001));
-            _intersections.Add(new Point(527.5, 97.60000000000001));
-            _intersections.Add(new Point(678, 97.60000000000001));
+            _intersections.Add(new Point(19.8, 144));
+            _intersections.Add(new Point(241.4, 144));
+            _intersections.Add(new Point(551, 144));
+            _intersections.Add(new Point(684.6, 144));
+            _intersections.Add(new Point(877.4, 144));
 
             // 3 row
-            _intersections.Add(new Point(16.300000000000036, 184.8));
-            _intersections.Add(new Point(185.90000000000003, 184.8));
-            _intersections.Add(new Point(313.1000000000001, 184.8));
-            _intersections.Add(new Point(425.1000000000001, 184.8));
-            _intersections.Add(new Point(527.5, 184.8));
-            _intersections.Add(new Point(678, 184.8));
+            _intersections.Add(new Point(19.8, 271.2));
+            _intersections.Add(new Point(241.4, 271.2));
+            _intersections.Add(new Point(406.2, 271.2));
+            _intersections.Add(new Point(551, 271.2));
+            _intersections.Add(new Point(684.6, 271.2));
+            _intersections.Add(new Point(877.4, 271.2));
 
             // 4 row
-            _intersections.Add(new Point(16.300000000000036, 275.2));
-            _intersections.Add(new Point(87.50000000000004, 275.2));
-            _intersections.Add(new Point(185.90000000000003, 275.2));
-            _intersections.Add(new Point(313.1000000000001, 275.2));
-            _intersections.Add(new Point(425.1000000000001, 275.2));
-            _intersections.Add(new Point(678, 275.2));
+            _intersections.Add(new Point(19.8, 400.8));
+            _intersections.Add(new Point(112.6, 400.8));
+            _intersections.Add(new Point(241.4, 400.8));
+            _intersections.Add(new Point(406.2, 400.8));
+            _intersections.Add(new Point(551, 400.8));
+            _intersections.Add(new Point(877.4, 400.8));
 
             // 5 row
-            _intersections.Add(new Point(16.300000000000036, 369.6));
-            _intersections.Add(new Point(85.90000000000003, 369.6));
-            _intersections.Add(new Point(185.90000000000003, 369.6));
-            _intersections.Add(new Point(315.50000000000006, 369.6));
-            _intersections.Add(new Point(425.1000000000001, 369.6));
-            _intersections.Add(new Point(678, 369.6));
+            _intersections.Add(new Point(19.8, 535.2));
+            _intersections.Add(new Point(111.8, 535.2));
+            _intersections.Add(new Point(241.4, 535.2));
+            _intersections.Add(new Point(406.2, 535.2));
+            _intersections.Add(new Point(551, 535.2));
+            _intersections.Add(new Point(877.4, 535.2));
 
             _dots = _intersections.ToList<Point>();
             

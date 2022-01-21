@@ -176,3 +176,5 @@ C:\Users\chudy\source\repos\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj
 C:\Users\chudy\source\repos\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj\Debug\netcoreapp3.1\Komiwojazer.pdb
 C:\Users\chudy\source\repos\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj\Debug\netcoreapp3.1\Komiwojazer.genruntimeconfig.cache
 C:\Users\chudy\source\repos\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj\Debug\netcoreapp3.1\Komiwojazer.csprojAssemblyReference.cache
+C:\Users\barto\Documents\University\semestr5\ProjektZespolowy\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj\Debug\netcoreapp3.1\AlgorithmsPickFull.g.cs
+C:\Users\barto\Documents\University\semestr5\ProjektZespolowy\Zagadnienie-komiwojazera\Komiwojazer\Komiwojazer\obj\Debug\netcoreapp3.1\AlgorithmsPickFull.baml
