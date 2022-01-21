@@ -38,7 +38,8 @@ namespace Komiwojazer
 
         private IList<IList<int>> _adjMatrix = new List<IList<int>>();
         private IList<IList<int>> _startingAdjMatrix = new List<IList<int>>();
-        
+        private IList<Tuple<int, int>> _verticalCross = new List<Tuple<int, int>>();
+
         private const int STARTING_POINT = 26;
         private const int SPEED = 500;
         private Version _version = Version.Demo;
@@ -60,7 +61,23 @@ namespace Komiwojazer
                 _startingAdjMatrix.Add(new List<int>());
                 _startingAdjMatrix[i] = new List<int>(_adjMatrix[i]);
             }
+            getVerticalRoads();
         }
+
+        private void getVerticalRoads()
+        {
+            for (int i = 0; i < _adjMatrix.Count; i++)
+            {
+                for (int j = i; j < _adjMatrix.Count; j++)
+                {
+                    if ((_adjMatrix[i][j] != 0 || _adjMatrix[j][i] != 0) && Math.Abs(i - j) != 1)
+                    {
+                        _verticalCross.Add(new Tuple<int, int>(i, j));
+                    }
+                }
+            }
+        }
+
 
         private void endButton_Click(object sender, RoutedEventArgs e)
         {
@@ -87,13 +104,35 @@ namespace Komiwojazer
             return true;
         }
 
-        
+        private bool isOnRoad(Point pos)
+        {
+            for (int i = 1; i < _intersections.Count; i++)
+            {
+                if (pos.X > _dots[i - 1].X && pos.X < _dots[i].X &&
+                    Math.Abs(pos.Y - _dots[i - 1].Y) < 8)
+                {
+                    return true;
+                }
+            }
+            for (int i = 0; i < _verticalCross.Count; i++)
+            {
+                if (pos.Y > _intersections[_verticalCross[i].Item1].Y &&
+                    pos.Y < _intersections[_verticalCross[i].Item2].Y &&
+                    Math.Abs(pos.X - _intersections[_verticalCross[i].Item1].X) < 20)
+                {
+                    return true;
+                }
+
+            }
+            return false;
+        }
 
         private void CanvasImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var coord = e.GetPosition(this.CanvasImage);
 
-            if (coord.IsOnRoad(Version.Demo) &&
+            if (/*coord.IsOnRoad(Version.Demo)*/ 
+                isOnRoad(coord) &&
                 crossCheck(coord) && pointCheck(coord))
             {
                 if (_flag == 1)
@@ -341,28 +380,48 @@ namespace Komiwojazer
 
             if (cross1 == -1)
             {
-                double close1 = double.MaxValue;
-                double close2 = double.MaxValue;
-                for (int i = 0; i < _intersections.Count; i++)
+                //double close1 = double.MaxValue;
+                //double close2 = double.MaxValue;
+                //for (int i = 0; i < _intersections.Count; i++)
+                //{
+                //    double x = Math.Abs(_dots[i].X - pos.X);
+                //    double y = Math.Abs(_dots[i].Y - pos.Y);
+                //    double sum = x + y;
+                //    if (sum < close1)
+                //    {
+                //        close2 = close1;
+                //        cross2 = cross1;
+                //        road2 = road1;
+                //        close1 = sum;
+                //        cross1 = i;
+                //        road1 = (int)(y * 0.4);
+                //    }
+                //    else if (sum < close2 && sum != close1)
+                //    {
+                //        close2 = sum;
+                //        cross2 = i;
+                //        road2 = (int)(y * 0.4);
+                //    }
+                //}
+                //int tmpcross1 = cross1;
+                //int tmpcross2 = cross2;
+
+                for (int i = 0; i < _verticalCross.Count; i++)
                 {
-                    double x = Math.Abs(_dots[i].X - pos.X);
-                    double y = Math.Abs(_dots[i].Y - pos.Y);
-                    double sum = x + y;
-                    if (sum < close1)
+                    if (pos.Y > _intersections[_verticalCross[i].Item1].Y &&
+                        pos.Y < _intersections[_verticalCross[i].Item2].Y &&
+                        Math.Abs(pos.X - _intersections[_verticalCross[i].Item1].X) < 20)
                     {
-                        close2 = close1;
-                        cross2 = cross1;
-                        road2 = road1;
-                        close1 = sum;
-                        cross1 = i;
-                        road1 = (int)(y * 0.4);
+                        cross1 = _verticalCross[i].Item1;
+                        cross2 = _verticalCross[i].Item2;
+                        road1 = (int)Math.Abs((_dots[_verticalCross[i].Item1].Y - pos.Y) * 0.4);
+                        road2 = (int)Math.Abs((_dots[_verticalCross[i].Item2].Y - pos.Y) * 0.4);
                     }
-                    else if (sum < close2 && sum != close1)
-                    {
-                        close2 = sum;
-                        cross2 = i;
-                        road2 = (int)(y * 0.4);
-                    }
+
+                }
+                if (cross1 == -1)
+                {
+                    MessageBox.Show("pionowe blad");
                 }
                 int tmpcross1 = cross1;
                 int tmpcross2 = cross2;

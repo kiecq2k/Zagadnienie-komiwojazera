@@ -40,7 +40,7 @@ namespace Komiwojazer
         private IList<IList<int>> _adjMatrix = new List<IList<int>>();
         private IList<IList<int>> _startingAdjMatrix = new List<IList<int>>();
         private IList<Tuple<int, int>> _verticalCross = new List<Tuple<int, int>>();
-        private const int SPEED = 500;
+        private const int SPEED = 50;
         private Version _version = Version.Full;
 
         public AppWindow()
@@ -99,8 +99,8 @@ namespace Komiwojazer
         {
             foreach (var cross in _intersections)
             {
-                if (cross.X + 5 > p.X && cross.X-5 < p.X &&
-                    cross.Y + 5 > p.Y && cross.Y-5 < p.Y)
+                if (cross.X + 10 > p.X && cross.X-10 < p.X &&
+                    cross.Y + 10 > p.Y && cross.Y-10 < p.Y)
                     return false;
             }
             return true;
@@ -108,19 +108,45 @@ namespace Komiwojazer
 
         private bool pointCheck(Point p)
         {
-            for (int i = 26; i < _dots.Count; i++)
+            for (int i = 132; i < _dots.Count; i++)
             {
-                if (Math.Abs(_dots[i].X - p.X) < 10 && Math.Abs(_dots[i].Y - p.Y) < 10)
+                if (Math.Abs(_dots[i].X - p.X) < 10 && Math.Abs(_dots[i].Y - p.Y) < 20)
                     return false;
             }
             return true;
+        }
+
+
+
+        private bool chybaCheck(Point pos)
+        {
+            for (int i = 1; i < _intersections.Count; i++)
+            {
+                if (pos.X > _dots[i - 1].X && pos.X < _dots[i].X &&
+                    Math.Abs(pos.Y - _dots[i - 1].Y) < 5)
+                {
+                    return true;
+
+                }
+            }
+            for (int i = 0; i < _verticalCross.Count; i++)
+            {
+                if (pos.Y > _intersections[_verticalCross[i].Item1].Y &&
+                    pos.Y < _intersections[_verticalCross[i].Item2].Y &&
+                    Math.Abs(pos.X - _intersections[_verticalCross[i].Item1].X) < 5)
+                {
+                    return true;
+                }
+            }
+            return false;
+
         }
         private void CanvasImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var coord = e.GetPosition(this.CanvasImage);
 
 
-            if (coord.IsOnRoad(Version.Full) &&
+            if (chybaCheck(coord) &&
                 crossCheck(coord) && pointCheck(coord))
             {
                 if (_flag == 1)
@@ -148,17 +174,18 @@ namespace Komiwojazer
                 else if (_flag == 2)
                 {
                     _points.Add(new Points());
-                    _points[_counter].point = new Ellipse();
-                    _points[_counter].point.Width = 10;
-                    _points[_counter].point.Height = 10;
-                    _points[_counter].point.Fill = Brushes.Blue;
-                    Canvas.SetLeft(_points[_counter].point, coord.X - 5);
-                    Canvas.SetTop(_points[_counter].point, coord.Y - 5);
-                    CanvasImage.Children.Add(_points[_counter].point);
-                    _points[_counter].Coor = coord;
-                    Canvas.SetZIndex(_points[_counter].point, _zIndexCounter++);
+                    _points[_pointCounter].point = new Ellipse();
+                    _points[_pointCounter].point.Width = 10;
+                    _points[_pointCounter].point.Height = 10;
+                    _points[_pointCounter].point.Fill = Brushes.Blue;
+                    Canvas.SetLeft(_points[_pointCounter].point, coord.X - 5);
+                    Canvas.SetTop(_points[_pointCounter].point, coord.Y - 5);
+                    CanvasImage.Children.Add(_points[_pointCounter].point);
+                    _points[_pointCounter].Coor = coord;
+                    Canvas.SetZIndex(_points[_pointCounter].point, _zIndexCounter++);
                     pointPosition(e, _flag);
                     _counter++;
+                    
                     startAlgorithmButton.IsEnabled = true;
                 }
             }
@@ -236,7 +263,7 @@ namespace Komiwojazer
                 for (int i = 132; i < _dots.Count; i++)
                 {
                     int dotsRoad = (int)(Math.Abs(_dots[i].Y - pos.Y) * 0.33);
-                    if (Math.Abs(pos.X - _dots[i].X) < 20)
+                    if (Math.Abs(pos.X - _dots[i].X) < 5)
                     {
                         if (_dots[i].Y < pos.Y)
                         {
@@ -626,6 +653,7 @@ namespace Komiwojazer
         DispatcherTimer m_oTimer3 = new DispatcherTimer();
         public void DrawingFormNN()
         {
+            m_oTimer = new DispatcherTimer();
             m_oTimer.Tick += m_oTimer_Tick1NN;
             m_oTimer.Interval = new TimeSpan(0, 0, 0, 0, SPEED);
             m_oTimer.Start();
@@ -633,6 +661,7 @@ namespace Komiwojazer
 
         public void DrawingFormBF()
         {
+            m_oTimer2 = new DispatcherTimer();
             m_oTimer2.Tick += m_oTimer_Tick1BF;
             m_oTimer2.Interval = new TimeSpan(0, 0, 0, 0, SPEED);
             m_oTimer2.Start();
@@ -640,6 +669,7 @@ namespace Komiwojazer
 
         public void DrawingFormGreedy()
         {
+            m_oTimer3 = new DispatcherTimer();
             m_oTimer3.Tick += m_oTimer_Tick1Greedy;
             m_oTimer3.Interval = new TimeSpan(0, 0, 0, 0, SPEED);
             m_oTimer3.Start();
