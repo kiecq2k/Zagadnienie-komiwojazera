@@ -27,30 +27,27 @@ namespace Komiwojazer
                 return false;
             }
 
-            //if ((point.X >= 5 && point.X <= 725 && point.Y >= 4 && point.Y <= 12) ||    //y8
-            //   (point.X >= 5 && point.X <= 358 && point.Y >= 48 && point.Y <= 58) ||    //y10
-            //   (point.X >= 467 && point.X <= 725 && point.Y >= 46 && point.Y <= 56) ||  //y10
-            //   (point.X >= 5 && point.X <= 605 && point.Y >= 93 && point.Y <= 103) ||   //y10
-            //   (point.X >= 5 && point.X <= 273 && point.Y >= 137 && point.Y <= 147) ||  //y10
-            //   (point.X >= 345 && point.X <= 725 && point.Y >= 137 && point.Y <= 145) ||//y8
-            //   (point.X >= 5 && point.X <= 725 && point.Y >= 182 && point.Y <= 190) ||  //y8
-            //   (point.X >= 5 && point.X <= 479 && point.Y >= 225 && point.Y <= 235) ||  //y10
-            //   (point.X >= 594 && point.X <= 726 && point.Y >= 225 && point.Y <= 234) ||//y9
-            //   (point.X >= 5 && point.X <= 666 && point.Y >= 275 && point.Y <= 285) ||  //y10
-            //   (point.X >= 5 && point.X <= 726 && point.Y >= 324 && point.Y <= 331) ||  //y7
-            //   (point.X >= 5 && point.X <= 726 && point.Y >= 366 && point.Y <= 375) ||  //y9
-            //   (point.X >= 93 && point.X <= 726 && point.Y >= 412 && point.Y <= 419) || //y7
-            //   (point.X >= 5 && point.X <= 726 && point.Y >= 457 && point.Y <= 464) ||  //y7
-            //   (point.X >= 5 && point.X <= 275 && point.Y >= 502 && point.Y <= 509) ||  //y6
-            //   (point.X >= 351 && point.X <= 726 && point.Y >= 500 && point.Y <= 509) ||//y9
-            //   (point.X >= 5 && point.X <= 608 && point.Y >= 547 && point.Y <= 554) ||  //y8
-            //   (point.X >= 5 && point.X <= 726 && point.Y >= 592 && point.Y <= 600))    //y8
-            //{
-            //    return true;
-            //}
-
-
-
+            if ((point.X >= 5 && point.X <= 725 && point.Y >= 4 && point.Y <= 12) ||    //y8
+               (point.X >= 5 && point.X <= 358 && point.Y >= 48 && point.Y <= 58) ||    //y10
+               (point.X >= 467 && point.X <= 725 && point.Y >= 46 && point.Y <= 56) ||  //y10
+               (point.X >= 5 && point.X <= 605 && point.Y >= 93 && point.Y <= 103) ||   //y10
+               (point.X >= 5 && point.X <= 273 && point.Y >= 137 && point.Y <= 147) ||  //y10
+               (point.X >= 345 && point.X <= 725 && point.Y >= 137 && point.Y <= 145) ||//y8
+               (point.X >= 5 && point.X <= 725 && point.Y >= 182 && point.Y <= 190) ||  //y8
+               (point.X >= 5 && point.X <= 479 && point.Y >= 225 && point.Y <= 235) ||  //y10
+               (point.X >= 594 && point.X <= 726 && point.Y >= 225 && point.Y <= 234) ||//y9
+               (point.X >= 5 && point.X <= 666 && point.Y >= 275 && point.Y <= 285) ||  //y10
+               (point.X >= 5 && point.X <= 726 && point.Y >= 324 && point.Y <= 331) ||  //y7
+               (point.X >= 5 && point.X <= 726 && point.Y >= 366 && point.Y <= 375) ||  //y9
+               (point.X >= 93 && point.X <= 726 && point.Y >= 412 && point.Y <= 419) || //y7
+               (point.X >= 5 && point.X <= 726 && point.Y >= 457 && point.Y <= 464) ||  //y7
+               (point.X >= 5 && point.X <= 275 && point.Y >= 502 && point.Y <= 509) ||  //y6
+               (point.X >= 351 && point.X <= 726 && point.Y >= 500 && point.Y <= 509) ||//y9
+               (point.X >= 5 && point.X <= 608 && point.Y >= 547 && point.Y <= 554) ||  //y8
+               (point.X >= 5 && point.X <= 726 && point.Y >= 592 && point.Y <= 600))    //y8
+            {
+                return true;
+            }
             return false;
         }
 

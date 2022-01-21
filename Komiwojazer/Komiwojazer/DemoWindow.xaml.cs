@@ -118,7 +118,7 @@ namespace Komiwojazer
             {
                 if (pos.Y > _intersections[_verticalCross[i].Item1].Y &&
                     pos.Y < _intersections[_verticalCross[i].Item2].Y &&
-                    Math.Abs(pos.X - _intersections[_verticalCross[i].Item1].X) < 20)
+                    Math.Abs(pos.X - _intersections[_verticalCross[i].Item1].X) < 10)
                 {
                     return true;
                 }

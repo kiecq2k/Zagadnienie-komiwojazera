@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Komiwojazer"
         mc:Ignorable="d"
-        Title="DemoWindow" Height="800" Width="1225" 
+        Title="DemoWindow" Height="800" Width="1225"  ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <!--Title="DemoWindow" Height="596" Width="1075" ResizeMode="NoResize"-->
