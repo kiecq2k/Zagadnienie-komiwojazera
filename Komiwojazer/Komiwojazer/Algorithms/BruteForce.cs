@@ -16,9 +16,10 @@ namespace Komiwojazer.Algorithms
 
         public List<IList<int>> GetPathBF2()
         {
-            int[] tab = new int[N - STARTING_POINT + 1];
+            int tmp = STARTING_POINT + 1;
+            int[] tab = new int[N - tmp];
             int i = 0;
-            for (int j = 27; j < N; i++, j++)
+            for (int j = tmp; j < N; i++, j++)
             {
                 tab[i] = j;
             }

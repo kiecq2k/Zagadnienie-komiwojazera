@@ -41,7 +41,7 @@ namespace Komiwojazer
         private IList<Tuple<int, int>> _verticalCross = new List<Tuple<int, int>>();
 
         private const int STARTING_POINT = 26;
-        private const int SPEED = 500;
+        private const int SPEED = 50;
         private Version _version = Version.Demo;
 
 
