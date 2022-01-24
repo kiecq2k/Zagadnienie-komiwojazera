@@ -168,6 +168,7 @@ namespace Komiwojazer
                     _points.Add(new Points { Coor = _startingPoint.Coor });
                     endPointsButton.IsEnabled = true;
                     startPointButton.IsEnabled = false;
+                    removePointsButton.IsEnabled = true;
                     _flag = 2;
 
                 }
@@ -263,7 +264,7 @@ namespace Komiwojazer
                 for (int i = 132; i < _dots.Count; i++)
                 {
                     int dotsRoad = (int)(Math.Abs(_dots[i].Y - pos.Y) * 0.33);
-                    if (Math.Abs(pos.X - _dots[i].X) < 5)
+                    if (Math.Abs(pos.X - _dots[i].X) < 9)
                     {
                         if (_dots[i].Y < pos.Y)
                         {
@@ -385,6 +386,7 @@ namespace Komiwojazer
             _pointCounter = 133;
             endPointsButton.IsEnabled = false;
             startAlgorithmButton.IsEnabled = false;
+            removePointsButton.IsEnabled = false;
             startPointButton.IsEnabled = true;
             for (int i = 0; i < 133; i++)
             {
@@ -405,23 +407,26 @@ namespace Komiwojazer
                 MessageBox.Show("Nie wybrano punktów");
                 return;
             }
-            AlgorithmsPickFull ap = new AlgorithmsPickFull();
-
-            if(ap.radioButtonNN.IsChecked == true)
+            int buttonCheck = 0;
+            if (radioButtonNN.IsChecked == true)
             {
                 resultNN = NajblizszySasiad();
                 DrawingFormNN();
+                buttonCheck = 1;
             }
-            else if(ap.radioButtonBF.IsChecked == true)
+            else if(radioButtonBF.IsChecked == true)
             {
                 resultBF = BruteForce();
                 DrawingFormBF();
+                buttonCheck = 1;
             }
-            else if(ap.radioButton3.IsChecked == true)
+            else if(radioButton3.IsChecked == true)
             {
                 resultGreedy = Greedy();
                 DrawingFormGreedy();
+                buttonCheck = 1;
             }
+            if (buttonCheck == 1) removePointsButton.IsEnabled = false;
         }
 
 
@@ -774,6 +779,10 @@ namespace Komiwojazer
                 m_oTimer.Stop();
                 increment = 0;
             }
+            if (!m_oTimer.IsEnabled && !m_oTimer2.IsEnabled && !m_oTimer3.IsEnabled)
+            {
+                removePointsButton.IsEnabled = true;
+            }
 
         }
 
@@ -863,6 +872,10 @@ namespace Komiwojazer
                 m_oTimer2.Stop();
                 increment2 = 0;
             }
+            if (!m_oTimer.IsEnabled && !m_oTimer2.IsEnabled && !m_oTimer3.IsEnabled)
+            {
+                removePointsButton.IsEnabled = true;
+            }
         }
 
         void m_oTimer_Tick1Greedy(object sender, EventArgs e)
@@ -947,6 +960,10 @@ namespace Komiwojazer
                 CanvasImage.Children.Remove(myPolygonGreedy);
                 m_oTimer3.Stop();
                 increment3 = 0;
+            }
+            if (!m_oTimer.IsEnabled && !m_oTimer2.IsEnabled && !m_oTimer3.IsEnabled)
+            {
+                removePointsButton.IsEnabled = true;
             }
 
         }
