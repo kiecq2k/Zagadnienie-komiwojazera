@@ -12,8 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Komiwojazer.Algorithms;
-using Priority_Queue;
-using QuickGraph;
 using Point = System.Windows.Point;
 using System.Windows.Threading;
 using System.Threading.Tasks;
@@ -39,6 +37,7 @@ namespace Komiwojazer
         private IList<IList<int>> _adjMatrix = new List<IList<int>>();
         private IList<IList<int>> _startingAdjMatrix = new List<IList<int>>();
         private IList<Tuple<int, int>> _verticalCross = new List<Tuple<int, int>>();
+        private IList<Tuple<int, int>> _betweenCross = new List<Tuple<int, int>>();
 
         private const int STARTING_POINT = 26;
         private const int SPEED = 50;
@@ -60,6 +59,10 @@ namespace Komiwojazer
             {
                 _startingAdjMatrix.Add(new List<int>());
                 _startingAdjMatrix[i] = new List<int>(_adjMatrix[i]);
+            }
+            for (int i = 0; i < 26; i++)
+            {
+                _betweenCross.Add(new Tuple<int, int>(-1, -1));
             }
             getVerticalRoads();
         }
@@ -87,8 +90,8 @@ namespace Komiwojazer
         {
             foreach (var cross in _intersections)
             {
-                if (cross.X + 20 > p.X && cross.X - 20 < p.X &&
-                    cross.Y + 20 > p.Y && cross.Y - 20 < p.Y)
+                if (cross.X + 5 > p.X && cross.X - 5 < p.X &&
+                    cross.Y + 5 > p.Y && cross.Y - 5 < p.Y)
                     return false;
             }
             return true;
@@ -118,7 +121,7 @@ namespace Komiwojazer
             {
                 if (pos.Y > _intersections[_verticalCross[i].Item1].Y &&
                     pos.Y < _intersections[_verticalCross[i].Item2].Y &&
-                    Math.Abs(pos.X - _intersections[_verticalCross[i].Item1].X) < 10)
+                    Math.Abs(pos.X - _intersections[_verticalCross[i].Item1].X) < 8)
                 {
                     return true;
                 }
@@ -259,7 +262,7 @@ namespace Komiwojazer
                 DrawingFormBF();
                 buttonCheck = 1;
             }
-            
+             
             if(checkbox3.IsChecked == true)
             {
                 resultGreedy = Greedy();
@@ -335,6 +338,8 @@ namespace Komiwojazer
             int cross2 = -1;
             int road1 = 0;
             int road2 = 0;
+            int defcross1 = -1;
+            int defcross2 = -1;
 
             for (int i = 1; i < _intersections.Count; i++)
             {
@@ -345,6 +350,8 @@ namespace Komiwojazer
                     road2 = (int)(Math.Abs(_dots[i].X - pos.X) * 0.4);
                     cross1 = i - 1;
                     cross2 = i;
+                    defcross1 = cross1;
+                    defcross2 = cross2;
                 }
 
             }
@@ -353,7 +360,8 @@ namespace Komiwojazer
                 for (int i = 26; i < _dots.Count; i++)
                 {
                     int dotsRoad = (int)(Math.Abs(_dots[i].X - pos.X) * 0.4);
-                    if (Math.Abs(pos.Y - _dots[i].Y) < 20) 
+                    if ((_betweenCross[i].Item1 == defcross1 && _betweenCross[i].Item2 == defcross2) ||
+                        (_betweenCross[i].Item1 == defcross2 && _betweenCross[i].Item2 == defcross1))
                     {
                         if (_dots[i].X < pos.X)
                         {
@@ -371,7 +379,6 @@ namespace Komiwojazer
                                 road2 = dotsRoad;
                                 cross2 = i;
                             }
-
                         }
                     }
                 }
@@ -380,31 +387,7 @@ namespace Komiwojazer
 
             if (cross1 == -1)
             {
-                //double close1 = double.MaxValue;
-                //double close2 = double.MaxValue;
-                //for (int i = 0; i < _intersections.Count; i++)
-                //{
-                //    double x = Math.Abs(_dots[i].X - pos.X);
-                //    double y = Math.Abs(_dots[i].Y - pos.Y);
-                //    double sum = x + y;
-                //    if (sum < close1)
-                //    {
-                //        close2 = close1;
-                //        cross2 = cross1;
-                //        road2 = road1;
-                //        close1 = sum;
-                //        cross1 = i;
-                //        road1 = (int)(y * 0.4);
-                //    }
-                //    else if (sum < close2 && sum != close1)
-                //    {
-                //        close2 = sum;
-                //        cross2 = i;
-                //        road2 = (int)(y * 0.4);
-                //    }
-                //}
-                //int tmpcross1 = cross1;
-                //int tmpcross2 = cross2;
+
 
                 for (int i = 0; i < _verticalCross.Count; i++)
                 {
@@ -414,22 +397,22 @@ namespace Komiwojazer
                     {
                         cross1 = _verticalCross[i].Item1;
                         cross2 = _verticalCross[i].Item2;
+                        defcross1 = cross1;
+                        defcross2 = cross2;
                         road1 = (int)Math.Abs((_dots[_verticalCross[i].Item1].Y - pos.Y) * 0.4);
                         road2 = (int)Math.Abs((_dots[_verticalCross[i].Item2].Y - pos.Y) * 0.4);
                     }
 
                 }
-                if (cross1 == -1)
-                {
-                    MessageBox.Show("pionowe blad");
-                }
+
                 int tmpcross1 = cross1;
                 int tmpcross2 = cross2;
 
                 for (int i = 26; i < _dots.Count; i++)
                 {
                     int dotsRoad = (int)(Math.Abs(_dots[i].Y - pos.Y) * 0.4);
-                    if (Math.Abs(pos.X - _dots[i].X) < 20)
+                    if ((_betweenCross[i].Item1 == defcross1 && _betweenCross[i].Item2 == defcross2) ||
+                        (_betweenCross[i].Item1 == defcross2 && _betweenCross[i].Item2 == defcross1))
                     {
                         if (_dots[i].Y < pos.Y) 
                         {
@@ -484,12 +467,14 @@ namespace Komiwojazer
             if (flag == 1)
             {
                 indexOfPoint = 26;
+                _betweenCross.Add(new Tuple<int, int>(0, 0));
                 _dots.Add(pos);
             }
             else
             {
                 indexOfPoint = _pointCounter++;
                 _dots.Add(pos);
+                _betweenCross.Add(new Tuple<int, int>(0, 0));
                 addToMatrix();
             }
             int check = 0;
@@ -498,6 +483,7 @@ namespace Komiwojazer
                 _adjMatrix[cross1][cross2] = 0;
                 _adjMatrix[cross1][indexOfPoint] = road1;
                 _adjMatrix[indexOfPoint][cross2] = road2;
+                
                 check = 1;
             }
             if (_adjMatrix[cross2][cross1] != 0)
@@ -505,8 +491,10 @@ namespace Komiwojazer
                 _adjMatrix[cross2][cross1] = 0;
                 _adjMatrix[cross2][indexOfPoint] = road2;
                 _adjMatrix[indexOfPoint][cross1] = road1;
+                
                 check = 1;
             }
+            _betweenCross[indexOfPoint] = new Tuple<int, int>(defcross1, defcross2);
             if (check == 0)
             {
                 MessageBox.Show("Blad dodawania punktow");
