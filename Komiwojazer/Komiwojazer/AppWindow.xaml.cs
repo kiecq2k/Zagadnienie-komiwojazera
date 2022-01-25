@@ -57,11 +57,16 @@ namespace Komiwojazer
                 _startingAdjMatrix.Add(new List<int>());
                 _startingAdjMatrix[i] = new List<int>(_adjMatrix[i]);
             }
+            betweenFill();
+            getVerticalRoads();
+        }
+
+        private void betweenFill()
+        {
             for (int i = 0; i < 132; i++)
             {
                 _betweenCross.Add(new Tuple<int, int>(-1, -1));
             }
-            getVerticalRoads();
         }
 
         private void getVerticalRoads()
@@ -102,8 +107,8 @@ namespace Komiwojazer
         {
             foreach (var cross in _intersections)
             {
-                if (cross.X + 5 > p.X && cross.X-5 < p.X &&
-                    cross.Y + 5 > p.Y && cross.Y-5 < p.Y)
+                if (cross.X + 10 > p.X && cross.X-10 < p.X &&
+                    cross.Y + 10 > p.Y && cross.Y-10 < p.Y)
                     return false;
             }
             return true;
@@ -150,7 +155,7 @@ namespace Komiwojazer
 
 
             if (chybaCheck(coord) &&
-                crossCheck(coord) && pointCheck(coord))
+                crossCheck(coord) && pointCheck(coord) && _counter <7)
             {
                 if (_flag == 1)
                 {
@@ -158,8 +163,8 @@ namespace Komiwojazer
                     {
                         _startingPoint = new Points();
                         _startingPoint.point = new Ellipse();
-                        _startingPoint.point.Width = 10;
-                        _startingPoint.point.Height = 10;
+                        _startingPoint.point.Width = 15;
+                        _startingPoint.point.Height = 15;
                         _startingPoint.point.Fill = Brushes.Black;
                         CanvasImage.Children.Add(_startingPoint.point);
                     }
@@ -179,8 +184,8 @@ namespace Komiwojazer
                 {
                     _points.Add(new Points());
                     _points[_pointCounter].point = new Ellipse();
-                    _points[_pointCounter].point.Width = 10;
-                    _points[_pointCounter].point.Height = 10;
+                    _points[_pointCounter].point.Width = 15;
+                    _points[_pointCounter].point.Height = 15;
                     _points[_pointCounter].point.Fill = Brushes.SaddleBrown;
                     Canvas.SetLeft(_points[_pointCounter].point, coord.X - 5);
                     Canvas.SetTop(_points[_pointCounter].point, coord.Y - 5);
@@ -189,8 +194,8 @@ namespace Komiwojazer
                     Canvas.SetZIndex(_points[_pointCounter].point, _zIndexCounter++);
                     pointPosition(e, _flag);
                     _counter++;
-                    
                     startAlgorithmButton.IsEnabled = true;
+                    number.Content = $"{_counter}";
                 }
             }
         }
@@ -264,10 +269,6 @@ namespace Komiwojazer
                         road2 = (int)Math.Abs((_dots[_verticalCross[i].Item2].Y - pos.Y) * 0.33);
                     }
                     
-                }
-                if (cross1 == -1) 
-                {
-                    MessageBox.Show("pionowe blad");
                 }
                 int tmpcross1 = cross1;
                 int tmpcross2 = cross2;
@@ -394,6 +395,7 @@ namespace Komiwojazer
             road_alg3.Clear();
             _points.Clear();
             _adjMatrix.Clear();
+            _betweenCross.Clear();
             _startingPoint = null;
             _flag = -1;
             _counter = 0;
@@ -402,6 +404,9 @@ namespace Komiwojazer
             startAlgorithmButton.IsEnabled = false;
             removePointsButton.IsEnabled = false;
             startPointButton.IsEnabled = true;
+            radioButtonNN.IsChecked = false;
+            radioButtonBF.IsChecked = false;
+            radioButton3.IsChecked = false;
             for (int i = 0; i < 133; i++)
             {
                 _adjMatrix.Add(new List<int>());
@@ -412,6 +417,8 @@ namespace Komiwojazer
             {
                 _points.Add(new Points { Coor = _intersections[i] });
             }
+            betweenFill();
+            number.Content = $"{_counter}";
         }
 
         private void startAlgorithmButton_Click(object sender, RoutedEventArgs e)
@@ -440,7 +447,13 @@ namespace Komiwojazer
                 DrawingFormGreedy();
                 buttonCheck = 1;
             }
-            if (buttonCheck == 1) removePointsButton.IsEnabled = false;
+            if (buttonCheck == 1)
+            {
+                removePointsButton.IsEnabled = false;
+                startAlgorithmButton.IsEnabled = false;
+                endPointsButton.IsEnabled = false;
+                _flag = -1;
+            }
         }
 
 

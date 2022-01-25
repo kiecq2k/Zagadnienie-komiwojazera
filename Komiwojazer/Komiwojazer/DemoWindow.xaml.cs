@@ -60,11 +60,16 @@ namespace Komiwojazer
                 _startingAdjMatrix.Add(new List<int>());
                 _startingAdjMatrix[i] = new List<int>(_adjMatrix[i]);
             }
+            betweenFill();
+            getVerticalRoads();
+        }
+
+        private void betweenFill()
+        {
             for (int i = 0; i < 26; i++)
             {
                 _betweenCross.Add(new Tuple<int, int>(-1, -1));
             }
-            getVerticalRoads();
         }
 
         private void getVerticalRoads()
@@ -136,7 +141,7 @@ namespace Komiwojazer
 
             if (/*coord.IsOnRoad(Version.Demo)*/ 
                 isOnRoad(coord) &&
-                crossCheck(coord) && pointCheck(coord))
+                crossCheck(coord) && pointCheck(coord) && _counter<7)
             {
                 if (_flag == 1)
                 {
@@ -178,6 +183,7 @@ namespace Komiwojazer
                     pointPosition(e, _flag);
                     _counter++;
                     startAlgorithmButton.IsEnabled = true;
+                    number.Content = $"{_counter}";
                 }
             }
         }
@@ -216,6 +222,7 @@ namespace Komiwojazer
             road_alg3.Clear();
             _points.Clear();
             _adjMatrix.Clear();
+            _betweenCross.Clear();
             _startingPoint = null;
             _flag = -1;
             _counter = 0;
@@ -237,6 +244,8 @@ namespace Komiwojazer
             {
                 _points.Add(new Points { Coor = _intersections[i] });
             }
+            betweenFill();
+            number.Content = $"{_counter}";
         }
 
         private void startAlgorithmButton_Click(object sender, RoutedEventArgs e)
@@ -269,7 +278,13 @@ namespace Komiwojazer
                 DrawingFormGreedy();
                 buttonCheck = 1;
             }
-            if (buttonCheck == 1) removePointsButton.IsEnabled = false;
+            if (buttonCheck == 1)
+            {
+                removePointsButton.IsEnabled = false;
+                startAlgorithmButton.IsEnabled = false;
+                endPointsButton.IsEnabled = false;
+                _flag = -1;
+            }
         }
 
         private void adjMatrixFill()

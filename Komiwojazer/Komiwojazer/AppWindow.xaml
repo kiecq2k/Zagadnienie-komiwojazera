@@ -31,15 +31,17 @@
 
 
         </StackPanel>
-
+        <Label Grid.Column="1" Margin="20,175,0,0"  Content="Maksymalna ilość punktów: 7" FontSize="20"/>
+        <Label Grid.Column="1" Margin="20,195,0,0"  Content="Wykorzystane punkty: " FontSize="20"/>
+        <Label x:Name="number" Grid.Column="1" Margin="220,195,0,0"  Content="0" FontSize="20"/>
         <StackPanel Grid.Column="1" Width="350">
-            <Button x:Name="startPointButton" Cursor="Hand" Content="Zaznacz punkt początkowy"  Height="50" Width="300" Margin="20,50,20,20" FontSize="22" Click="startPointButton_Click"></Button>
-            <Button x:Name="endPointsButton" Cursor="Hand" Content="Zaznacz resztę punktów" IsEnabled="False" Height="50" Width="300" Margin="20" FontSize="22" Click="endPointsButton_Click"></Button>
-            <Button x:Name="startAlgorithmButton" Cursor="Hand" Content="Znajdź trasę" IsEnabled="false" Height="50" Width="300" Margin="20" FontSize="22" Click="startAlgorithmButton_Click"></Button>
-            <Button x:Name="removePointsButton" Cursor="Hand" Content="Wyczyść mape" IsEnabled="false" Height="50" Width="300" Margin="20" FontSize="22" Click="removePointsButton_Click"></Button>
-            <Button x:Name="endButton" Cursor="Hand" Content="Wyjście" Height="50" Margin="20" Width="300" FontSize="22" Click="endButton_Click"></Button>
+            <Button x:Name="startPointButton" Cursor="Hand" Content="Zaznacz punkt początkowy"  Height="50" Width="300" Margin="20,30,20,25" FontSize="22" Click="startPointButton_Click"></Button>
+            <Button x:Name="endPointsButton" Cursor="Hand" Content="Zaznacz resztę punktów" IsEnabled="False" Height="50" Width="300" Margin="0,25,0,25" FontSize="22" Click="endPointsButton_Click"></Button>
+            <Button x:Name="startAlgorithmButton" Cursor="Hand" Content="Znajdź trasę" IsEnabled="false" Height="50" Width="300" Margin="0,25,0,25" FontSize="22" Click="startAlgorithmButton_Click"></Button>
+            <Button x:Name="removePointsButton" Cursor="Hand" Content="Wyczyść mape" IsEnabled="false" Height="50" Width="300" Margin="0,25,0,25" FontSize="22" Click="removePointsButton_Click"></Button>
+            <Button x:Name="endButton" Cursor="Hand" Content="Wyjście" Height="50" Margin="0,25,0,25" Width="300" FontSize="22" Click="endButton_Click"></Button>
 
-            <Grid Margin="0,20,0,0">
+            <Grid Margin="0,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto" ></RowDefinition>
