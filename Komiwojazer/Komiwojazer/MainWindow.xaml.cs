@@ -32,6 +32,11 @@ namespace Komiwojazer
             Close();
         }
 
-        
+        private void demoButton_Click(object sender, RoutedEventArgs e)
+        {
+            var demoWindow = new DemoWindow();
+            demoWindow.Show();
+            Close();
+        }
     }
 }

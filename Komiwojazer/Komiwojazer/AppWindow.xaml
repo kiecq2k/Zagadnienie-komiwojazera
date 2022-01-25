@@ -5,57 +5,82 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Komiwojazer"
         mc:Ignorable="d"
-        Title="Zagadnienie komiwojażera" Height="800" Width="1200">
+        Title="Zagadnienie komiwojażera" Height="860" Width="1325" ResizeMode="NoResize"
+         
+        WindowStartupLocation="CenterScreen">
     <Grid>
+        <!--Title="Zagadnienie komiwojażera" Height="825" Width="1140" ResizeMode="NoResize"-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition Width="340" ></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Image x:Name="image" Height="600" Width="780" Source="/mapa.jpg" Stretch="Fill" Margin="10,10,10,174"></Image>
+        <!--<Image x:Name="image" Height="600" Width="780" Source="/mapa.jpg" Stretch="None" Margin="10,10,10,174"></Image>-->
+        <Image x:Name="image" Height="800" Width="950" Source="/mapa.jpg" Stretch="Fill" Margin="10,10,10,0"></Image>
         <StackPanel Grid.Column="0">
-            <Canvas x:Name="CanvasImage" Height="600" Width="771" Margin="8,10,0,0" Background="Transparent"
-                    MouseDown="CanvasImage_MouseDown" MouseUp="CanvasImage_MouseUp">
-
+            <!--<Canvas x:Name="CanvasImage" Height="600" Width="771" Margin="8,10,0,0" Background="Transparent"
+                    MouseDown="CanvasImage_MouseDown">
+            </Canvas>-->
+            <Canvas x:Name="CanvasImage" Height="800" Width="950" Margin="10,10,10,0" Background="Transparent"
+                    MouseDown="CanvasImage_MouseDown">
             </Canvas>
 
 
 
 
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="Algorytm 1" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="37" Width="108"/>
-                <CheckBox x:Name="alg1" Grid.Column="1" Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="16"/>
-                <TextBox x:Name="road_alg1" Grid.Row="0" Grid.Column="2" Margin="15,0,0,0" Width="50" Height="20" />
-
-                <Label Grid.Row="1" Grid.Column="0" Content="Algorytm 2" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="36" Width="108"></Label>
-                <CheckBox x:Name="alg2" Grid.Row="1" Grid.Column="1" Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="16"></CheckBox>
-                <TextBox x:Name="road_alg2" Grid.Row="1" Grid.Column="2" Margin="15,0,0,0" Width="50" Height="20" />
-
-                <Label Grid.Row="2" Grid.Column="0" Content="Algorytm 3" FontSize="20" Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="37" Width="108"></Label>
-                <CheckBox x:Name="alg3" Grid.Row="2" Grid.Column="1" Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="16"></CheckBox>
-                <TextBox x:Name="road_alg3" Grid.Row="2" Grid.Column="2" Margin="15,0,0,0" Height="20" Width="50"  />
-
-            </Grid>
         </StackPanel>
 
-        <StackPanel Grid.Column="1">
-            <Button x:Name="startPointButton" Cursor="Hand" Content="Zaznacz punkt początkowy" Height="50" Margin="20,50,20,20" FontSize="16" Click="startPointButton_Click"></Button>
-            <Button x:Name="endPointsButton" Cursor="Hand" Content="Zaznacz resztę punktów" Height="50" Margin="20" FontSize="16" Click="endPointsButton_Click"></Button>
-            <Button x:Name="startAlgorithmButton" Cursor="Hand" Content="Znajdź trasę" Height="50" Margin="20" FontSize="16" Click="startAlgorithmButton_Click"></Button>
-            <Button x:Name="removePointsButton" Cursor="Hand" Content="Wyczyść punkty" Height="50" Margin="20" FontSize="16" Click="removePointsButton_Click"></Button>
-            <Button x:Name="endButton" Cursor="Hand" Content="Wyjście" Height="50" Margin="20" FontSize="16" Click="endButton_Click"></Button>
+        <StackPanel Grid.Column="1" Width="350">
+            <Button x:Name="startPointButton" Cursor="Hand" Content="Zaznacz punkt początkowy"  Height="50" Width="300" Margin="20,50,20,20" FontSize="22" Click="startPointButton_Click"></Button>
+            <Button x:Name="endPointsButton" Cursor="Hand" Content="Zaznacz resztę punktów" IsEnabled="False" Height="50" Width="300" Margin="20" FontSize="22" Click="endPointsButton_Click"></Button>
+            <Button x:Name="startAlgorithmButton" Cursor="Hand" Content="Znajdź trasę" IsEnabled="false" Height="50" Width="300" Margin="20" FontSize="22" Click="startAlgorithmButton_Click"></Button>
+            <Button x:Name="removePointsButton" Cursor="Hand" Content="Wyczyść mape" IsEnabled="false" Height="50" Width="300" Margin="20" FontSize="22" Click="removePointsButton_Click"></Button>
+            <Button x:Name="endButton" Cursor="Hand" Content="Wyjście" Height="50" Margin="20" Width="300" FontSize="22" Click="endButton_Click"></Button>
+
+            <Grid Margin="0,20,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto" ></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" TextWrapping="Wrap" Margin="30,0,0,0"  Text="Algorytm najbliższego sąsiada" FontSize="22" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Width="220"/>
+                <RadioButton x:Name="radioButtonNN" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="16"/>
+                <Rectangle  Grid.Column="0" HorizontalAlignment="Left" Height="20" Margin="0,0,0,0" Grid.Row="0" Stroke="Black" VerticalAlignment="Center" Width="20" Grid.ColumnSpan="2" Fill="OrangeRed"/>
+                <TextBox x:Name="road_alg1" FontSize="18" Grid.Row="0" Grid.Column="2" Margin="15,10,0,22" VerticalAlignment="Center" HorizontalAlignment="Center"  Width="50" Height="25"  />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Algorytm zachłanny" FontSize="22" Margin="30,10,0,10" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="220"></TextBlock>
+
+                <Rectangle  Grid.Column="0" HorizontalAlignment="Left" Height="20" Margin="0,0,0,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Center" Width="20" Grid.ColumnSpan="2" Fill="DeepSkyBlue"/>
+                <RadioButton x:Name="radioButtonBF" Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="16"></RadioButton>
+                <TextBox x:Name="road_alg2" FontSize="18" Grid.Row="1" Grid.Column="2" Margin="15,0,0,0" Width="50" Height="25" />
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Algorytm najm. krawędzi" Margin="30,0,0,0" FontSize="22" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Width="220"></TextBlock>
+
+                <Rectangle  Grid.Column="0" HorizontalAlignment="Left" Height="20" Margin="0,0,0,0" Grid.Row="2" Stroke="Black" VerticalAlignment="Center" Width="20" Grid.ColumnSpan="2" Fill="Green"/>
+                <RadioButton x:Name="radioButton3" Grid.Row="2" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="16"></RadioButton>
+                <TextBox x:Name="road_alg3" FontSize="18" Grid.Row="2" Grid.Column="2" Margin="15,0,0,0" Height="25" Width="50"  />
+
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Punkt startowy: "  HorizontalAlignment="Left" FontSize="22" Margin="30,60,0,0"  Height="37" Width="160" />
+                <Ellipse Grid.Row="3" Grid.Column="0" Height="15" Stroke="Black" Fill="Black" Width="15" Margin="200,60,0,0"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Punkt do odwiedzenia: " FontSize="22" Margin="30,0,0,0" VerticalAlignment="Center" Height="37" Width="220"/>
+                <Ellipse Grid.Row="4" Grid.Column="2" Height="15" Stroke="Black" Fill="SaddleBrown" Width="15" Margin="0,0,0,0"/>
+
+
+
+            </Grid>
+
         </StackPanel>
     </Grid>
 </Window>
