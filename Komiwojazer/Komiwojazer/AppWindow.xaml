@@ -77,7 +77,7 @@
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Punkt startowy: "  HorizontalAlignment="Left" FontSize="22" Margin="30,60,0,0"  Height="37" Width="160" />
                 <Ellipse Grid.Row="3" Grid.Column="0" Height="15" Stroke="Black" Fill="Black" Width="15" Margin="200,60,0,0"/>
                 <TextBlock Grid.Row="4" Grid.Column="0" Text="Punkt do odwiedzenia: " FontSize="22" Margin="30,0,0,0" VerticalAlignment="Center" Height="37" Width="220"/>
-                <Ellipse Grid.Row="4" Grid.Column="2" Height="15" Stroke="Black" Fill="SaddleBrown" Width="15" Margin="0,0,0,0"/>
+                <Ellipse Grid.Row="4" Grid.Column="2" Height="15" Stroke="Black" Fill="Sienna" Width="15" Margin="0,0,0,0"/>
 
 
 

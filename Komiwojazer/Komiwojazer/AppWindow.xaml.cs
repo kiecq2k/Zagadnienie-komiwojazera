@@ -39,8 +39,11 @@ namespace Komiwojazer
         private IList<IList<int>> _startingAdjMatrix = new List<IList<int>>();
         private IList<Tuple<int, int>> _verticalCross = new List<Tuple<int, int>>();
         private IList<Tuple<int, int>> _betweenCross = new List<Tuple<int, int>>();
-        private const int SPEED = 50;
+        private const int SPEED = 300;
         private Version _version = Version.Full;
+        private bool algIsOnMapNN = false;
+        private bool algIsOnMapBF = false;
+        private bool algIsOnMap3 = false;
 
         public AppWindow()
         {
@@ -186,7 +189,7 @@ namespace Komiwojazer
                     _points[_pointCounter].point = new Ellipse();
                     _points[_pointCounter].point.Width = 15;
                     _points[_pointCounter].point.Height = 15;
-                    _points[_pointCounter].point.Fill = Brushes.SaddleBrown;
+                    _points[_pointCounter].point.Fill = Brushes.Sienna;
                     Canvas.SetLeft(_points[_pointCounter].point, coord.X - 5);
                     Canvas.SetTop(_points[_pointCounter].point, coord.Y - 5);
                     CanvasImage.Children.Add(_points[_pointCounter].point);
@@ -429,19 +432,19 @@ namespace Komiwojazer
                 return;
             }
             int buttonCheck = 0;
-            if (radioButtonNN.IsChecked == true)
+            if (radioButtonNN.IsChecked == true && !algIsOnMapNN)
             {
                 resultNN = NajblizszySasiad();
                 DrawingFormNN();
                 buttonCheck = 1;
             }
-            else if(radioButtonBF.IsChecked == true)
+            if(radioButtonBF.IsChecked == true && !algIsOnMapBF)
             {
                 resultBF = BruteForce();
                 DrawingFormBF();
                 buttonCheck = 1;
             }
-            else if(radioButton3.IsChecked == true)
+            if(radioButton3.IsChecked == true && !algIsOnMap3)
             {
                 resultGreedy = Greedy();
                 DrawingFormGreedy();
@@ -450,7 +453,7 @@ namespace Komiwojazer
             if (buttonCheck == 1)
             {
                 removePointsButton.IsEnabled = false;
-                startAlgorithmButton.IsEnabled = false;
+
                 endPointsButton.IsEnabled = false;
                 _flag = -1;
             }

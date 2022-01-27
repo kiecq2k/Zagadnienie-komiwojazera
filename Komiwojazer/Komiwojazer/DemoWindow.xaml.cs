@@ -40,8 +40,12 @@ namespace Komiwojazer
         private IList<Tuple<int, int>> _betweenCross = new List<Tuple<int, int>>();
 
         private const int STARTING_POINT = 26;
-        private const int SPEED = 50;
+        private const int SPEED = 500;
         private Version _version = Version.Demo;
+        private bool algIsOnMapNN = false;
+        private bool algIsOnMapBF = false;
+        private bool algIsOnMap3 = false;
+        
 
 
         public DemoWindow()
@@ -169,12 +173,11 @@ namespace Komiwojazer
                 }
                 else if (_flag == 2)
                 {
-
                     _points.Add(new Points());
                     _points[_pointCounter].point = new Ellipse();
                     _points[_pointCounter].point.Width = 18;
                     _points[_pointCounter].point.Height = 18;
-                    _points[_pointCounter].point.Fill = Brushes.SaddleBrown;
+                    _points[_pointCounter].point.Fill = Brushes.Sienna;
                     Canvas.SetLeft(_points[_pointCounter].point, coord.X - 5);
                     Canvas.SetTop(_points[_pointCounter].point, coord.Y - 5);
                     CanvasImage.Children.Add(_points[_pointCounter].point);
@@ -234,6 +237,9 @@ namespace Komiwojazer
             checkboxNN.IsChecked = false;
             checkboxBF.IsChecked = false;
             checkbox3.IsChecked = false;
+            algIsOnMapNN = false;
+            algIsOnMapBF = false;
+            algIsOnMap3 = false;
             for (int i = 0; i < 27; i++)
             {
                 _adjMatrix.Add(new List<int>());
@@ -256,32 +262,43 @@ namespace Komiwojazer
                 MessageBox.Show("Nie wybrano punktów");
                 return;
             }
+            if (_lines != null)
+            {
+                foreach (var line in _lines)
+                {
+                    CanvasImage.Children.Remove(line);
+                }
+            }
+
             int buttonCheck = 0;
 
-            if (checkboxNN.IsChecked == true)
+            if (checkboxNN.IsChecked == true && !algIsOnMapNN)
             {
                 resultNN = NajblizszySasiad();
                 DrawingFormNN();
                 buttonCheck = 1;
+                algIsOnMapNN = true;
             }
 
-            if(checkboxBF.IsChecked == true)
+            if(checkboxBF.IsChecked == true && !algIsOnMapBF)
             {
                 resultBF = BruteForce();
                 DrawingFormBF();
                 buttonCheck = 1;
+                algIsOnMapBF = true;
             }
              
-            if(checkbox3.IsChecked == true)
+            if(checkbox3.IsChecked == true && !algIsOnMap3)
             {
                 resultGreedy = Greedy();
                 DrawingFormGreedy();
                 buttonCheck = 1;
+                algIsOnMapNN = true;
             }
             if (buttonCheck == 1)
             {
                 removePointsButton.IsEnabled = false;
-                startAlgorithmButton.IsEnabled = false;
+               
                 endPointsButton.IsEnabled = false;
                 _flag = -1;
             }
