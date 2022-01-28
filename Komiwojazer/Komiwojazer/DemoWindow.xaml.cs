@@ -272,7 +272,7 @@ namespace Komiwojazer
 
             int buttonCheck = 0;
 
-            if (checkboxNN.IsChecked == true && !algIsOnMapNN)
+            if (checkboxNN.IsChecked == true)
             {
                 resultNN = NajblizszySasiad();
                 DrawingFormNN();
@@ -280,7 +280,7 @@ namespace Komiwojazer
                 algIsOnMapNN = true;
             }
 
-            if(checkboxBF.IsChecked == true && !algIsOnMapBF)
+            if(checkboxBF.IsChecked == true)
             {
                 resultBF = BruteForce();
                 DrawingFormBF();
@@ -288,17 +288,17 @@ namespace Komiwojazer
                 algIsOnMapBF = true;
             }
              
-            if(checkbox3.IsChecked == true && !algIsOnMap3)
+            if(checkbox3.IsChecked == true)
             {
                 resultGreedy = Greedy();
                 DrawingFormGreedy();
                 buttonCheck = 1;
-                algIsOnMapNN = true;
+                algIsOnMap3 = true;
             }
             if (buttonCheck == 1)
             {
                 removePointsButton.IsEnabled = false;
-               
+                startAlgorithmButton.IsEnabled = false;
                 endPointsButton.IsEnabled = false;
                 _flag = -1;
             }
@@ -552,8 +552,7 @@ namespace Komiwojazer
         {
             var dijkstra = new Dijkstra(_version, _adjMatrix);
             var result = dijkstra.GetPath();
-         
-            road_alg1.Text += Distance(result);
+            if (!algIsOnMapNN) road_alg1.Text += Distance(result);
             return result;
         }
 
@@ -562,7 +561,7 @@ namespace Komiwojazer
             var bruteForce = new BruteForce(_version, _adjMatrix);
             var result = bruteForce.GetPathBF2();
             var result2 = DistanceBF(result);
-            road_alg2.Text += Distance(result2);
+            if(!algIsOnMapBF) road_alg2.Text += Distance(result2);
             return result2;
         }
 
@@ -570,7 +569,7 @@ namespace Komiwojazer
         {
             var greedy = new Greedy(_version, _adjMatrix);
             var result = greedy.NajmniejszaKrawedz();
-            road_alg3.Text += Distance(result);
+            if(!algIsOnMap3) road_alg3.Text += Distance(result);
             return result;
         }
 
@@ -733,6 +732,7 @@ namespace Komiwojazer
             if (!m_oTimer.IsEnabled && !m_oTimer2.IsEnabled && !m_oTimer3.IsEnabled)
             {
                 removePointsButton.IsEnabled = true;
+                startAlgorithmButton.IsEnabled = true;
             }
 
         }
@@ -826,6 +826,7 @@ namespace Komiwojazer
             if (!m_oTimer.IsEnabled && !m_oTimer2.IsEnabled && !m_oTimer3.IsEnabled)
             {
                 removePointsButton.IsEnabled = true;
+                startAlgorithmButton.IsEnabled = true;
             }
         }
 
@@ -918,6 +919,7 @@ namespace Komiwojazer
             if(!m_oTimer.IsEnabled && !m_oTimer2.IsEnabled && !m_oTimer3.IsEnabled)
             {
                 removePointsButton.IsEnabled = true;
+                startAlgorithmButton.IsEnabled = true;
             }
 
         }

@@ -31,6 +31,7 @@
 
 
         </StackPanel>
+        <Label Grid.Column="1" Content="Długość drogi:" FontSize="15"  Height="40" Width="308" Margin="200,480,-168,319" Panel.ZIndex="3"/>
         <Label Grid.Column="1" Margin="20,175,0,0"  Content="Maksymalna ilość punktów: 7" FontSize="20"/>
         <Label Grid.Column="1" Margin="20,195,0,0"  Content="Wykorzystane punkty: " FontSize="20"/>
         <Label x:Name="number" Grid.Column="1" Margin="220,195,0,0"  Content="0" FontSize="20"/>

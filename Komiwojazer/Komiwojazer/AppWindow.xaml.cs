@@ -437,23 +437,26 @@ namespace Komiwojazer
                 resultNN = NajblizszySasiad();
                 DrawingFormNN();
                 buttonCheck = 1;
+                algIsOnMapNN = true;
             }
             if(radioButtonBF.IsChecked == true && !algIsOnMapBF)
             {
                 resultBF = BruteForce();
                 DrawingFormBF();
                 buttonCheck = 1;
+                algIsOnMapBF = true;
             }
             if(radioButton3.IsChecked == true && !algIsOnMap3)
             {
                 resultGreedy = Greedy();
                 DrawingFormGreedy();
                 buttonCheck = 1;
+                algIsOnMap3 = true;
             }
             if (buttonCheck == 1)
             {
                 removePointsButton.IsEnabled = false;
-
+                startAlgorithmButton.IsEnabled = false;
                 endPointsButton.IsEnabled = false;
                 _flag = -1;
             }
@@ -812,6 +815,7 @@ namespace Komiwojazer
             if (!m_oTimer.IsEnabled && !m_oTimer2.IsEnabled && !m_oTimer3.IsEnabled)
             {
                 removePointsButton.IsEnabled = true;
+                startAlgorithmButton.IsEnabled = true;
             }
 
         }
@@ -905,6 +909,7 @@ namespace Komiwojazer
             if (!m_oTimer.IsEnabled && !m_oTimer2.IsEnabled && !m_oTimer3.IsEnabled)
             {
                 removePointsButton.IsEnabled = true;
+                startAlgorithmButton.IsEnabled = true;
             }
         }
 
@@ -994,6 +999,7 @@ namespace Komiwojazer
             if (!m_oTimer.IsEnabled && !m_oTimer2.IsEnabled && !m_oTimer3.IsEnabled)
             {
                 removePointsButton.IsEnabled = true;
+                startAlgorithmButton.IsEnabled = true;
             }
 
         }
