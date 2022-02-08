@@ -30,11 +30,8 @@ namespace Komiwojazer
         private int _counter = 0;
         private int _pointCounter = 133;
         private int _zIndexCounter = 1;
-
-
         private IList<Point> _intersections = new List<Point>();
         private IList<Point> _dots = new List<Point>();
-        private IList<Point> _usedPoints = new List<Point>();
         private IList<IList<int>> _adjMatrix = new List<IList<int>>();
         private IList<IList<int>> _startingAdjMatrix = new List<IList<int>>();
         private IList<Tuple<int, int>> _verticalCross = new List<Tuple<int, int>>();
@@ -129,7 +126,7 @@ namespace Komiwojazer
 
 
 
-        private bool chybaCheck(Point pos)
+        private bool onRoadCheck(Point pos)
         {
             for (int i = 1; i < _intersections.Count; i++)
             {
@@ -155,10 +152,8 @@ namespace Komiwojazer
         private void CanvasImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var coord = e.GetPosition(this.CanvasImage);
-
-
-            if (chybaCheck(coord) &&
-                crossCheck(coord) && pointCheck(coord) && _counter <7)
+            if (onRoadCheck(coord) && crossCheck(coord) &&
+                pointCheck(coord) && _counter <7)
             {
                 if (_flag == 1)
                 {
@@ -181,7 +176,6 @@ namespace Komiwojazer
                     startPointButton.IsEnabled = false;
                     removePointsButton.IsEnabled = true;
                     _flag = 2;
-
                 }
                 else if (_flag == 2)
                 {

@@ -29,21 +29,6 @@
           "lib/netstandard1.0/PriorityQueue.dll": {}
         }
       },
-      "QuickGraph/3.6.61119.7": {
-        "type": "package",
-        "compile": {
-          "lib/net4/QuickGraph.Data.dll": {},
-          "lib/net4/QuickGraph.Graphviz.dll": {},
-          "lib/net4/QuickGraph.Serialization.dll": {},
-          "lib/net4/QuickGraph.dll": {}
-        },
-        "runtime": {
-          "lib/net4/QuickGraph.Data.dll": {},
-          "lib/net4/QuickGraph.Graphviz.dll": {},
-          "lib/net4/QuickGraph.Serialization.dll": {},
-          "lib/net4/QuickGraph.dll": {}
-        }
-      },
       "System.Collections/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -125,29 +110,6 @@
         "lib/portable-net40+sl5+win8+wpa81+wp8/PriorityQueue.xml",
         "optimizedpriorityqueue.5.1.0.nupkg.sha512",
         "optimizedpriorityqueue.nuspec"
-      ]
-    },
-    "QuickGraph/3.6.61119.7": {
-      "sha512": "crtYNiFcYFtYbmbEfdYsdGw5M3923OO5ZZD25K+WeLPgTp/q4oq3U/FVrbaOK5+Jg8UJDmoZ6sqAVion4RgXCA==",
-      "type": "package",
-      "path": "quickgraph/3.6.61119.7",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net4/CodeContracts/QuickGraph.Contracts.dll",
-        "lib/net4/CodeContracts/QuickGraph.Data.Contracts.dll",
-        "lib/net4/CodeContracts/QuickGraph.Graphviz.Contracts.dll",
-        "lib/net4/CodeContracts/QuickGraph.Serialization.Contracts.dll",
-        "lib/net4/QuickGraph.Data.XML",
-        "lib/net4/QuickGraph.Data.dll",
-        "lib/net4/QuickGraph.Graphviz.XML",
-        "lib/net4/QuickGraph.Graphviz.dll",
-        "lib/net4/QuickGraph.Serialization.XML",
-        "lib/net4/QuickGraph.Serialization.dll",
-        "lib/net4/QuickGraph.XML",
-        "lib/net4/QuickGraph.dll",
-        "quickgraph.3.6.61119.7.nupkg.sha512",
-        "quickgraph.nuspec"
       ]
     },
     "System.Collections/4.3.0": {
@@ -314,12 +276,12 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "OptimizedPriorityQueue >= 5.1.0",
-      "QuickGraph >= 3.6.61119.7",
       "System.Collections >= 4.3.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\chudy\\.nuget\\packages\\": {}
+    "C:\\Users\\chudy\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
@@ -330,6 +292,9 @@
       "packagesPath": "C:\\Users\\chudy\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\chudy\\source\\repos\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
         "C:\\Users\\chudy\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -361,10 +326,6 @@
             "target": "Package",
             "version": "[5.1.0, )"
           },
-          "QuickGraph": {
-            "target": "Package",
-            "version": "[3.6.61119.7, )"
-          },
           "System.Collections": {
             "target": "Package",
             "version": "[4.3.0, )"
@@ -391,17 +352,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'QuickGraph 3.6.61119.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
-      "libraryId": "QuickGraph",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    }
-  ]
+  }
 }

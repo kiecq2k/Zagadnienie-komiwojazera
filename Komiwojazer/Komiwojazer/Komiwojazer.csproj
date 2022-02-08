@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <PackageReference Include="OptimizedPriorityQueue" Version="5.1.0" />
-    <PackageReference Include="QuickGraph" Version="3.6.61119.7" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
   </ItemGroup>
 

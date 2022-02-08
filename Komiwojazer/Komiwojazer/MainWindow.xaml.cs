@@ -18,8 +18,12 @@ namespace Komiwojazer
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
+    public enum Version { Demo, Full };
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();

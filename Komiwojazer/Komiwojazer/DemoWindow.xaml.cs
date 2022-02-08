@@ -39,7 +39,6 @@ namespace Komiwojazer
         private IList<Tuple<int, int>> _verticalCross = new List<Tuple<int, int>>();
         private IList<Tuple<int, int>> _betweenCross = new List<Tuple<int, int>>();
 
-        private const int STARTING_POINT = 26;
         private const int SPEED = 500;
         private Version _version = Version.Demo;
         private bool algIsOnMapNN = false;
@@ -116,6 +115,12 @@ namespace Komiwojazer
             return true;
         }
 
+        /// <summary>
+        /// Metoda sprawdza czy obecnie nacisniety punkt jest na
+        /// drodze czy poza nią
+        /// </summary>
+        /// <param name="pos">Pozycja myszki podczas naciśninięcia na mape</param>
+        /// <returns>Zwraca prawde lub fałsz</returns>
         private bool isOnRoad(Point pos)
         {
             for (int i = 1; i < _intersections.Count; i++)
@@ -143,8 +148,7 @@ namespace Komiwojazer
         {
             var coord = e.GetPosition(this.CanvasImage);
 
-            if (/*coord.IsOnRoad(Version.Demo)*/ 
-                isOnRoad(coord) &&
+            if (isOnRoad(coord) &&
                 crossCheck(coord) && pointCheck(coord) && _counter<7)
             {
                 if (_flag == 1)

@@ -9,7 +9,6 @@
       "Komiwojazer/1.0.0": {
         "dependencies": {
           "OptimizedPriorityQueue": "5.1.0",
-          "QuickGraph": "3.6.61119.7",
           "System.Collections": "4.3.0"
         },
         "runtime": {
@@ -23,26 +22,6 @@
           "lib/netstandard1.0/PriorityQueue.dll": {
             "assemblyVersion": "5.0.0.0",
             "fileVersion": "5.0.0.0"
-          }
-        }
-      },
-      "QuickGraph/3.6.61119.7": {
-        "runtime": {
-          "lib/net4/QuickGraph.Data.dll": {
-            "assemblyVersion": "3.6.61114.0",
-            "fileVersion": "3.6.61114.0"
-          },
-          "lib/net4/QuickGraph.Graphviz.dll": {
-            "assemblyVersion": "3.6.61114.0",
-            "fileVersion": "3.6.61114.0"
-          },
-          "lib/net4/QuickGraph.Serialization.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          },
-          "lib/net4/QuickGraph.dll": {
-            "assemblyVersion": "3.6.61114.0",
-            "fileVersion": "3.6.61114.0"
           }
         }
       },
@@ -87,13 +66,6 @@
       "sha512": "sha512-0AnX6kAs0GiLrSqrHKe5mpQhJSHTmXeqLNucV2CxGATP/I9UzLMc1N4MtS/z8qB6mcgX61OjHdY3YbOmETGs+A==",
       "path": "optimizedpriorityqueue/5.1.0",
       "hashPath": "optimizedpriorityqueue.5.1.0.nupkg.sha512"
-    },
-    "QuickGraph/3.6.61119.7": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-crtYNiFcYFtYbmbEfdYsdGw5M3923OO5ZZD25K+WeLPgTp/q4oq3U/FVrbaOK5+Jg8UJDmoZ6sqAVion4RgXCA==",
-      "path": "quickgraph/3.6.61119.7",
-      "hashPath": "quickgraph.3.6.61119.7.nupkg.sha512"
     },
     "System.Collections/4.3.0": {
       "type": "package",
