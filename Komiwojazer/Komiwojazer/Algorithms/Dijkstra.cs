@@ -165,28 +165,28 @@ namespace Komiwojazer.Algorithms
             var result = new List<int>();
             int startPoint = STARTING_POINT;
 
-            while (!AllPointsUsed())
+            while (!AllPointsUsed()) //tworzenie marszruty
             {
                 var paths = dijkstra(startPoint);
 
                 int minDistance = int.MaxValue;
 
-                for (int i = STARTING_POINT + 1; i < N; i++)
+                for (int i = STARTING_POINT + 1; i < N; i++) //szukanie najbliższego wierzchołka
                 {
-                    if (paths[i].Distance < minDistance && !_usedPoints.Contains(i))
+                    if (paths[i].Distance < minDistance && !_usedPoints.Contains(i)) //porównanie wag krawędzi
                     {
                         minDistance = paths[i].Distance;
                         startPoint = i;
                     }
                 }
 
-                _usedPoints.Add(startPoint);
+                _usedPoints.Add(startPoint); //dodanie wierzchołka do zbioru wierzchołków wykorzystanych
 
-                for (int i = 0; i < paths[startPoint].Route.Count; i++)
+                for (int i = 0; i < paths[startPoint].Route.Count; i++) //dodanie krawedzi do rozwiązania
                     result.Add(paths[startPoint].Route[i]);
             }
 
-            // comeback path
+            //dodanie drogi z ostatniego wierzchołka do wierzchołka początkowego
             var lastVisitedNode = result[result.Count - 1];
             var cbPath = dijkstra(lastVisitedNode);
             for (int i = 0; i < cbPath[STARTING_POINT].Route.Count; i++)

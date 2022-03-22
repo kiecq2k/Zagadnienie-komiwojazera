@@ -19,18 +19,18 @@ namespace Komiwojazer.Algorithms
             int tmp = STARTING_POINT + 1;
             int[] tab = new int[N - tmp];
             int i = 0;
-            for (int j = tmp; j < N; i++, j++)
+            for (int j = tmp; j < N; i++, j++) //wypelnienie tablicy indeskami wierzchołków bez indeksu wierzchołka początkowego
             {
                 tab[i] = j;
             }
-            DoPermute(tab, 0, i - 1, _drogiBF);
-            foreach (var droga in _drogiBF)
+            DoPermute(tab, 0, i - 1, _drogiBF); //utworzenie wszystkich permutacji
+            foreach (var droga in _drogiBF) //dodanie na początku i na końcu każdej permutacji indeksu wierzchołka początkowego
             {
                 droga.Insert(0, STARTING_POINT);
                 droga.Add(STARTING_POINT);
             }
             var road = new List<int>();
-            foreach (var droga in _drogiBF)
+            foreach (var droga in _drogiBF) //dodanie między wierzchołkami małego grafu indeksów wierzchołków pośrednich
             {
                 road.Clear();
                 for (int k = 1; k < droga.Count(); k++)
@@ -43,10 +43,6 @@ namespace Komiwojazer.Algorithms
                 }
                 _drogiBF2.Add(road.RemoveDuplication().ToList());
             }
-
-
-
-
             return _drogiBF2;
         }
         static void DoPermute(int[] nums, int start, int end, IList<IList<int>> list)

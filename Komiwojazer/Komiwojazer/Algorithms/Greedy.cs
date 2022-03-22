@@ -27,8 +27,7 @@ namespace Komiwojazer.Algorithms
             {
                 var dijkstra = new Dijkstra(Version, G);
                 var distances = dijkstra.dijkstra(i);
-                
-                for(int j=STARTING_POINT; j < distances.Length; j++)
+                for(int j=STARTING_POINT; j < distances.Length; j++) //zapisanie wszytskich wag krawędzi małego grafu w liście
                 {
                     if(distances[j].Distance != 0)
                     {
@@ -41,27 +40,21 @@ namespace Komiwojazer.Algorithms
                     }
                 }
             }
-
-            var sortedPaths = _paths.OrderBy(p => p.Distance).ToList();
-
+            var sortedPaths = _paths.OrderBy(p => p.Distance).ToList(); //sortowanie listy z wagami krawędzi w kolejności rosnącej
             int n = N - STARTING_POINT;
-            var dict = new Dictionary<int, int>();
+            var dict = new Dictionary<int, int>(); //stworzenie miejsca do dodawania krawędzi do rozwiązania
+            dict.Add(sortedPaths[0].From, sortedPaths[0].To); //dodanie pierwszej krawędzi z listy do rozwiązania
 
-            // 26 27 w slowniku
-            // chce dojsc 27 26
-
-            dict.Add(sortedPaths[0].From, sortedPaths[0].To);
-
-            for (int i = 1; i < sortedPaths.Count; i++)
+            for (int i = 1; i < sortedPaths.Count; i++) //dodawanie krawędzi do rozwiązania
             {
                 if (!dict.ContainsKey(sortedPaths[i].From) &&
-                    !dict.ContainsValue(sortedPaths[i].To))
+                    !dict.ContainsValue(sortedPaths[i].To)) //sprawdzamy czy w rozwiązaniu nie ma krawędzi z tym samym wierzołkiem na początku lub końcu krawędzi
                 {
                     int value;
                     if(n > 2)
                     {
                         if ((!dict.TryGetValue(sortedPaths[i].To, out value) ||
-                            value != sortedPaths[i].From) && KrawedzOK(dict, sortedPaths, i))
+                            value != sortedPaths[i].From) && KrawedzOK(dict, sortedPaths, i)) //sprawdzenie czy możemy dołączyć krawędź do rozwiązania
                         {
                             dict.Add(sortedPaths[i].From, sortedPaths[i].To);
                         }
@@ -69,55 +62,30 @@ namespace Komiwojazer.Algorithms
                     }
                     else
                     {
-                        dict.Add(sortedPaths[i].From, sortedPaths[i].To);
+                        dict.Add(sortedPaths[i].From, sortedPaths[i].To); //dodanie krawędzi do rozwiązania
                     }
                     
                 }   
             }
-
-            //for(int i = 26; i < N; i++)
-            //{
-            //    int value;
-            //    if(!dict.TryGetValue(i, out value))
-            //        dict.Add(i, sortedPaths.First(p => p.From == i).To);
-            //}
-
-            //for(int i = 26; i < N; i++)
-            //{
-            //    var el = sortedPaths.First(p =>
-            //    {
-            //        return p.From == i && !dict.ContainsValue(p.To);
-            //    });
-
-            //    dict.Add(el.From, el.To);
-            //}
-
             var list = new List<int>();
-
             int index = STARTING_POINT;
-
-            while(dict.Count > 0)
+            while(dict.Count > 0) //edytujemy listę aby krawedzie laczyly się ze sobą po kolei
             {
                 list.Add(index);
                 var to = dict[index];
                 dict.Remove(index);
                 index = to;
             }
-
             var result = new List<int>();
-
-            for(int i = 0; i < list.Count - 1; i++)
+            for(int i = 0; i < list.Count - 1; i++) //dodanie do rozwiązania punktów pośrednich
             {
                 var dijkstra1 = new Dijkstra(Version, G).dijkstra(list[i]);
                 
                 result.AddRange(dijkstra1[list[i + 1]].Route);
             }
-
             RemoveDuplication(ref result);
-
             var dijkstra2 = new Dijkstra(Version, G).dijkstra(result[result.Count - 1]);
             result.AddRange(dijkstra2[STARTING_POINT].Route);
-
             return result.RemoveDuplication();
         }
 
