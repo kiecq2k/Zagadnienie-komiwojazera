@@ -151,12 +151,22 @@ namespace Komiwojazer
         }
         private void CanvasImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            //pobranie obecnej pozycji myszki
             var coord = e.GetPosition(this.CanvasImage);
+            //sprawdzenie czy punkt jest na drodze, 
+            //czy nie jest na skrzyzowaniu,
+            //czy nie jest blisko postawionego juz punku 
+            //oraz czy nie zostal przekroczony limit punktow
             if (onRoadCheck(coord) && crossCheck(coord) &&
                 pointCheck(coord) && _counter <7)
             {
+                //sprawdzenie numeru flagi, jesli jest
+                //rowne 1 to znaczy ze uzytkownik stawia punkt startowy, 
+                //jesli flaga rowna sie 2 to znaczy ze uzytkownik stawia punkt do odwiedzenia
                 if (_flag == 1)
                 {
+                    //jesli _startingPoint jest rowny null to tworzymy nowy obiekt 
+                    //ustawiamyu jego wielkosc i kolor, nastepnie dodajemy go do interfejsu
                     if (_startingPoint == null)
                     {
                         _startingPoint = new Points();
@@ -166,12 +176,18 @@ namespace Komiwojazer
                         _startingPoint.point.Fill = Brushes.Black;
                         CanvasImage.Children.Add(_startingPoint.point);
                     }
+                    //ustawnienie miejsca punktu na mapie
                     Canvas.SetLeft(_startingPoint.point, coord.X - 5);
                     Canvas.SetTop(_startingPoint.point, coord.Y - 5);
                     Canvas.SetZIndex(_startingPoint.point, _zIndexCounter++);
+                    //wywolanie metody ktora sprawdza miedzy ktorymi skrzyzowaniami 
+                    //znajduje sie dodany punkt, oraz dodaje punkt do macierzy wraz
+                    //z odpowiednimi odleglosciami liczonymi w skali
                     pointPosition(e, _flag);
+                    //zapisanie koordynatow punktu startowego
                     _startingPoint.Coor = coord;
                     _points.Add(new Points { Coor = _startingPoint.Coor });
+                    //aktualizacja dostepnosci guzikow
                     endPointsButton.IsEnabled = true;
                     startPointButton.IsEnabled = false;
                     removePointsButton.IsEnabled = true;
@@ -179,19 +195,30 @@ namespace Komiwojazer
                 }
                 else if (_flag == 2)
                 {
+                    //dodanie nowego obiektu punktu do odwiedzenia 
+                    //ustawienie mu okreslonego rozmiaru oraz koloru
                     _points.Add(new Points());
                     _points[_pointCounter].point = new Ellipse();
                     _points[_pointCounter].point.Width = 15;
                     _points[_pointCounter].point.Height = 15;
                     _points[_pointCounter].point.Fill = Brushes.Sienna;
+                    //ustawienie miejsca punktu na mapie
                     Canvas.SetLeft(_points[_pointCounter].point, coord.X - 5);
                     Canvas.SetTop(_points[_pointCounter].point, coord.Y - 5);
+                    //dodanie obiektu na mape
                     CanvasImage.Children.Add(_points[_pointCounter].point);
+                    //zapisanie pozycji punktu do odwiedzenia
                     _points[_pointCounter].Coor = coord;
                     Canvas.SetZIndex(_points[_pointCounter].point, _zIndexCounter++);
+                    //wywolanie metody ktora sprawdza miedzy ktorymi skrzyzowaniami 
+                    //znajduje sie dodany punkt, oraz dodaje punkt do macierzy wraz
+                    //z odpowiednimi odleglosciami liczonymi w skali
                     pointPosition(e, _flag);
+                    //licznik punktow
                     _counter++;
+                    //aktualizacja interfejsu guzikow
                     startAlgorithmButton.IsEnabled = true;
+                    //aktualizacja tekstu odpowiadajacego za ilosc punktow na mapie
                     number.Content = $"{_counter}";
                 }
             }
