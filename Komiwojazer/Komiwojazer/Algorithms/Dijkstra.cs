@@ -12,7 +12,6 @@ namespace Komiwojazer.Algorithms
         public int Distance { get; set; }
         public List<int> Route { get; set; }
 
-
         public Result()
         {
             Route = new List<int>();
@@ -21,50 +20,50 @@ namespace Komiwojazer.Algorithms
 
     public class Dijkstra : BaseAlgorithm
     {
-        private static readonly int NO_PARENT = -1;
+        private static readonly int BRAK_RODZICA = -1;
 
         public Dijkstra(Version version, IList<IList<int>> g) : base(version, g)
         {
         }
 
-        public Result[] dijkstra(int startVertex)
+        public Result[] dijkstra(int wierzchPoczatkowy)
         {
-            int nVertices = G.Count;
+            // przypisanie do zmiennej ilosci wierzcholkow
+            int iloscWierzcholkow = G.Count; 
 
-            // shortestDistances[i] will hold the
-            // shortest distance from src to i
-            int[] shortestDistances = new int[nVertices];
+            // inicjalizacja tablicy, ktora bedzie zawierala najkrotsza dlugosc trasy od wierzcholka 
+            // startowego do wierzcholka o indeksie i
+            int[] najkrotszeTrasy = new int[iloscWierzcholkow];
 
-            // added[i] will true if vertex i is
-            // included / in shortest path tree
-            // or shortest distance from src to
-            // i is finalized
-            bool[] added = new bool[nVertices];
+            // inicjalizacja tablicy wartosci logicznych
+            // ktora na indeksie i bedzie zawierala wartosc true
+            // gdy juz mamy wierzcholek i zapisany w tablicy najkrotszeTrasy
+            bool[] dodane = new bool[iloscWierzcholkow];
 
-            // Initialize all distances as
-            // INFINITE and added[] as false
-            for (int vertexIndex = 0; vertexIndex < nVertices;
-                                                vertexIndex++)
+            // inicjalizacja dlugosci tras na ustalona wartosc
+            // ustawienie false w tablicy dodane
+            for (int indexWierzcholka = 0; indexWierzcholka < iloscWierzcholkow;
+                                                indexWierzcholka++)
             {
-                shortestDistances[vertexIndex] = int.MaxValue - 1;
-                added[vertexIndex] = false;
+                najkrotszeTrasy[indexWierzcholka] = int.MaxValue - 1;
+                dodane[indexWierzcholka] = false;
             }
 
-            // Distance of source vertex from
-            // itself is always 0
-            shortestDistances[startVertex] = 0;
+            // ustawienie odleglosci od wierzcholka startowego 
+            // do siebie samego, czyli wartosc 0
+            najkrotszeTrasy[wierzchPoczatkowy] = 0;
 
-            // Parent array to store shortest
-            // path tree
-            int[] parents = new int[nVertices];
+            // inicjalizacja tablicy, ktora bedzie przechowywala
+            // drzewo najkrotszych tras
+            int[] rodzice = new int[iloscWierzcholkow];
 
-            // The starting vertex does not
-            // have a parent
-            parents[startVertex] = NO_PARENT;
+            // wierzcholek poczatkowy nie ma rodzica
+            // wiec ustawiamy wartosc -1
+            rodzice[wierzchPoczatkowy] = BRAK_RODZICA;
 
-            // Find shortest path for all
-            // vertices
-            for (int i = 1; i < nVertices; i++)
+            // algorytm znajdowania najkrotszej trasy
+            // dla wszystkich wierzcholkow
+            for (int i = 1; i < iloscWierzcholkow; i++)
             {
 
                 // Pick the minimum distance vertex
@@ -72,47 +71,50 @@ namespace Komiwojazer.Algorithms
                 // processed. nearestVertex is
                 // always equal to startNode in
                 // first iteration.
-                int nearestVertex = -1;
-                int shortestDistance = int.MaxValue - 1;
-                for (int vertexIndex = 0;
-                        vertexIndex < nVertices;
-                        vertexIndex++)
+
+                // wybranie wierzcholka o najmniejszej odleglosci
+                // ze zbioru wierzcholkow jeszcze nie przeprocesowanych
+                int najblizszyWierzcholek = -1;
+                int najmniejszaOdleglosc = int.MaxValue - 1;
+                for (int indexWierzcholka = 0;
+                        indexWierzcholka < iloscWierzcholkow;
+                        indexWierzcholka++)
                 {
-                    if (!added[vertexIndex] &&
-                        shortestDistances[vertexIndex] <
-                        shortestDistance)
+                    if (!dodane[indexWierzcholka] &&
+                        najkrotszeTrasy[indexWierzcholka] <
+                        najmniejszaOdleglosc)
                     {
-                        nearestVertex = vertexIndex;
-                        shortestDistance = shortestDistances[vertexIndex];
+                        najblizszyWierzcholek = indexWierzcholka;
+                        najmniejszaOdleglosc = najkrotszeTrasy[indexWierzcholka];
                     }
                 }
 
-                // Mark the picked vertex as
-                // processed
-                added[nearestVertex] = true;
+                // ustawienie wybranego wierzcholka jako przeprocesowanego
+                // czyli ustawienie flagi na true
+                dodane[najblizszyWierzcholek] = true;
 
-                // Update dist value of the
-                // adjacent vertices of the
-                // picked vertex.
+                // aktualizacja odleglosci w tablicy
+                // dla wybranego wierzcholka
                 for (int vertexIndex = 0;
-                        vertexIndex < nVertices;
+                        vertexIndex < iloscWierzcholkow;
                         vertexIndex++)
                 {
-                    int edgeDistance = G[nearestVertex][vertexIndex];
+                    int edgeDistance = G[najblizszyWierzcholek][vertexIndex];
 
                     if (edgeDistance > 0
-                        && ((shortestDistance + edgeDistance) <
-                            shortestDistances[vertexIndex]))
+                        && ((najmniejszaOdleglosc + edgeDistance) <
+                            najkrotszeTrasy[vertexIndex]))
                     {
-                        parents[vertexIndex] = nearestVertex;
-                        shortestDistances[vertexIndex] = shortestDistance +
+                        rodzice[vertexIndex] = najblizszyWierzcholek;
+                        najkrotszeTrasy[vertexIndex] = najmniejszaOdleglosc +
                                                         edgeDistance;
                     }
                 }
             }
 
-            //printSolution(startVertex, shortestDistances, parents);
-            return GetResult(startVertex, shortestDistances, parents);
+            // pomocnicza metoda do zwrocenia wartosci w czytelnej formie
+            // czyli obiektu Result
+            return GetResult(wierzchPoczatkowy, najkrotszeTrasy, rodzice);
 
         }
 
@@ -152,7 +154,7 @@ namespace Komiwojazer.Algorithms
 
             // Base case : Source node has
             // been processed
-            if (currentVertex == NO_PARENT)
+            if (currentVertex == BRAK_RODZICA)
             {
                 return;
             }
