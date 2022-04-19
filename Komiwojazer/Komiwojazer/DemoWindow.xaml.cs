@@ -33,12 +33,12 @@ namespace Komiwojazer
         private IList<Point> _dots = new List<Point>();
         private int _pointCounter = 27;
         private int _zIndexCounter = 1;
-
         private IList<IList<int>> _adjMatrix = new List<IList<int>>();
+        private IList<IList<int>> _smallGraph = new List<IList<int>>();
         private IList<IList<int>> _startingAdjMatrix = new List<IList<int>>();
         private IList<Tuple<int, int>> _verticalCross = new List<Tuple<int, int>>();
         private IList<Tuple<int, int>> _betweenCross = new List<Tuple<int, int>>();
-
+        private BaseAlgorithm _algorithm;
         private const int SPEED = 500;
         private Version _version = Version.Demo;
         private bool algIsOnMapNN = false;
@@ -53,7 +53,7 @@ namespace Komiwojazer
             FillIntersections();
             adjMatrixFill();
             addToMatrix();
-            
+            _algorithm = new BaseAlgorithm(0, _adjMatrix);
             for (int i = 0; i < 26; i++)
             {
                 _points.Add(new Points { Coor = _intersections[i] });
@@ -230,6 +230,7 @@ namespace Komiwojazer
             _points.Clear();
             _adjMatrix.Clear();
             _betweenCross.Clear();
+            _smallGraph.Clear();
             _startingPoint = null;
             _flag = -1;
             _counter = 0;
@@ -244,6 +245,7 @@ namespace Komiwojazer
             algIsOnMapNN = false;
             algIsOnMapBF = false;
             algIsOnMap3 = false;
+
             for (int i = 0; i < 27; i++)
             {
                 _adjMatrix.Add(new List<int>());
@@ -274,7 +276,27 @@ namespace Komiwojazer
                 }
             }
 
+
+            // petla przechodzi po wszystkich wierzchołkach
+            for (int i = 0; i < _counter+1; i++)
+            {
+                // wywołanie algorytmy dijkstry dla odpowiedniej wiersji
+                var dijkstra = new Dijkstra(_algorithm.Version, _algorithm.G);
+                var distances = dijkstra.dijkstra(i+26);
+                _smallGraph.Add(new List<int>());
+                
+                for (int j = 0; j < _counter+1; j++)
+                {
+                    // policzenie odległości dla kolejnego wierzchołka
+                    _smallGraph[i].Add(distances[j+26].Distance);
+                }
+            }
+            
             int buttonCheck = 0;
+
+
+            
+            
 
             if (checkboxNN.IsChecked == true)
             {
@@ -556,7 +578,7 @@ namespace Komiwojazer
         {
             var dijkstra = new Dijkstra(_version, _adjMatrix);
             var result = dijkstra.GetPath();
-            if (!algIsOnMapNN) road_alg1.Text += Distance(result);
+            if (!algIsOnMapNN) road_alg1.Text += Distance2(result);
             return result;
         }
 
@@ -565,7 +587,7 @@ namespace Komiwojazer
             var bruteForce = new BruteForce(_version, _adjMatrix);
             var result = bruteForce.GetPathBF2();
             var result2 = DistanceBF(result);
-            if(!algIsOnMapBF) road_alg2.Text += Distance(result2);
+            if(!algIsOnMapBF) road_alg2.Text += Distance2(result2);
             return result2;
         }
 
@@ -573,7 +595,7 @@ namespace Komiwojazer
         {
             var greedy = new Greedy(_version, _adjMatrix);
             var result = greedy.NajmniejszaKrawedz();
-            if(!algIsOnMap3) road_alg3.Text += Distance(result);
+            if(!algIsOnMap3) road_alg3.Text += Distance2(result);
             return result;
         }
 
@@ -586,6 +608,22 @@ namespace Komiwojazer
             }
             return distance;
         }
+        
+        public int Distance2(IList<int> result)
+        {
+            int distance = 0; 
+            int last = 0;
+            for(int i =1;i<result.Count();i++)
+            {
+                if(result[i] > 25)
+                {
+                    distance += _smallGraph[result[last]-26][result[i]-26];
+                    last = i;
+                }
+
+            }
+            return distance;
+        }
 
         public IList<int> DistanceBF(List<IList<int>> drogiBF)
         {
@@ -594,7 +632,7 @@ namespace Komiwojazer
             int minDistance = int.MaxValue;
             foreach (var droga in drogiBF)
             {
-                distance =Distance(droga);
+                distance =Distance2(droga);
                 if (distance < minDistance)
                 {
                     result.Clear();

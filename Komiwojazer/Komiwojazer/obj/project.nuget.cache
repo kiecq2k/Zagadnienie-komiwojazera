@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RLQaiAAEAFb3UwxrC7/ycn+GgYCCPZq4vGgv8U5Lqe1T4wz/DX4HdCqGD9oI4GLzm185g9jMW0YTHacJksthtw==",
+  "dgSpecHash": "bPbdf0l1GWz+UE0Vp+9JsKhdweFi94Fmu3F74Jvc05ktJrETyC9gRBz3p/Y9F6SUUmn8h5aw+oG1VF2L4eRCVg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\chudy\\Documents\\GitHub\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
+  "projectFilePath": "C:\\Users\\chudy\\source\\repos\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\chudy\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\chudy\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",

@@ -33,9 +33,11 @@ namespace Komiwojazer
         private IList<Point> _intersections = new List<Point>();
         private IList<Point> _dots = new List<Point>();
         private IList<IList<int>> _adjMatrix = new List<IList<int>>();
+        private IList<IList<int>> _smallGraph = new List<IList<int>>();
         private IList<IList<int>> _startingAdjMatrix = new List<IList<int>>();
         private IList<Tuple<int, int>> _verticalCross = new List<Tuple<int, int>>();
         private IList<Tuple<int, int>> _betweenCross = new List<Tuple<int, int>>();
+        private BaseAlgorithm _algorithm;
         private const int SPEED = 300;
         private Version _version = Version.Full;
         private bool algIsOnMapNN = false;
@@ -48,6 +50,7 @@ namespace Komiwojazer
             FillIntersections();
             matrixFill();
             addToMatrix();
+            _algorithm = new BaseAlgorithm((Version)1, _adjMatrix);
             for (int i = 0; i < 132; i++)
             {
                 _points.Add(new Points { Coor = _intersections[i] });
@@ -420,6 +423,7 @@ namespace Komiwojazer
             _points.Clear();
             _adjMatrix.Clear();
             _betweenCross.Clear();
+            _smallGraph.Clear();
             _startingPoint = null;
             _flag = -1;
             _counter = 0;
@@ -431,6 +435,9 @@ namespace Komiwojazer
             radioButtonNN.IsChecked = false;
             radioButtonBF.IsChecked = false;
             radioButton3.IsChecked = false;
+            algIsOnMapNN = false;
+            algIsOnMapBF = false;
+            algIsOnMap3 = false;
             for (int i = 0; i < 133; i++)
             {
                 _adjMatrix.Add(new List<int>());
@@ -453,6 +460,20 @@ namespace Komiwojazer
                 return;
             }
             int buttonCheck = 0;
+
+
+            for (int i = 0; i < _counter + 1; i++)
+            {
+                var dijkstra = new Dijkstra(_algorithm.Version, _algorithm.G);
+                var distances = dijkstra.dijkstra(i + 132);
+                _smallGraph.Add(new List<int>());
+                for (int j = 0; j < _counter + 1; j++)
+                {
+
+                    _smallGraph[i].Add(distances[j + 132].Distance);
+                }
+            }
+
             if (radioButtonNN.IsChecked == true && !algIsOnMapNN)
             {
                 resultNN = NajblizszySasiad();
@@ -489,7 +510,7 @@ namespace Komiwojazer
         {
             var dijkstra = new Dijkstra(_version, _adjMatrix);
             var result = dijkstra.GetPath();
-            road_alg1.Text += Distance(result);
+            road_alg1.Text += Distance2(result);
             return result;
         }
 
@@ -498,7 +519,7 @@ namespace Komiwojazer
             var bruteForce = new BruteForce(_version, _adjMatrix);
             var result = bruteForce.GetPathBF2();
             var result2 = DistanceBF(result);
-            road_alg2.Text += Distance(result2);
+            road_alg2.Text += Distance2(result2);
             return result2;
         }
 
@@ -506,7 +527,7 @@ namespace Komiwojazer
         {
             var greedy = new Greedy(_version, _adjMatrix);
             var result = greedy.NajmniejszaKrawedz();
-            road_alg3.Text += Distance(result);
+            road_alg3.Text += Distance2(result);
             return result;
         }
 
@@ -520,6 +541,22 @@ namespace Komiwojazer
             return distance;
         }
 
+        public int Distance2(IList<int> result)
+        {
+            int distance = 0;
+            int last = 0;
+            for (int i = 1; i < result.Count(); i++)
+            {
+                if (result[i] > 131)
+                {
+                    distance += _smallGraph[result[last] - 132][result[i] - 132];
+                    last = i;
+                }
+
+            }
+            return distance;
+        }
+
         public IList<int> DistanceBF(List<IList<int>> drogiBF)
         {
             var result = new List<int>();
@@ -527,7 +564,7 @@ namespace Komiwojazer
             int minDistance = int.MaxValue;
             foreach (var droga in drogiBF)
             {
-                distance = Distance(droga);
+                distance = Distance2(droga);
                 if (distance < minDistance)
                 {
                     result.Clear();

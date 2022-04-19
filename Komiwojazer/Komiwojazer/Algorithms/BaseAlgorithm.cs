@@ -7,9 +7,9 @@ namespace Komiwojazer.Algorithms
     public class BaseAlgorithm
     {
         protected readonly int N;
-        protected readonly IList<IList<int>> G;
+        public IList<IList<int>> G;
         protected IList<int> _usedPoints;
-        protected readonly Version Version;
+        public Version Version;
         protected readonly int STARTING_POINT;
 
         public BaseAlgorithm(Version version, IList<IList<int>> g)
