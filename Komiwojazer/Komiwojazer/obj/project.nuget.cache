@@ -1,14 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "bPbdf0l1GWz+UE0Vp+9JsKhdweFi94Fmu3F74Jvc05ktJrETyC9gRBz3p/Y9F6SUUmn8h5aw+oG1VF2L4eRCVg==",
+  "dgSpecHash": "K41QPSm4aqxryKjC8mzMGLQ147K6nAMZfoBeemHW/oMh0hXbO5+kPWXDfmw80n3az9HkLmzp9TLplgJ2gZzuNA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\chudy\\source\\repos\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
+  "projectFilePath": "C:\\Users\\olekm\\OneDrive\\Pulpit\\Zagadnienie-komiwojazera\\Komiwojazer\\Komiwojazer\\Komiwojazer.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\chudy\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\chudy\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
-    "C:\\Users\\chudy\\.nuget\\packages\\optimizedpriorityqueue\\5.1.0\\optimizedpriorityqueue.5.1.0.nupkg.sha512",
-    "C:\\Users\\chudy\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
-    "C:\\Users\\chudy\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512"
+    "C:\\Users\\olekm\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\olekm\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "C:\\Users\\olekm\\.nuget\\packages\\optimizedpriorityqueue\\5.1.0\\optimizedpriorityqueue.5.1.0.nupkg.sha512",
+    "C:\\Users\\olekm\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
+    "C:\\Users\\olekm\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512",
+    "C:\\Users\\olekm\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.23\\microsoft.netcore.app.host.win-x64.3.1.23.nupkg.sha512"
   ],
   "logs": []
 }
