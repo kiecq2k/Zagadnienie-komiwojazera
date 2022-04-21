@@ -23,10 +23,12 @@ namespace Komiwojazer
     public enum Version { Demo, Full };
     public partial class MainWindow : Window
     {
-
+        Welcome w = new Welcome();
         public MainWindow()
         {
+            w.ShowDialog();
             InitializeComponent();
+            
         }
 
         private void startButton_Click(object sender, RoutedEventArgs e)

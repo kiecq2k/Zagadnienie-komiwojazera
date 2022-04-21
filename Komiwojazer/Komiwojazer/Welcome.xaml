@@ -1,0 +1,17 @@
+﻿<Window x:Class="Komiwojazer.Welcome"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Komiwojazer"
+        mc:Ignorable="d"
+        Title="Welcome" Height="1000" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown" >
+        <Image HorizontalAlignment="Center" Stretch="Fill"  Height="451" VerticalAlignment="Top" Width="456"  Source="\Images\logo.jpg" Margin="0,124,0,0" />
+        <TextBlock HorizontalAlignment="Center" Margin="0,24,0,0" TextWrapping="Wrap" Text="Uniwersytet Kardynała Stefana Wyszyńskiego Wydział matematyczno-przyrodniczy" VerticalAlignment="Top" Height="165" Width="680" TextAlignment="Center" FontFamily="Calibri" FontSize="36"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,575,0,0" TextWrapping="Wrap" Text="Zagadnienie komiwojażera w sieci miejskiej" VerticalAlignment="Top" FontSize="36" Height="99" Width="448" FontFamily="Calibri" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,712,0,0" TextWrapping="Wrap" Text="Michał Chudzik&#x0a;Bartosz Dec&#x0a;Aleksander Maciejewski" VerticalAlignment="Top" FontSize="36" TextAlignment="Center" Width="400" FontFamily="Calibri"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,909,0,0" TextWrapping="Wrap" Text="Warszawa, 2022" VerticalAlignment="Top" FontSize="36" FontFamily="Calibri"/>
+
+    </Grid>
+</Window>

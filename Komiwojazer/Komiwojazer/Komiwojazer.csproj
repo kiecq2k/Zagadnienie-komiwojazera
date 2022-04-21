@@ -7,12 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\logo.jpg" />
     <None Remove="Images\mapaDemo.jpg" />
     <None Remove="mapa.jpg" />
     <None Remove="mapa.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\logo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\mapaDemo.jpg" />
   </ItemGroup>
 
